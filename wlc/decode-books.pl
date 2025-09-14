@@ -21,11 +21,11 @@ $OFS = "\t";
 # Initialize the I/O:
 
 # Input XML
-# open(INPUT, "<&0") or die("Failed to open BASE from FD #0");
+# TODO: Explore custom I/O handling: open(INPUT, "<&0") or die("Failed to open BASE from FD #0");
 
 my $filename = shift @ARGV;
 
-# Output latex
+# Output TSV
 open(OUTPUT, ">&1") or die("Failed to open writing to FD #1");
 
 # Error messages:
@@ -33,6 +33,9 @@ open(ERROR, ">&2") or die("Failed to open writing to FD #2");
 
 # Debug messages:
 open(DEBUG, ">&3") or die("Failed to open writing to FD #3");
+
+# Output TSV schema
+open(SCHEMA, ">&4") or die("Failed to open writing to FD #4");
 
 #---------------------------------------------------------
 
@@ -232,21 +235,53 @@ sub parseOsisWordNum
 
 #---------------------------------------------------------
 
-#   print OUTPUT 
-#       "OsisWordNum",
-#       "TokenType",
-#       "OsisWordId",
-#       "WordSpeechType",
-#       "WordHebrew",
-#       "WordHebrewParsed",
-#       "Lemma",
-#       "Morph",
-#       "PrefixConjunction",
-#       "WordVerbBinyanim",
-#       "WordVerbForm",
-#       "WordVerbPGN",
-#       "WordVerbState" .
-#       "\n";
+print SCHEMA
+    "OsisWordNum",
+    "TokenType",
+    "OsisWordId",
+    "WordSpeechType",
+    "WordHebrew",
+    "WordHebrewParsed",
+    "Lemma",
+    "Morph",
+    "PrefixConjunction",
+    "PrefixPreposition",
+    "PrefixArticle",
+    "PrefixInterrogative",
+    "WordVerbBinyanim",
+    "WordVerbForm",
+    "WordVerbPGN",
+    "WordVerbState",
+    "SuffixPronominal",
+    "SuffixPronominalPGN",
+    "SuffixDirectionalHe",
+    "SuffixParagogicHe",
+    "SuffixParagogicNun" .
+    "\n";
+
+print SCHEMA
+    "string(ASCII)",
+    "string(ASCII)",
+    "string(ASCII)",
+    "string(ASCII)",
+    "string(UTF-8)",
+    "string(UTF-8)",
+    "string(ASCII)",
+    "string(ASCII)",
+    "string(UTF-8)",
+    "string(UTF-8)",
+    "string(UTF-8)",
+    "string(UTF-8)",
+    "string(ASCII)",
+    "string(ASCII)",
+    "string(ASCII)",
+    "string(ASCII)",
+    "string(UTF-8)",
+    "string(ASCII)",
+    "string(UTF-8)",
+    "string(UTF-8)",
+    "string(UTF-8)" .
+    "\n";
 
 my $dom = XML::LibXML->load_xml(location => $filename);
 my $xpc = XML::LibXML::XPathContext->new($dom);
@@ -369,9 +404,9 @@ foreach my $book (@books) {
                                 my $wordVerbFormCore = $wordVerbForm =~ s/^(ve-|va-)//gr;
                                 my $wordVerbFormConjuction = "${prefixConjunctionName}-${wordVerbFormCore}";
                                 if ($f eq "q" and $wordVerbFormConjuction ne "ve-perfect") {
-                                    print ERROR "ERROR($osisWordNum/$osisWordId): Unknown wordVerbForm($wordVerbForm) does not match wordVerbFormConjuction($wordVerbFormConjuction)\n";
+                                    print ERROR "WARNING($osisWordNum/$osisWordId): The wordVerbForm($wordVerbForm) does not match wordVerbFormConjuction($wordVerbFormConjuction) -- keeping the wordVerbForm($wordVerbForm)\n";
                                 } elsif ($f eq "w" and $wordVerbFormConjuction ne "va-imperfect") {
-                                    print ERROR "ERROR($osisWordNum/$osisWordId): Unknown wordVerbForm($wordVerbForm) does not match wordVerbFormConjuction($wordVerbFormConjuction)\n";
+                                    print ERROR "WARNING($osisWordNum/$osisWordId): The wordVerbForm($wordVerbForm) does not match wordVerbFormConjuction($wordVerbFormConjuction) -- keeping the wordVerbForm($wordVerbForm)\n";
                                 } else {
                                     $wordVerbForm = $wordVerbFormConjuction;
                                 }
@@ -409,6 +444,7 @@ foreach my $book (@books) {
                             if ($f =~ m/[rs]/) {
                                 my $s = substr($morphS, $i++, 1);
                                 $wordVerbState = $osisStateToHebrewState{$s};
+                                $wordVerbForm .= " " . $wordVerbState;
                                 print DEBUG "osisWordId($osisWordId),wordSpeechType($wordSpeechType),morphS($morphS),i($i),s($s),wordVerbState($wordVerbState)\n";
                             }
                         }

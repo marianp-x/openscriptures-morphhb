@@ -51,13 +51,14 @@ GENERATED=\
 all: WLC.tsv
 
 WLC.tsv : $(BOOK_TSVs)
-	echo "OsisWordNum	TokenType	OsisWordId	WordSpeechType	WordHebrew	WordHebrewParsed	Lemma	Morph	PrefixConjunction	PrefixPreposition	PrefixArticle	PrefixInterrogative	WordVerbBinyanim	WordVerbForm	WordVerbPGN	WordVerbState	SuffixPronominal	SuffixPronominalPGN	SuffixDirectionalHe	SuffixParagogicHe	SuffixParagogicNun" >"WLC.tsv"
-	cat $(BOOK_TSVs) >>"WLC.tsv"
+	/usr/bin/cat "Gen.schema" | head -n 1 >"WLC.tsv"
+	/usr/bin/cat $(BOOK_TSVs) >>"WLC.tsv"
 
 %.tsv %.debug : %.xml Makefile decode-books.pl
 	decode-books.pl "$*.xml" \
 		1>"$*.tsv" \
-		3>"$*.debug"
+		3>"$*.debug" \
+		4>"$*.schema"
 
 clean:
 	rm -f \

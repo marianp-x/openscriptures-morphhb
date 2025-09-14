@@ -3,5 +3,6 @@
 
 # Generated output
 *.debug
+*.schema
 *.tsv
 *.log
