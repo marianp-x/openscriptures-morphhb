@@ -1,0 +1,7 @@
+# Temporary VIM files
+**/*.sw[p-x]
+
+# Generated output
+*.debug
+*.tsv
+*.log
