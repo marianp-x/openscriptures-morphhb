@@ -302,7 +302,7 @@ foreach my $book (@books) {
             my $osisVerseId = $verse->getAttribute("osisID");
             print DEBUG "osisVerseId($osisVerseId)\n";
 
-            my @tokens = $xpc->findnodes("osis:w[not(\@type = 'x-ketiv') and not(\@type = 'x-morph-err')]|osis:note[\@type = 'variant']/osis:rdg[\@type = 'x-qere']/osis:w|osis:note[\@type = 'variant']/osis:rdg/osis:w[\@type = 'x-morph-fix']|osis:seg", $verse);
+            my @tokens = $xpc->findnodes("osis:w[not(\@type = 'x-ketiv') and not(starts-with(\@type, 'x-err'))]|osis:note[\@type = 'variant']/osis:rdg[\@type = 'x-qere']/osis:w|osis:note[\@type = 'variant']/osis:w[starts-with(\@type, 'x-fix')]|osis:seg", $verse);
             print DEBUG "verse/nodes(" . scalar(@tokens). ")\n";
             my $tokenNum = 1;
             foreach my $token (@tokens) {

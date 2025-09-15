@@ -8408,7 +8408,9 @@
           <w lemma="m/l/6440" n="1" morph="HR/R/Ncbpc/Sp2ms" id="19sR9">מִ/לְּ/פָנֶ֑י/ךָ</w>
           <w lemma="c/7307" morph="HC/Ncbsc" id="19Upo">וְ/ר֥וּחַ</w>
           <w lemma="6944" n="0.0" morph="HNcmsc/Sp2ms" id="19tV7">קָ֝דְשְׁ/ךָ֗</w>
-          <w lemma="408" morph="HTn" id="19X4N">אַל</w><seg type="x-maqqef">־</seg><w lemma="3947" morph="HVqj2ms" id="19BMP">תִּקַּ֥ח</w>
+          <w lemma="408" morph="HTn" id="19X4N">אַל</w><seg type="x-maqqef">־</seg>
+          <w type="x-err-morph" lemma="3947" morph="HVqj2ms" id="19BMP">תִּקַּ֥ח</w><note type="variant"><catchWord>תִּקַּ֥ח</catchWord>Matches a Qal Imperfect 2ms morph (HVqi2ms) exactly. No justification to interpret as a Qal Jussive 2ms morph (HVqj2ms).
+          <w type="x-fix-morph" lemma="3947" morph="HVqi2ms" id="19BMP">תִּקַּ֥ח</w></note>
           <w lemma="4480 a" n="0" morph="HR/Sp1cs" id="19XQZ">מִמֶּֽ/נִּי</w><seg type="x-sof-pasuq">׃</seg>
         </verse>
         <verse osisID="Ps.51.14">
@@ -14745,7 +14747,8 @@
           <w lemma="7141" n="2" morph="HNp" id="19DR3">קֹ֥רַח</w>
           <w lemma="l/5329" morph="HRd/Vprmsa" id="19kGn">לַ/מְנַצֵּ֣חַ</w>
           <w lemma="5921 a" morph="HR" id="19cKf">עַל</w><seg type="x-maqqef">־</seg><w lemma="4257" morph="HNcfsa" id="199TP">מָחֲלַ֣ת</w>
-          <w lemma="l/6031 b" n="1" morph="HC/Vpa" id="19TMx">לְ/עַנּ֑וֹת</w>
+          <w type="x-err-morph" lemma="l/6031 b" n="1" morph="HC/Vpa" id="19TMx">לְ/עַנּ֑וֹת</w><note type="variant"><catchWord>תִּקַּ֥ח</catchWord>The "לְ" is not a conjuction, but an attached preposition.
+          <w type="x-fix-morph" lemma="l/6031 b" n="1" morph="HR/Vpa" id="19TMx">לְ/עַנּ֑וֹת</w></note>
           <w lemma="4905" n="0.0" morph="HNcmsa" id="19bXh">מַ֝שְׂכִּ֗יל</w>
           <w lemma="l/1968" morph="HR/Np" id="197Fn">לְ/הֵימָ֥ן</w>
           <w lemma="d/250" n="0" morph="HTd/Ngmsa" id="19AQV">הָ/אֶזְרָחִֽי</w><seg type="x-sof-pasuq">׃</seg>
