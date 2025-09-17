@@ -65,7 +65,7 @@ clean:
 		$(GENERATED)
 
 edit:
-	"C:/Program Files/Vim/vim91/gvim.exe" +"set number" +"set delcombine" +"set maxcombine=6" \
+	"C:/Program Files/Vim/vim91/gvim.exe" +"guifont=Consolas:h18" +"set number" +"set delcombine" +"set maxcombine=6" \
 		"Makefile" \
 		"README.md" \
 		"decode-books.pl" \
@@ -77,7 +77,7 @@ edit:
 		&
 
 validate:
-	/usr/bin/xmllint --schema "osisCore.2.1.1.xsd" --noout $(BOOK_XMLs)
+	/usr/bin/xmllint --nonet --schema "osisCore.2.1.1.xsd" --noout $(BOOK_XMLs)
 
 print:
 	@echo "BOOK_NAMEs($(BOOK_NAMEs))"
