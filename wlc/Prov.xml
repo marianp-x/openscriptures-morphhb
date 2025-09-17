@@ -3462,7 +3462,8 @@
         </verse>
         <verse osisID="Prov.13.19">
           <w lemma="8378" morph="HNcfsa" id="20FjT">תַּאֲוָ֣ה</w>
-          <w lemma="1961" n="1.0" morph="HVNrfsa" id="20fFL">נִ֭הְיָה</w>
+          <w type="x-err-morph" lemma="1961" n="1.0" morph="HVNrfsa" id="20fFL">נִ֭הְיָה</w><note type="variant"><catchWord>נִ֭הְיָה</catchWord>Morphology designation of a Niphal Participle Active Absolute 2fs morph (VNrfsa) is invalid. Matches perfectly the Niphal Perfect 3ms morph (VNp3ms).
+          <w type="x-fix-morph" lemma="1961" n="1.0" morph="HVNp3ms" id="20fFL">נִ֭הְיָה</w></note>
           <w lemma="6149" morph="HVqi3fs" id="20iyy">תֶּעֱרַ֣ב</w>
           <w lemma="l/5315" n="1" morph="HR/Ncbsa" id="20fXN">לְ/נָ֑פֶשׁ</w>
           <w lemma="c/8441" morph="HC/Ncfsc" id="20L79">וְ/תוֹעֲבַ֥ת</w>

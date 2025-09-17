@@ -4547,7 +4547,8 @@
           <w lemma="l/1961" morph="HR/Vqc" id="03yK5">לִ/הְיֹ֥ת</w>
           <w lemma="l" n="1.0" morph="HR/Sp2mp" id="03kcg">לָ/כֶ֖ם</w>
           <w lemma="l/430" n="1" morph="HR/Ncmpa" id="03RRm">לֵ/אלֹהִ֑ים</w>
-          <w lemma="c/1961" morph="HC/Vqq2cp" id="037pV">וִ/הְיִיתֶ֣ם</w>
+          <w type="x-err-morph" lemma="c/1961" morph="HC/Vqq2cp" id="037pV">וִ/הְיִיתֶ֣ם</w><note type="variant"><catchWord>וִ/הְיִיתֶ֣ם</catchWord>Matches a Qal Perfect 2mp morph (Vqp2mp) exactly. No justification to interpret as the unusual "2cp" in the Qal Perfect 2cp morph (Vqq2cp).
+          <w type="x-fix-morph" lemma="c/1961" morph="HC/Vqq2mp" id="037pV">וִ/הְיִיתֶ֣ם</w></note>
           <w lemma="6918" n="0.1" morph="HAampa" id="03HhQ">קְדֹשִׁ֔ים</w>
           <w lemma="3588 a" morph="HC" id="03zX3">כִּ֥י</w>
           <w lemma="6918" n="0.0" morph="HAamsa" id="03qit">קָד֖וֹשׁ</w>
