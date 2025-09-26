@@ -2,7 +2,8 @@
 **/*.sw[p-x]
 
 # Generated output
-*.debug
-*.schema
-*.tsv
-*.log
+fix/*.xml
+tsv/*.debug
+tsv/*.schema
+tsv/*.tsv
+tsv/*.log

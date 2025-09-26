@@ -241,6 +241,8 @@ print SCHEMA
     "OsisWordId",
     "WordSpeechType",
     "WordHebrew",
+    "WordHebrewN",
+    "WordHebrewC",
     "WordHebrewParsed",
     "Lemma",
     "Morph",
@@ -248,6 +250,7 @@ print SCHEMA
     "PrefixPreposition",
     "PrefixArticle",
     "PrefixInterrogative",
+    "PrefixParticle",
     "WordVerbBinyanim",
     "WordVerbForm",
     "WordVerbPGN",
@@ -302,7 +305,7 @@ foreach my $book (@books) {
             my $osisVerseId = $verse->getAttribute("osisID");
             print DEBUG "osisVerseId($osisVerseId)\n";
 
-            my @tokens = $xpc->findnodes("osis:w[not(\@type = 'x-ketiv') and not(starts-with(\@type, 'x-err'))]|osis:note[\@type = 'variant']/osis:rdg[\@type = 'x-qere']/osis:w|osis:note[\@type = 'variant']/osis:w[starts-with(\@type, 'x-fix')]|osis:seg", $verse);
+            my @tokens = $xpc->findnodes(".//osis:w[not(\@type)]|osis:seg", $verse);
             print DEBUG "verse/nodes(" . scalar(@tokens). ")\n";
             my $tokenNum = 1;
             foreach my $token (@tokens) {
@@ -318,16 +321,21 @@ foreach my $book (@books) {
                     $morph = substr($morph, 1);
                     my $wordHebrewParsed = $token->textContent;
                     my $wordHebrew = $wordHebrewParsed =~ s#/##gr;
+                    my $wordHebrewN = stripTaamim($wordHebrew);
+                    my $wordHebrewC = stripPointing($wordHebrew);
                     my $wordSpeechType = "";
-                    print DEBUG "osisWordId($osisWordId),wordSpeechType($wordSpeechType),wordHebrew($wordHebrew),wordHebrewParsed($wordHebrewParsed),lemma($lemma),morph($morph)\n";
+                    print DEBUG "osisWordId($osisWordId),wordSpeechType($wordSpeechType),wordHebrew($wordHebrew),wordHebrewN($wordHebrewN),wordHebrewC($wordHebrewC),wordHebrewParsed($wordHebrewParsed),lemma($lemma),morph($morph)\n";
 
                     my $prefixConjunction = "";
                     my $prefixConjunctionName = "";
                     my $prefixPreposition = "";
                     my $prefixArticle = "";
                     my $prefixInterrogative = "";
+                    my $prefixParticle = "";
                     my $wordVerbBinyanim = "";
                     my $wordVerbForm = "";
+                    my $wordVerbFormN = "";
+                    my $wordVerbFormC = "";
                     my $wordVerbPGN = "";
                     my $wordVerbState = "";
                     my $suffixPronominal = "";
@@ -338,7 +346,7 @@ foreach my $book (@books) {
 
                     my @morphSegments = split(/\//, $morph);
                     my @wordHebrewParsedSegments = split(/\//, $wordHebrewParsed);
-                    die("Inconsistent '@morphSegments' vs '@wordHebrewParsedSegments'") if scalar(@morphSegments) ne scalar(@wordHebrewParsedSegments);
+                    die("ERROR($osisWordNum/$osisWordId): Inconsistent '@morphSegments' vs '@wordHebrewParsedSegments'") if scalar(@morphSegments) ne scalar(@wordHebrewParsedSegments);
                     for(my $s = 0; $s < scalar(@morphSegments); $s++) {
                         my $morphS = $morphSegments[$s];
                         my $wordHebrewS = $wordHebrewParsedSegments[$s];
@@ -363,6 +371,8 @@ foreach my $book (@books) {
                                 $prefixArticle = $wordHebrewS;
                             } elsif ($t eq "i") {
                                 $prefixInterrogative = $wordHebrewS;
+                            } elsif ($t eq "r") {
+                                $prefixParticle = $wordHebrewS;
                             }
                         } elsif ($morphS =~ m/^S/) {
                             my $i = 1;
@@ -455,6 +465,8 @@ foreach my $book (@books) {
                         $osisWordId,
                         $wordSpeechType,
                         $wordHebrew,
+                        $wordHebrewN,
+                        $wordHebrewC,
                         $wordHebrewParsed,
                         $lemma,
                         $morph,
@@ -462,6 +474,7 @@ foreach my $book (@books) {
                         $prefixPreposition,
                         $prefixArticle,
                         $prefixInterrogative,
+                        $prefixParticle,
                         $wordVerbBinyanim,
                         $wordVerbForm,
                         $wordVerbPGN,
