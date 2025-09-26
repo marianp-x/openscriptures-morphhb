@@ -3,25 +3,30 @@
 <xsl:transform version="1.0"
         xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-        xmlns:xi="http://www.w3.org/2001/XInclude"
         xmlns:osis="http://www.bibletechnologies.net/2003/OSIS/namespace"
         xmlns:exslt="http://exslt.org/common"
-        xmlns:date="http://exslt.org/dates-and-times"
-        xmlns:func="http://exslt.org/functions"
-        xmlns:mp24="http://my.own.org/namespace"
-        extension-element-prefixes="date func mp24"
-        exclude-result-prefixes="date func mp24">
+        extension-element-prefixes="exslt">
 
 <!--
-  The 'bookId' global parameter is used to control the name of the external XML
-  file that follows the pattern "fixes/{bookId}Fixes.xml".
+  The 'bookId' global parameter is used to provide the OSIS book identifier.
+
+  The default value for this parameter is designed to NOT match any actual OSIS
+  book name, thus implicitly making this parameter mandatory to be defined
+  during the run-time.
+  -->
+
+<xsl:param name="bookId" select="'UNKNOWN'"/>
+
+<!--
+  The 'bookFixesXmlFname' global parameter is used to control the name of the
+  external XML file.
 
   The default value for this parameter is designed to NOT match any .xml file,
   thus implicitly making this parameter mandatory to be defined during the
   run-time.
   -->
 
-<xsl:param name="bookId" select="'UNKNOWN'"/>
+<xsl:param name="bookFixesXmlFname" select="'UNKNOWN'"/>
 
 <!--                               -->
 
@@ -33,8 +38,8 @@
 
 <!--                               -->
 
-<xsl:variable name="fixes_xml" select="document(concat('fixes/', $bookId, 'Fixes.xml'))"/>
-<xsl:variable name="fixes" select="exslt:node-set($fixes_xml)"/>
+<xsl:variable name="bookFixesXml" select="document($bookFixesXmlFname)"/>
+<xsl:variable name="bookFixes" select="exslt:node-set($bookFixesXml)"/>
 
 <!--                               -->
 
@@ -46,7 +51,7 @@
 
 <xsl:template match="osis:osis/osis:osisText/osis:div/osis:chapter/osis:verse//osis:w[not(@type)]">
   <xsl:variable name="wid" select="@id"/>
-  <xsl:variable name="fix" select="$fixes/fixes/fix-word-morph[@osisId = $wid]"/>
+  <xsl:variable name="fix" select="$bookFixes/fixes/fix-word-morph[@osisId = $wid]"/>
   <xsl:choose>
     <xsl:when test="$fix">
       <xsl:element name="w">

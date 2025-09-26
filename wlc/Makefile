@@ -78,7 +78,7 @@ $(FIX_OUTPUT_PATH)/%Fixes.xml : BookFixes.tsv Makefile tsv2xml.pl
 
 $(FIX_OUTPUT_PATH)/%.xml : %.xml $(FIX_OUTPUT_PATH)/%Fixes.xml $(FIX_OUTPUT_PATH) Makefile BookFix.xsl osisCore.2.1.1.xsd
 	/usr/bin/xmllint --nonet --schema "osisCore.2.1.1.xsd" --noout "$*.xml"
-	/usr/bin/xsltproc --nonet --xinclude --stringparam "bookId" "$*" "BookFix.xsl" "$*.xml" >"$(FIX_OUTPUT_PATH)/$*.xml"
+	/usr/bin/xsltproc --nonet --xinclude --stringparam "bookId" "$*" --stringparam "bookFixesXmlFname" "$(FIX_OUTPUT_PATH)/$*Fixes.xml" "BookFix.xsl" "$*.xml" >"$(FIX_OUTPUT_PATH)/$*.xml"
 	/usr/bin/xmllint --nonet --schema "osisCore.2.1.1.xsd" --noout "$(FIX_OUTPUT_PATH)/$*.xml"
 
 .PRECIOUS: $(TSV_OUTPUT_PATH)/%.tsv
