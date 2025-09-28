@@ -94,11 +94,14 @@ $(TSV_OUTPUT_PATH)/%.tsv $(TSV_OUTPUT_PATH)/%.debug : $(TSV_OUTPUT_PATH) $(FIX_O
 
 # Diag
 
-diag: $(TSV_OUTPUT_PATH)/Diag.tsv
+diag: $(TSV_OUTPUT_PATH)/Diag.tsv $(TSV_OUTPUT_PATH)/DiagStructure.tsv
 
 $(TSV_OUTPUT_PATH)/Diag.tsv: Diag.xsl Makefile $(BOOK_XMLs)
 	@echo "Element	@id	@type	@n" >"$@"
 	/usr/bin/xsltproc --nonet "Diag.xsl" $(BOOK_XMLs) >>"$@"
+
+$(TSV_OUTPUT_PATH)/DiagStructure.tsv: DiagStructure.xsl Makefile $(BOOK_XMLs)
+	/usr/bin/xsltproc --nonet "DiagStructure.xsl" $(BOOK_XMLs) | /usr/bin/sort --unique >"$@"
 
 # Testing
 
