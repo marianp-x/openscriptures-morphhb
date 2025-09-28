@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="unqualified"
+    attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+
+  <xs:annotation>
+    <xs:documentation>XSD specification for generated '*Fixes.xml' documents.</xs:documentation>
+  </xs:annotation>
+
+  <xs:element name="fixes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="fix-word-morph" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="morph"  minOccurs="1" maxOccurs="1" type="xs:string" xml:lang="en"/>
+              <xs:element name="note"   minOccurs="1" maxOccurs="1" type="xs:string" xml:lang="en he"/>
+            </xs:sequence>
+            <xs:attribute name="osisBookId" type="OsisBookIdType" use="required"/>
+            <xs:attribute name="osisId" type="OsisIdType" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="OsisIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(((\p{L}|\p{N}|_)+)((\.(\p{L}|\p{N}|_)+)*)?:)?((\p{L}|\p{N}|_|(\\[^\s]))+)((\.(\p{L}|\p{N}|_|(\\[^\s]))+)*)?(!((\p{L}|\p{N}|_|(\\[^\s]))+)((\.(\p{L}|\p{N}|_|(\\[^\s]))+)*)?)?"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="OsisBookIdType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Gen"/>
+      <xs:enumeration value="Exod"/>
+      <xs:enumeration value="Lev"/>
+      <xs:enumeration value="Num"/>
+      <xs:enumeration value="Deut"/>
+      <xs:enumeration value="Josh"/>
+      <xs:enumeration value="Judg"/>
+      <xs:enumeration value="Ruth"/>
+      <xs:enumeration value="1Sam"/>
+      <xs:enumeration value="2Sam"/>
+      <xs:enumeration value="1Kgs"/>
+      <xs:enumeration value="2Kgs"/>
+      <xs:enumeration value="1Chr"/>
+      <xs:enumeration value="2Chr"/>
+      <xs:enumeration value="Ezra"/>
+      <xs:enumeration value="Neh"/>
+      <xs:enumeration value="Esth"/>
+      <xs:enumeration value="Job"/>
+      <xs:enumeration value="Ps"/>
+      <xs:enumeration value="Prov"/>
+      <xs:enumeration value="Eccl"/>
+      <xs:enumeration value="Song"/>
+      <xs:enumeration value="Isa"/>
+      <xs:enumeration value="Jer"/>
+      <xs:enumeration value="Lam"/>
+      <xs:enumeration value="Ezek"/>
+      <xs:enumeration value="Dan"/>
+      <xs:enumeration value="Hos"/>
+      <xs:enumeration value="Joel"/>
+      <xs:enumeration value="Amos"/>
+      <xs:enumeration value="Obad"/>
+      <xs:enumeration value="Jonah"/>
+      <xs:enumeration value="Mic"/>
+      <xs:enumeration value="Nah"/>
+      <xs:enumeration value="Hab"/>
+      <xs:enumeration value="Zeph"/>
+      <xs:enumeration value="Hag"/>
+      <xs:enumeration value="Zech"/>
+      <xs:enumeration value="Mal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+
+<!--
+  vim:shiftwidth=2:tabstop=2
+  -->

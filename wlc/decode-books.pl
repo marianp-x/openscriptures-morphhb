@@ -313,8 +313,9 @@ foreach my $book (@books) {
                 my $osisWordNum = $osisVerseId . "." . $tokenNum;
                 my @osisWordNumParsed = parseOsisWordNum($osisWordNum);
                 print DEBUG "osisWordNum($osisWordNum),@osisWordNumParsed,tokenNum($tokenNum),tokenName($tokenName)";
+                my $osisWordId = "";
                 if ($tokenName eq "w") {
-                    my $osisWordId = $token->getAttribute("id");
+                    $osisWordId = $token->getAttribute("id");
                     my $lemma = $token->getAttribute("lemma");
                     my $morph = $token->getAttribute("morph");
                     my $wordLang = substr($morph, 0, 1);
@@ -491,6 +492,7 @@ foreach my $book (@books) {
                     print OUTPUT
                         $osisWordNum,
                         "SEG",
+                        $osisWordId,
                         $segType,
                         $segHebrew;
                 } elsif ($tokenName eq "note") {
@@ -503,6 +505,7 @@ foreach my $book (@books) {
                     print OUTPUT
                         $osisWordNum,
                         "NOTE",
+                        $osisWordId,
                         $noteN,
                         $noteType,
                         $note;

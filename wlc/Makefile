@@ -69,10 +69,13 @@ $(FIX_OUTPUT_PATH):
 $(TSV_OUTPUT_PATH):
 	mkdir -p "$@"
 
+fixes: $(BOOK_FIXED_XMLs)
+
 .PRECIOUS: $(FIX_OUTPUT_PATH)/%Fixes.xml
 
-$(FIX_OUTPUT_PATH)/%Fixes.xml : BookFixes.tsv Makefile tsv2xml.pl
+$(FIX_OUTPUT_PATH)/%Fixes.xml : BookFixes.tsv $(FIX_OUTPUT_PATH) Makefile tsv2xml.pl BookFixes.xsd
 	perl -ane 'my $$bookId = $$F[0]; print if $$bookId =~ m/^$*$$/' <"$<" | tsv2xml.pl >"$@"
+	/usr/bin/xmllint --nonet --schema "BookFixes.xsd" --noout "$@"
 
 .PRECIOUS: $(FIX_OUTPUT_PATH)/%.xml
 
