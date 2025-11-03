@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="unqualified"
+    attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+
+  <xs:annotation>
+    <xs:documentation>XSD specification for generated normalized XML documents.</xs:documentation>
+  </xs:annotation>
+
+  <!-- Elements -->
+
+  <xs:element name="book">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="token" type="TokenType" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="osisBookId" type="OsisBookIdType" use="required"/>
+      <xs:attribute name="bookPathJewish" type="xs:string" use="required"/>
+      <xs:attribute name="bookPathChristian" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="TokenType">
+    <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <!-- TODO: Enforce the requirement for specific sequencing of these 3 prefixes: -->
+      <xs:element name="conjunction" type="WordPartType"/>
+      <xs:element name="preposition" type="WordPartPrepositionType"/>
+      <xs:element name="particle" type="WordPartParticleType"/>
+      <!-- TODO: Enforce the requirement that only one of these elements can be allowed: -->
+      <xs:element name="noun" type="WordPartNounType"/>
+      <xs:element name="pronoun" type="WordPartPronounType"/>
+      <xs:element name="adjective" type="WordPartAdjectiveType"/>
+      <xs:element name="adverb" type="WordPartType"/>
+      <xs:element name="verb" type="WordPartVerbType">
+      </xs:element>
+      <!-- TODO: Enforce the requirement for specific sequencing of this 1 suffix: -->
+      <xs:element name="suffix" type="WordPartSuffixType"/>
+      <xs:element name="punctuation" type="PunctuationType"/>
+    </xs:choice>
+    <xs:attribute name="versePathJewish" type="VersePathType" use="required"/>
+    <xs:attribute name="versePathChristian" type="VersePathType" use="required"/>
+    <xs:attribute ref="lang" use="required"/>
+    <xs:attribute name="osisWordId" type="OsisWordIdType" use="optional"/>
+    <xs:attribute name="lemma" type="WordLemmaType" use="optional"/>
+    <xs:attribute name="morph" type="WordMorphType" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="WordPartType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="WordPartVerbType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
+        <xs:attribute name="stem" type="StemType" use="required"/>
+        <xs:attribute name="type" type="VerbType" use="required"/>
+        <xs:attribute name="person" type="GrammaticalPersonType" use="optional"/>       <!-- Not available for 'type' = "participle *" or "infinitive" -->
+        <xs:attribute name="gender" type="GrammaticalVerbGenderType" use="optional"/>   <!-- Not available for 'type' = "infinitive" -->
+        <xs:attribute name="number" type="GrammaticalNumberType" use="optional"/>       <!-- Not available for 'type' = "infinitive" -->
+        <xs:attribute name="state" type="GrammaticalStateType" use="optional"/>         <!-- Not available for 'type' != "participle *" or "infinitive" -->
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="WordPartNounType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
+        <xs:attribute name="type" type="NounType" use="optional"/>                      <!-- TODO: Optional ONLY to support the "MENE, MENE, TEKEL, UPHARSIN." phrase in Daniel 5 -->
+        <xs:attribute name="gender" type="GrammaticalNounGenderType" use="optional"/>   <!-- Not available when 'type' = "proper" -->
+        <xs:attribute name="number" type="GrammaticalNumberType" use="optional"/>       <!-- Not available when 'type' = "proper" -->
+        <xs:attribute name="state" type="GrammaticalStateType" use="optional"/>         <!-- Not available when 'type' = "proper" -->
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="WordPartSuffixType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
+        <xs:attribute name="type" type="SuffixType" use="required"/>
+        <xs:attribute name="person" type="GrammaticalPersonType" use="optional"/>       <!-- TODO: Not available for 'type' = "directional he" or "paragogic he" or "paragogic nun" -->
+        <xs:attribute name="gender" type="GrammaticalVerbGenderType" use="optional"/>   <!-- TODO: Not available for 'type' = "directional he" or "paragogic he" or "paragogic nun" -->
+        <xs:attribute name="number" type="GrammaticalNumberType" use="optional"/>       <!-- TODO: Not available for 'type' = "directional he" or "paragogic he" or "paragogic nun" -->
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="WordPartPronounType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
+        <xs:attribute name="type" type="PronounType" use="required"/>
+        <xs:attribute name="person" type="GrammaticalPersonType" use="optional"/>       <!-- TODO: Not available for 'type' = "demonstrative" -->
+        <xs:attribute name="gender" type="GrammaticalPronounGenderType" use="optional"/><!-- TODO: Not available for 'type' = "indefinite", "interrogative", "relative" -->
+        <xs:attribute name="number" type="GrammaticalNumberType" use="optional"/>       <!-- TODO: Not available for 'type' = "indefinite", "interrogative", "relative" -->
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="WordPartAdjectiveType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
+        <xs:attribute name="type" type="AdjectiveType" use="required"/>
+        <xs:attribute name="gender" type="GrammaticalNounGenderType" use="required"/>
+        <xs:attribute name="number" type="GrammaticalNumberType" use="required"/>
+        <xs:attribute name="state" type="GrammaticalStateType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="WordPartPrepositionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
+        <xs:attribute name="type" type="PrepositionType" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="WordPartParticleType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lemma" type="WordLemmaType" use="optional"/>
+        <xs:attribute name="morph" type="WordPartMorphType" use="optional"/>
+        <xs:attribute name="type" type="ParticleType" use="optional"/>        <!-- Not available for Aramaic particle with no type defined (morph defined as the "AT") -->
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="PunctuationType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="WordPartPunctuationType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- Types -->
+
+  <xs:simpleType name="OsisBookIdType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Gen"/>
+      <xs:enumeration value="Exod"/>
+      <xs:enumeration value="Lev"/>
+      <xs:enumeration value="Num"/>
+      <xs:enumeration value="Deut"/>
+      <xs:enumeration value="Josh"/>
+      <xs:enumeration value="Judg"/>
+      <xs:enumeration value="Ruth"/>
+      <xs:enumeration value="1Sam"/>
+      <xs:enumeration value="2Sam"/>
+      <xs:enumeration value="1Kgs"/>
+      <xs:enumeration value="2Kgs"/>
+      <xs:enumeration value="1Chr"/>
+      <xs:enumeration value="2Chr"/>
+      <xs:enumeration value="Ezra"/>
+      <xs:enumeration value="Neh"/>
+      <xs:enumeration value="Esth"/>
+      <xs:enumeration value="Job"/>
+      <xs:enumeration value="Ps"/>
+      <xs:enumeration value="Prov"/>
+      <xs:enumeration value="Eccl"/>
+      <xs:enumeration value="Song"/>
+      <xs:enumeration value="Isa"/>
+      <xs:enumeration value="Jer"/>
+      <xs:enumeration value="Lam"/>
+      <xs:enumeration value="Ezek"/>
+      <xs:enumeration value="Dan"/>
+      <xs:enumeration value="Hos"/>
+      <xs:enumeration value="Joel"/>
+      <xs:enumeration value="Amos"/>
+      <xs:enumeration value="Obad"/>
+      <xs:enumeration value="Jonah"/>
+      <xs:enumeration value="Mic"/>
+      <xs:enumeration value="Nah"/>
+      <xs:enumeration value="Hab"/>
+      <xs:enumeration value="Zeph"/>
+      <xs:enumeration value="Hag"/>
+      <xs:enumeration value="Zech"/>
+      <xs:enumeration value="Mal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="BookNameChristian">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Genesis"/>
+      <xs:enumeration value="Exodus"/>
+      <xs:enumeration value="Leviticus"/>
+      <xs:enumeration value="Numbers"/>
+      <xs:enumeration value="Deuteronomy"/>
+      <xs:enumeration value="Joshua"/>
+      <xs:enumeration value="Judges"/>
+      <xs:enumeration value="Ruth"/>
+      <xs:enumeration value="1 Samuel"/>
+      <xs:enumeration value="2 Samuel"/>
+      <xs:enumeration value="1 Kings"/>
+      <xs:enumeration value="1 Kings"/>
+      <xs:enumeration value="1 Chronicles"/>
+      <xs:enumeration value="2 Chronicles"/>
+      <xs:enumeration value="Ezra"/>
+      <xs:enumeration value="Nehemiah"/>
+      <xs:enumeration value="Esther"/>
+      <xs:enumeration value="Job"/>
+      <xs:enumeration value="Psalms"/>
+      <xs:enumeration value="Proverbs"/>
+      <xs:enumeration value="Ecclesiastes"/>
+      <xs:enumeration value="Song of Songs"/>
+      <xs:enumeration value="Isaiah"/>
+      <xs:enumeration value="Jeremiah"/>
+      <xs:enumeration value="Lamentations"/>
+      <xs:enumeration value="Ezekiel"/>
+      <xs:enumeration value="Daniel"/>
+      <xs:enumeration value="Hosea"/>
+      <xs:enumeration value="Joel"/>
+      <xs:enumeration value="Amos"/>
+      <xs:enumeration value="Obadiah"/>
+      <xs:enumeration value="Jonah"/>
+      <xs:enumeration value="Micah"/>
+      <xs:enumeration value="Nahum"/>
+      <xs:enumeration value="Habakkuk"/>
+      <xs:enumeration value="Zephaniah"/>
+      <xs:enumeration value="Haggai"/>
+      <xs:enumeration value="Zechariah"/>
+      <xs:enumeration value="Malachi"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:attribute name="lang">
+    <xs:simpleType>
+      <xs:restriction base="xs:language">
+        <xs:enumeration value="he"/>
+        <xs:enumeration value="arc"/>
+        <xs:enumeration value="el"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:simpleType name="OsisWordIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{2}[a-zA-Z0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VersePathType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d+/\d+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WordMorphType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[HA][A-Z][a-zA-Z123|]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WordLemmaType">
+    <xs:restriction base="xs:string">     <!-- TODO: Improve specificity -->
+      <xs:pattern value="[bdicklms\|0-9 \+a-f]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!--
+  <xs:simpleType name="WordPartNumType">
+    <xs:restriction base="xs:positiveInteger">
+    </xs:restriction>
+  </xs:simpleType>
+    -->
+
+  <xs:simpleType name="WordPartMorphType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[ACDNPRSTVNPHOMKQLDa-z123]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="StemType">
+    <xs:restriction base="xs:string">
+      <!-- Hebrew stems -->
+      <xs:enumeration value="qal"/>
+      <xs:enumeration value="niphal"/>
+      <xs:enumeration value="piel"/>
+      <xs:enumeration value="pual"/>
+      <xs:enumeration value="hiphil"/>
+      <xs:enumeration value="hophal"/>
+      <xs:enumeration value="hithpael"/>
+      <xs:enumeration value="polel"/>
+      <xs:enumeration value="polal"/>
+      <xs:enumeration value="hithpolel"/>
+      <xs:enumeration value="poel"/>
+      <xs:enumeration value="poal"/>
+      <xs:enumeration value="palel"/>
+      <xs:enumeration value="pulal"/>
+      <xs:enumeration value="qal passive"/>
+      <xs:enumeration value="pilpel"/>
+      <xs:enumeration value="pilpel"/>
+      <xs:enumeration value="polpal"/>
+      <xs:enumeration value="hithpalpel"/>
+      <xs:enumeration value="nithpael"/>
+      <xs:enumeration value="pealal"/>
+      <xs:enumeration value="pilel"/>
+      <xs:enumeration value="hothpaal"/>
+      <xs:enumeration value="tiphil"/>
+      <xs:enumeration value="hishtaphel"/>
+      <xs:enumeration value="nithpalel"/>
+      <xs:enumeration value="nithpoel"/>
+      <xs:enumeration value="hithpoel"/>
+      <!-- Aramaic stems -->
+      <xs:enumeration value="peal"/>
+      <xs:enumeration value="peil"/>
+      <xs:enumeration value="hithpeel"/>
+      <xs:enumeration value="pael"/>
+      <xs:enumeration value="ithpaal"/>
+      <xs:enumeration value="hithpaal"/>
+      <xs:enumeration value="aphel"/>
+      <xs:enumeration value="haphel"/>
+      <xs:enumeration value="saphel"/>
+      <xs:enumeration value="shaphel"/>
+      <xs:enumeration value="hophal"/>
+      <xs:enumeration value="ithpeel"/>
+      <xs:enumeration value="hishtaphel"/>
+      <xs:enumeration value="ishtaphel"/>
+      <xs:enumeration value="hithaphel"/>
+      <xs:enumeration value="polel"/>
+      <xs:enumeration value="ithpoel"/>
+      <xs:enumeration value="hithpolel"/>
+      <xs:enumeration value="hithpalpel"/>
+      <xs:enumeration value="hephal"/>
+      <xs:enumeration value="tiphel"/>
+      <xs:enumeration value="poel"/>
+      <xs:enumeration value="palpel"/>
+      <xs:enumeration value="ithpalpel"/>
+      <xs:enumeration value="ithpolel"/>
+      <xs:enumeration value="ittaphal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VerbType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="perfect"/>
+      <xs:enumeration value="sequential perfect"/>
+      <xs:enumeration value="imperfect"/>
+      <xs:enumeration value="sequential imperfect"/>
+      <xs:enumeration value="cohortative"/>
+      <xs:enumeration value="jussive"/>
+      <xs:enumeration value="imperative"/>
+      <xs:enumeration value="participle active"/>
+      <xs:enumeration value="participle passive"/>
+      <xs:enumeration value="infinitive absolute"/>
+      <xs:enumeration value="infinitive construct"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="NounType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="common"/>
+      <xs:enumeration value="proper"/>
+      <xs:enumeration value="gentilic"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SuffixType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="directional he"/>
+      <xs:enumeration value="paragogic he"/>
+      <xs:enumeration value="paragogic nun"/>
+      <xs:enumeration value="pronominal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PronounType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="demonstrative"/>
+      <xs:enumeration value="indefinite"/>
+      <xs:enumeration value="interrogative"/>
+      <xs:enumeration value="personal"/>
+      <xs:enumeration value="relative"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AdjectiveType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="adjective"/>
+      <xs:enumeration value="cardinal number"/>
+      <xs:enumeration value="gentilic"/>
+      <xs:enumeration value="ordinal number"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PrepositionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="definite article"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ParticleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="affirmation"/>
+      <xs:enumeration value="definite article"/>
+      <xs:enumeration value="exhortation"/>
+      <xs:enumeration value="interrogative"/>
+      <xs:enumeration value="interjection"/>
+      <xs:enumeration value="demonstrative"/>
+      <xs:enumeration value="negative"/>
+      <xs:enumeration value="direct object marker"/>
+      <xs:enumeration value="relative"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WordPartPunctuationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="sof pasuq"/>
+      <xs:enumeration value="maqqef"/>
+      <xs:enumeration value="paseq"/>
+      <xs:enumeration value="samekh"/>
+      <xs:enumeration value="pe"/>
+      <xs:enumeration value="reversed nun"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalPersonType">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:enumeration value="1">
+        <xs:annotation><xs:documentation>First person.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation><xs:documentation>Second person.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation><xs:documentation>Third person.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalVerbGenderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="masculine"/>
+      <xs:enumeration value="feminine"/>
+      <xs:enumeration value="common"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalNounGenderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="masculine"/>
+      <xs:enumeration value="feminine"/>
+      <xs:enumeration value="both"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalPronounGenderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="masculine"/>
+      <xs:enumeration value="feminine"/>
+      <xs:enumeration value="common"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalNumberType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="singular"/>
+      <xs:enumeration value="dual"/>
+      <xs:enumeration value="plural"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalStateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="absolute"/>
+      <xs:enumeration value="construct"/>
+      <xs:enumeration value="determined"/>        <!-- TODO: Applicable only for Aramaic language -->
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+
+<!--
+  vim:shiftwidth=2:tabstop=2
+  -->

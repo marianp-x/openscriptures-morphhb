@@ -81,7 +81,7 @@ my %osisBookIdToSblBookName = (
     "Mal" => "Malachi",
 );
 
-my %osisVerbStepToHebrewBinyanim = (
+my %osisVerbStempToHebrewBinyanim = (
     "q" => "qal",
     "N" => "niphal",
     "p" => "piel",
@@ -111,7 +111,7 @@ my %osisVerbStepToHebrewBinyanim = (
     "z" => "hithpoel",
 );
 
-my %osisVerbStepToAramaicBinyanim = (
+my %osisVerbStempToAramaicBinyanim = (
     "q" => "peal",
     "Q" => "peil",
     "u" => "hithpeel",
@@ -142,9 +142,9 @@ my %osisVerbStepToAramaicBinyanim = (
 
 my %osisVerbConjugationToHebrewForm = (
     "p" => "perfect",
-    "q" => "ve-perfect",           # ve-perfect
+    "q" => "sequential perfect",           # ve-perfect
     "i" => "imperfect",
-    "w" => "va-imperfect",         # va-imperfect
+    "w" => "sequential imperfect",         # va-imperfect
     "h" => "cohortative",
     "j" => "jussive",
     "v" => "imperative",
@@ -317,11 +317,14 @@ foreach my $book (@books) {
                 if ($tokenName eq "w") {
                     $osisWordId = $token->getAttribute("id");
                     my $lemma = $token->getAttribute("lemma");
-                    my $morph = $token->getAttribute("morph");
-                    my $wordLang = substr($morph, 0, 1);
-                    $morph = substr($morph, 1);
+                    $lemma = $lemma =~ s#/#|#gr;
+                    my $morphOrig = $token->getAttribute("morph");
+                    $morphOrig = $morphOrig =~ s#/#|#gr;
+                    my $wordLang = substr($morphOrig, 0, 1);
+                    my $morph = substr($morphOrig, 1);
                     my $wordHebrewParsed = $token->textContent;
-                    my $wordHebrew = $wordHebrewParsed =~ s#/##gr;
+                    $wordHebrewParsed = $wordHebrewParsed =~ s#/#׀#gr;
+                    my $wordHebrew = $wordHebrewParsed =~ s#׀##gr;
                     my $wordHebrewN = stripTaamim($wordHebrew);
                     my $wordHebrewC = stripPointing($wordHebrew);
                     my $wordSpeechType = "";
@@ -337,16 +340,16 @@ foreach my $book (@books) {
                     my $wordVerbForm = "";
                     my $wordVerbFormN = "";
                     my $wordVerbFormC = "";
-                    my $wordVerbPGN = "";
+                    my $wordVerbPGN = "***";
                     my $wordVerbState = "";
                     my $suffixPronominal = "";
-                    my $suffixPronominalPGN = "";
+                    my $suffixPronominalPGN = "***";
                     my $suffixDirectionalHe = "";
                     my $suffixParagogicHe = "";
                     my $suffixParagogicNun = "";
 
-                    my @morphSegments = split(/\//, $morph);
-                    my @wordHebrewParsedSegments = split(/\//, $wordHebrewParsed);
+                    my @morphSegments = split(/\|/, $morph);
+                    my @wordHebrewParsedSegments = split(/׀/, $wordHebrewParsed);
                     die("ERROR($osisWordNum/$osisWordId): Inconsistent '@morphSegments' vs '@wordHebrewParsedSegments'") if scalar(@morphSegments) ne scalar(@wordHebrewParsedSegments);
                     for(my $s = 0; $s < scalar(@morphSegments); $s++) {
                         my $morphS = $morphSegments[$s];
@@ -381,8 +384,17 @@ foreach my $book (@books) {
                             if ($t eq "p") {
                                 $suffixPronominal = $wordHebrewS;
                                 my $p = substr($morphS, $i++, 1);
+                                if ($p eq "c") {
+                                    $p = "*"
+                                }
                                 my $g = substr($morphS, $i++, 1);
+                                if ($g eq "c") {
+                                    $g = "*"
+                                }
                                 my $n = substr($morphS, $i++, 1);
+                                if ($n eq "c") {
+                                    $n = "*"
+                                }
                                 $suffixPronominalPGN = "$p$g$n";
                             } elsif ($t eq "d") {
                                 $suffixDirectionalHe = $wordHebrewS;
@@ -396,9 +408,9 @@ foreach my $book (@books) {
                             my $i = 1;
                             my $b = substr($morphS, $i++, 1);
                             if ($wordLang eq "H") {
-                                $wordVerbBinyanim = $osisVerbStepToHebrewBinyanim{$b};
+                                $wordVerbBinyanim = $osisVerbStempToHebrewBinyanim{$b};
                             } elsif ($wordLang eq "A") {
-                                $wordVerbBinyanim = $osisVerbStepToAramaicBinyanim{$b};
+                                $wordVerbBinyanim = $osisVerbStempToAramaicBinyanim{$b};
                             } else {
                                 print ERROR "ERROR($osisWordNum/$osisWordId): Unknown wordLang($wordLang)\n";
                             }
@@ -411,26 +423,30 @@ foreach my $book (@books) {
                             if ($prefixConjunctionName eq "UNKNOWN") {
                                 print ERROR "ERROR($osisWordNum/$osisWordId): Unknown prefixConjunction($prefixConjunction)\n";
                             }
-                            if ($prefixConjunctionName ne "") {
-                                my $wordVerbFormCore = $wordVerbForm =~ s/^(ve-|va-)//gr;
-                                my $wordVerbFormConjuction = "${prefixConjunctionName}-${wordVerbFormCore}";
-                                if ($f eq "q" and $wordVerbFormConjuction ne "ve-perfect") {
-                                    print ERROR "WARNING($osisWordNum/$osisWordId): The wordVerbForm($wordVerbForm) does not match wordVerbFormConjuction($wordVerbFormConjuction) -- keeping the wordVerbForm($wordVerbForm)\n";
-                                } elsif ($f eq "w" and $wordVerbFormConjuction ne "va-imperfect") {
-                                    print ERROR "WARNING($osisWordNum/$osisWordId): The wordVerbForm($wordVerbForm) does not match wordVerbFormConjuction($wordVerbFormConjuction) -- keeping the wordVerbForm($wordVerbForm)\n";
-                                } else {
-                                    $wordVerbForm = $wordVerbFormConjuction;
-                                }
+                            if ($prefixConjunction ne "" && $wordVerbForm !~ /^sequential/) {
+                                $wordVerbForm = "conjunction-" . $wordVerbForm
+#                               my $wordVerbFormCore = $wordVerbForm =~ s/^(ve-|va-)//gr;
+#                               my $wordVerbFormConjuction = "${prefixConjunctionName}-${wordVerbFormCore}";
+#                               if ($f eq "q" and $wordVerbFormConjuction ne "ve-perfect") {
+#                                   print ERROR "WARNING($osisWordNum/$osisWordId): The wordVerbForm($wordVerbForm) does not match wordVerbFormConjuction($wordVerbFormConjuction) -- keeping the wordVerbForm($wordVerbForm)\n";
+#                               } elsif ($f eq "w" and $wordVerbFormConjuction ne "va-imperfect") {
+#                                   print ERROR "WARNING($osisWordNum/$osisWordId): The wordVerbForm($wordVerbForm) does not match wordVerbFormConjuction($wordVerbFormConjuction) -- keeping the wordVerbForm($wordVerbForm)\n";
+#                               } else {
+#                                   $wordVerbForm = $wordVerbFormConjuction;
+#                               }
                             }
                             print DEBUG "osisWordId($osisWordId),wordSpeechType($wordSpeechType),morphS($morphS),i($i),f($f),wordVerbForm($wordVerbForm)\n";
 
                             my $p = "";
                             if ($f eq "r" || $f eq "s") {
-                                $p = "3";
+                                $p = "*";
                             } elsif ($f eq "a" || $f eq "c") {
                                 $p = "*";
                             } else {
                                 $p = substr($morphS, $i++, 1);
+                                if ($p eq "c") {
+                                    $p = "*"
+                                }
                             }
                             print DEBUG "osisWordId($osisWordId),wordSpeechType($wordSpeechType),morphS($morphS),i($i),p($p)\n";
 
@@ -439,6 +455,9 @@ foreach my $book (@books) {
                                 $g = "*";
                             } else {
                                 $g = substr($morphS, $i++, 1);
+                                if ($g eq "c") {
+                                    $g = "*"
+                                }
                             }
                             print DEBUG "osisWordId($osisWordId),wordSpeechType($wordSpeechType),morphS($morphS),i($i),g($g)\n";
 
@@ -447,11 +466,19 @@ foreach my $book (@books) {
                                 $n = "*";
                             } else {
                                 $n = substr($morphS, $i++, 1);
+                                if ($n eq "c") {
+                                    $n = "*"
+                                }
                             }
                             print DEBUG "osisWordId($osisWordId),wordSpeechType($wordSpeechType),morphS($morphS),i($i),n($n)\n";
 
                             $wordVerbPGN = "$p$g$n";
                             print DEBUG "osisWordId($osisWordId),wordSpeechType($wordSpeechType),morphS($morphS),wordVerbPGN($wordVerbPGN)\n";
+                            if ($f eq "a" || $f eq "c") {
+                                my $s = substr($morphS, $i - 1, 1);
+                                $wordVerbState = $osisStateToHebrewState{$s};
+                                print DEBUG "osisWordId($osisWordId),wordSpeechType($wordSpeechType),morphS($morphS),i($i),s($s),wordVerbState($wordVerbState)\n";
+                            }
                             if ($f =~ m/[rs]/) {
                                 my $s = substr($morphS, $i++, 1);
                                 $wordVerbState = $osisStateToHebrewState{$s};
@@ -470,7 +497,7 @@ foreach my $book (@books) {
                         $wordHebrewC,
                         $wordHebrewParsed,
                         $lemma,
-                        $morph,
+                        $morphOrig,
                         $prefixConjunction,
                         $prefixPreposition,
                         $prefixArticle,
@@ -494,7 +521,26 @@ foreach my $book (@books) {
                         "SEG",
                         $osisWordId,
                         $segType,
-                        $segHebrew;
+                        $segHebrew,
+                        $segHebrew,
+                        $segHebrew,
+                        $segHebrew,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "***",
+                        "",
+                        "",
+                        "***",
+                        "",
+                        "",
+                        "";
                 } elsif ($tokenName eq "note") {
                     my $noteN = "";
                     $noteN = $token->getAttribute("n") if defined($token->getAttribute("n"));

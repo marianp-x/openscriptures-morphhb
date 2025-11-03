@@ -14,11 +14,13 @@
   <xs:element name="fixes">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="fix-word-morph" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="fix-word" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="morph"  minOccurs="1" maxOccurs="1" type="xs:string" xml:lang="en"/>
-              <xs:element name="note"   minOccurs="1" maxOccurs="1" type="xs:string" xml:lang="en he"/>
+              <xs:element name="morph"  minOccurs="0" maxOccurs="1" type="xs:string" xml:lang="en"/>
+              <xs:element name="morph-note"   minOccurs="0" maxOccurs="1" type="xs:string" xml:lang="en he"/>
+              <xs:element name="lemma"  minOccurs="0" maxOccurs="1" type="xs:string" xml:lang="en"/>
+              <xs:element name="lemma-note"   minOccurs="0" maxOccurs="1" type="xs:string" xml:lang="en he"/>
             </xs:sequence>
             <xs:attribute name="osisBookId" type="OsisBookIdType" use="required"/>
             <xs:attribute name="osisId" type="OsisIdType" use="required"/>

@@ -7,3 +7,9 @@ tsv/*.debug
 tsv/*.schema
 tsv/*.tsv
 tsv/*.log
+nrm/*.xml
+tst/*.xml
+tst/*.tsv
+wrd/*.tsv
+wrd/*.schema
+wrd/*.diff

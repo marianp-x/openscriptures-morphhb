@@ -4,18 +4,11 @@
         xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:osis="http://www.bibletechnologies.net/2003/OSIS/namespace"
-        xmlns:exslt="http://exslt.org/common"
-        extension-element-prefixes="exslt">
-
-<!--
-  The 'bookId' global parameter is used to provide the OSIS book identifier.
-
-  The default value for this parameter is designed to NOT match any actual OSIS
-  book name, thus implicitly making this parameter mandatory to be defined
-  during the run-time.
-  -->
-
-<xsl:param name="bookId" select="'UNKNOWN'"/>
+        xmlns:common="http://exslt.org/common"
+        xmlns:func="http://exslt.org/functions"
+        xmlns:mp="http://my.own.org/namespace"
+        extension-element-prefixes="common func mp"
+        exclude-result-prefixes="common func mp">
 
 <!--
   The 'bookFixesXmlFname' global parameter is used to control the name of the
@@ -26,7 +19,7 @@
   run-time.
   -->
 
-<xsl:param name="bookFixesXmlFname" select="'UNKNOWN'"/>
+<xsl:param name="bookFixXmlFname" select="'UNKNOWN'"/>
 
 <!--                               -->
 
@@ -38,8 +31,12 @@
 
 <!--                               -->
 
-<xsl:variable name="bookFixesXml" select="document($bookFixesXmlFname)"/>
-<xsl:variable name="bookFixes" select="exslt:node-set($bookFixesXml)"/>
+<xsl:variable name="osisBookId" select="osis:osis/osis:osisText/osis:div[@type = 'book' and position() = 1]/@osisID"/>
+
+<!--                               -->
+
+<xsl:variable name="bookFixesXml" select="document($bookFixXmlFname)"/>
+<xsl:variable name="bookFixes" select="common:node-set($bookFixesXml)"/>
 
 <!--                               -->
 
@@ -51,36 +48,48 @@
 
 <xsl:template match="osis:osis/osis:osisText/osis:div/osis:chapter/osis:verse//osis:w[not(@type)]">
   <xsl:variable name="wid" select="@id"/>
-  <xsl:variable name="fix" select="$bookFixes/fixes/fix-word-morph[@osisId = $wid]"/>
+  <xsl:variable name="fix" select="$bookFixes/fixes/fix-word[@osisId = $wid]"/>
   <xsl:choose>
     <xsl:when test="$fix">
       <xsl:element name="w">
-        <xsl:if test="count(@type) > 0">
-          <xsl:message terminate="no">
-            <xsl:text>ERROR: Unable to update 'type' for '</xsl:text>
-            <xsl:value-of select="@id"/>
-            <xsl:text>'.</xsl:text>
-          </xsl:message>
-        </xsl:if>
         <xsl:attribute name="type">
-          <xsl:value-of select="'x-err-morph'"/>
+          <xsl:value-of select="'x-err'"/>
         </xsl:attribute>
         <xsl:apply-templates select="@lemma|@n|@morph|@id"/>
         <xsl:value-of select="text()"/>
       </xsl:element>
       <xsl:element name="note">
         <xsl:attribute name="type">
-          <xsl:value-of select="'x-fix-morph'"/>
+          <xsl:value-of select="'x-fix'"/>
         </xsl:attribute>
         <xsl:element name="catchWord">
           <xsl:value-of select="text()"/>
         </xsl:element>
-        <xsl:value-of select="$fix/note/text()"/>
+        <xsl:variable name="noteTextParts" select="$fix/*[contains(name(), 'note')]/text()"/>
+        <xsl:value-of select="mp:string_join(' ', $noteTextParts)"/>
         <xsl:element name="w">
-          <xsl:apply-templates select="@lemma|@n|@id"/>
-          <xsl:attribute name="morph">
-            <xsl:value-of select="$fix/morph/text()"/>
-          </xsl:attribute>
+          <xsl:choose>
+            <xsl:when test="normalize-space($fix/lemma) != ''">
+              <xsl:attribute name="lemma">
+                <xsl:value-of select="$fix/lemma"/>
+              </xsl:attribute>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="@lemma"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:apply-templates select="@n"/>
+          <xsl:choose>
+            <xsl:when test="normalize-space($fix/morph) != ''">
+              <xsl:attribute name="morph">
+                <xsl:value-of select="$fix/morph"/>
+              </xsl:attribute>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="@morph"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:apply-templates select="@id"/>
           <xsl:value-of select="text()"/>
         </xsl:element>
       </xsl:element>
@@ -104,6 +113,22 @@
     <xsl:apply-templates/>
   </xsl:copy>
 </xsl:template>
+
+<!--                               -->
+
+<func:function name="mp:string_join">
+  <xsl:param name="delimiter"/>
+  <xsl:param name="strings"/>
+
+  <func:result>
+    <xsl:for-each select="$strings">
+      <xsl:if test="position() > 1">
+        <xsl:value-of select="$delimiter"/>
+      </xsl:if>
+      <xsl:value-of select="."/>
+    </xsl:for-each>
+  </func:result>
+</func:function>
 
 <!--                               -->
 
