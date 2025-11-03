@@ -7819,7 +7819,7 @@
           <w lemma="c/7971" morph="HC/Vqw3ms" id="13UMb">וַ/יִּשְׁלַ֣ח</w>
           <w lemma="853" morph="HTo" id="13sBg">אֶת</w><seg type="x-maqqef">־</seg><w lemma="1913 a" morph="HNp" id="13mtF">הֲדֽוֹרָם</w><seg type="x-maqqef">־</seg><w lemma="1121 a" morph="HNcmsc/Sp3ms" id="13saW">בְּנ֣/וֹ</w>
           <w lemma="413" morph="HR" id="13s5y">אֶל</w><seg type="x-maqqef">־</seg><w lemma="d/4428" morph="HTd/Ncmsa" id="13Ccr">הַ/מֶּֽלֶךְ</w><seg type="x-maqqef">־</seg><w lemma="1732" n="1.1.1.1" morph="HNp" id="13Q6y">דָּ֠וִיד</w>
-          <w type="x-ketiv" lemma="l/7592" morph="HR/Vqc" id="13F3m">ל/שאול</w><note type="variant"><catchWord>ל/שאול</catchWord><rdg type="x-qere"><w lemma="l/7592" morph="HR/Vqc" id="13Qnx">לִ/שְׁאָל</w></rdg></note><seg type="x-maqqef">־</seg><w lemma="l" morph="HR/Sp3ms" id="134CQ">ל֨/וֹ</w>
+          <w type="x-ketiv" lemma="l/7592" morph="HR/Vqc" id="13F3m">ל/שאול</w><note type="variant"><catchWord>ל/שאול</catchWord><rdg type="x-qere"><w lemma="l/7592" morph="HR/Vqc" id="13Qnx">לִ/שְׁאָל</w></rdg></note><seg type="x-maqqef">־</seg><w lemma="l/7592" morph="HR/Sp3ms" id="134CQ">ל֨/וֹ</w>
           <w lemma="l/7965" n="1.1.1.0" morph="HR/Ncmsa" id="13BgX">לְ/שָׁל֜וֹם</w>
           <w lemma="c/l/1288" n="1.1.1" morph="HC/R/Vpc/Sp3ms" id="13i2o">וּֽ/לְ/בָרֲכ֗/וֹ</w>
           <w lemma="5921 a" morph="HR" id="13oyG">עַל֩</w>
