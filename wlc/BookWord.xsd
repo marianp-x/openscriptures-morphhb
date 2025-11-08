@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="unqualified"
+    attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+
+  <xs:annotation>
+    <xs:documentation>XSD specification for generated normalized XML documents.</xs:documentation>
+  </xs:annotation>
+
+  <!-- Elements -->
+
+  <xs:element name="book">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="token" type="TokenType" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="osisBookId" type="OsisBookIdType" use="required"/>
+      <xs:attribute name="bookPathJewish" type="xs:string" use="required"/>
+      <xs:attribute name="bookPathChristian" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="TokenType">
+    <xs:choice minOccurs="1" maxOccurs="1">
+      <xs:sequence>
+        <!-- TODO: Enforce the requirement for specific sequencing of these 3 prefixes: -->
+        <xs:choice minOccurs="0" maxOccurs="2">
+          <xs:element ref="hebrew_conjunction"/>
+          <xs:choice>
+            <xs:element ref="hebrew_preposition"/>
+            <xs:element ref="hebrew_preposition_definite"/>
+          </xs:choice>
+          <xs:element ref="hebrew_particle"/>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element ref="hebrew_conjunction"/>
+          <xs:choice>
+            <xs:element ref="hebrew_preposition"/>
+            <xs:element ref="hebrew_preposition_definite"/>
+          </xs:choice>
+          <xs:element ref="hebrew_particle"/>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element ref="hebrew_noun"/>
+          <xs:element ref="hebrew_noun_gentilic"/>
+          <xs:element ref="hebrew_noun_proper"/>
+          <xs:element ref="hebrew_pronoun_personal"/>
+          <xs:element ref="hebrew_pronoun_demonstrative"/>
+          <xs:element ref="hebrew_pronoun_indefinite"/>
+          <xs:element ref="hebrew_adjective"/>
+          <xs:element ref="hebrew_adjective_gentilic"/>
+          <xs:element ref="hebrew_adjective_number"/>
+          <xs:element ref="hebrew_adverb"/>
+          <xs:element ref="hebrew_verb_perfect"/>
+          <xs:element ref="hebrew_verb_imperfect"/>
+          <xs:element ref="hebrew_verb_imperative"/>
+          <xs:element ref="hebrew_verb_cohortative"/>
+          <xs:element ref="hebrew_verb_jussive"/>
+          <xs:element ref="hebrew_verb_participal"/>
+          <xs:element ref="hebrew_verb_infinitive"/>
+        </xs:choice>
+        <xs:element ref="hebrew_suffix_paragogic_nun" minOccurs="0"/>
+        <xs:element ref="hebrew_suffix_pronominal" minOccurs="0"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="hebrew_suffix_directional_he"/>
+          <xs:element ref="hebrew_suffix_paragogic_he"/>
+        </xs:choice>
+        <xs:element ref="hebrew_particle" minOccurs="0" maxOccurs="1"/>   <!-- TODO: Hebrew Jonah 1:7(32BU7): "מִ֛י" -->
+      </xs:sequence>
+      <xs:sequence>
+        <xs:element ref="hebrew_punctuation"/>
+      </xs:sequence>
+    </xs:choice>
+    <xs:attribute name="versePathJewish" type="VersePathType" use="required"/>
+    <xs:attribute name="versePathChristian" type="VersePathType" use="required"/>
+    <!-- Not needed: <xs:attribute ref="lang" use="required"/> -->
+    <xs:attribute name="osisWordId" type="OsisWordIdType" use="optional"/>
+  </xs:complexType>
+
+  <xs:attribute name="lang">
+    <xs:simpleType>
+      <xs:restriction base="xs:language">
+        <xs:enumeration value="he"/>
+        <xs:enumeration value="arc"/>
+        <xs:enumeration value="el"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:element name="hebrew_conjunction">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_preposition">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_preposition_definite">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_particle">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="role" type="HebrewParticleFormType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_noun">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="pgn" type="HebrewNounPgnType" use="required"/>
+          <xs:attribute name="state" type="HebrewStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:element name="hebrew_noun_gentilic">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_noun_proper">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_pronoun_personal">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="pgn" type="HebrewPronounPersonalPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_pronoun_demonstrative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="pgn" type="HebrewPronounDemonstrativePgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_pronoun_indefinite">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_adjective">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="pgn" type="HebrewAdjectivePgnType" use="required"/>
+          <xs:attribute name="state" type="HebrewStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_adjective_gentilic">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="pgn" type="HebrewAdjectivePgnType" use="required"/>
+          <xs:attribute name="state" type="HebrewStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_adjective_number">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="role" type="HebrewAdjectiveRoleType" use="required"/>
+          <xs:attribute name="pgn" type="HebrewAdjectivePgnType" use="required"/>
+          <xs:attribute name="state" type="HebrewStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_adverb">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_verb_perfect">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
+          <xs:attribute name="role" type="HebrewVerbSequentialRoleType" use="optional"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_verb_imperfect">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
+          <xs:attribute name="role" type="HebrewVerbSequentialRoleType" use="optional"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_verb_imperative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_verb_cohortative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_verb_jussive">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_verb_participal">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
+          <xs:attribute name="role" type="HebrewVerbParticipalRoleType" use="required"/>
+          <xs:attribute name="pgn" type="HebrewVerbParticipalPgnType" use="required"/>
+          <xs:attribute name="state" type="HebrewStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_verb_infinitive">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
+          <xs:attribute name="state" type="HebrewStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_suffix_pronominal">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="pgn" type="HebrewSuffixPronominalPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_suffix_directional_he">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_suffix_paragogic_he">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_suffix_paragogic_nun">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_punctuation">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="role" type="WordPartHebrewPunctuationFormType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Complex types -->
+
+  <xs:complexType name="WordPartLemma">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lemma" type="WordPartLemmaType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- Simple types -->
+
+  <xs:simpleType name="OsisBookIdType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Gen"/>
+      <xs:enumeration value="Exod"/>
+      <xs:enumeration value="Lev"/>
+      <xs:enumeration value="Num"/>
+      <xs:enumeration value="Deut"/>
+      <xs:enumeration value="Josh"/>
+      <xs:enumeration value="Judg"/>
+      <xs:enumeration value="Ruth"/>
+      <xs:enumeration value="1Sam"/>
+      <xs:enumeration value="2Sam"/>
+      <xs:enumeration value="1Kgs"/>
+      <xs:enumeration value="2Kgs"/>
+      <xs:enumeration value="1Chr"/>
+      <xs:enumeration value="2Chr"/>
+      <xs:enumeration value="Ezra"/>
+      <xs:enumeration value="Neh"/>
+      <xs:enumeration value="Esth"/>
+      <xs:enumeration value="Job"/>
+      <xs:enumeration value="Ps"/>
+      <xs:enumeration value="Prov"/>
+      <xs:enumeration value="Eccl"/>
+      <xs:enumeration value="Song"/>
+      <xs:enumeration value="Isa"/>
+      <xs:enumeration value="Jer"/>
+      <xs:enumeration value="Lam"/>
+      <xs:enumeration value="Ezek"/>
+      <xs:enumeration value="Dan"/>
+      <xs:enumeration value="Hos"/>
+      <xs:enumeration value="Joel"/>
+      <xs:enumeration value="Amos"/>
+      <xs:enumeration value="Obad"/>
+      <xs:enumeration value="Jonah"/>
+      <xs:enumeration value="Mic"/>
+      <xs:enumeration value="Nah"/>
+      <xs:enumeration value="Hab"/>
+      <xs:enumeration value="Zeph"/>
+      <xs:enumeration value="Hag"/>
+      <xs:enumeration value="Zech"/>
+      <xs:enumeration value="Mal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="BookNameChristian">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Genesis"/>
+      <xs:enumeration value="Exodus"/>
+      <xs:enumeration value="Leviticus"/>
+      <xs:enumeration value="Numbers"/>
+      <xs:enumeration value="Deuteronomy"/>
+      <xs:enumeration value="Joshua"/>
+      <xs:enumeration value="Judges"/>
+      <xs:enumeration value="Ruth"/>
+      <xs:enumeration value="1 Samuel"/>
+      <xs:enumeration value="2 Samuel"/>
+      <xs:enumeration value="1 Kings"/>
+      <xs:enumeration value="1 Kings"/>
+      <xs:enumeration value="1 Chronicles"/>
+      <xs:enumeration value="2 Chronicles"/>
+      <xs:enumeration value="Ezra"/>
+      <xs:enumeration value="Nehemiah"/>
+      <xs:enumeration value="Esther"/>
+      <xs:enumeration value="Job"/>
+      <xs:enumeration value="Psalms"/>
+      <xs:enumeration value="Proverbs"/>
+      <xs:enumeration value="Ecclesiastes"/>
+      <xs:enumeration value="Song of Songs"/>
+      <xs:enumeration value="Isaiah"/>
+      <xs:enumeration value="Jeremiah"/>
+      <xs:enumeration value="Lamentations"/>
+      <xs:enumeration value="Ezekiel"/>
+      <xs:enumeration value="Daniel"/>
+      <xs:enumeration value="Hosea"/>
+      <xs:enumeration value="Joel"/>
+      <xs:enumeration value="Amos"/>
+      <xs:enumeration value="Obadiah"/>
+      <xs:enumeration value="Jonah"/>
+      <xs:enumeration value="Micah"/>
+      <xs:enumeration value="Nahum"/>
+      <xs:enumeration value="Habakkuk"/>
+      <xs:enumeration value="Zephaniah"/>
+      <xs:enumeration value="Haggai"/>
+      <xs:enumeration value="Zechariah"/>
+      <xs:enumeration value="Malachi"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="OsisWordIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{2}[a-zA-Z0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VersePathType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d+/\d+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WordPartLemmaType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([bdicklms]|\d{1,4}( [a-f])?\+?)"/>      <!-- TODO: Double-check the '+' use -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewBinyanimType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="qal"/>
+      <xs:enumeration value="niphal"/>
+      <xs:enumeration value="piel"/>
+      <xs:enumeration value="pual"/>
+      <xs:enumeration value="hiphil"/>
+      <xs:enumeration value="hophal"/>
+      <xs:enumeration value="hithpael"/>
+      <xs:enumeration value="polel"/>
+      <xs:enumeration value="polal"/>
+      <xs:enumeration value="hithpolel"/>
+      <xs:enumeration value="poel"/>
+      <xs:enumeration value="poal"/>
+      <xs:enumeration value="palel"/>
+      <xs:enumeration value="pulal"/>
+      <xs:enumeration value="qal passive"/>
+      <xs:enumeration value="pilpel"/>
+      <xs:enumeration value="pilpel"/>
+      <xs:enumeration value="polpal"/>
+      <xs:enumeration value="hithpalpel"/>
+      <xs:enumeration value="nithpael"/>
+      <xs:enumeration value="pealal"/>
+      <xs:enumeration value="pilel"/>
+      <xs:enumeration value="hothpaal"/>
+      <xs:enumeration value="tiphil"/>
+      <xs:enumeration value="hishtaphel"/>
+      <xs:enumeration value="nithpalel"/>
+      <xs:enumeration value="nithpoel"/>
+      <xs:enumeration value="hithpoel"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AramaicBinyanimType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="peal"/>
+      <xs:enumeration value="peil"/>
+      <xs:enumeration value="hithpeel"/>
+      <xs:enumeration value="pael"/>
+      <xs:enumeration value="ithpaal"/>
+      <xs:enumeration value="hithpaal"/>
+      <xs:enumeration value="aphel"/>
+      <xs:enumeration value="haphel"/>
+      <xs:enumeration value="saphel"/>
+      <xs:enumeration value="shaphel"/>
+      <xs:enumeration value="hophal"/>
+      <xs:enumeration value="ithpeel"/>
+      <xs:enumeration value="hishtaphel"/>
+      <xs:enumeration value="ishtaphel"/>
+      <xs:enumeration value="hithaphel"/>
+      <xs:enumeration value="polel"/>
+      <xs:enumeration value="ithpoel"/>
+      <xs:enumeration value="hithpolel"/>
+      <xs:enumeration value="hithpalpel"/>
+      <xs:enumeration value="hephal"/>
+      <xs:enumeration value="tiphel"/>
+      <xs:enumeration value="poel"/>
+      <xs:enumeration value="palpel"/>
+      <xs:enumeration value="ithpalpel"/>
+      <xs:enumeration value="ithpolel"/>
+      <xs:enumeration value="ittaphal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewVerbSequentialRoleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="sequential"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewVerbParticipalRoleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="active"/>
+      <xs:enumeration value="passive"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewSuffixPronominalPgnType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1*s"/>
+      <xs:enumeration value="2ms"/>
+      <xs:enumeration value="2fs"/>
+      <xs:enumeration value="3ms"/>
+      <xs:enumeration value="3fs"/>
+      <xs:enumeration value="1*p"/>
+      <xs:enumeration value="2mp"/>
+      <xs:enumeration value="2fp"/>
+      <xs:enumeration value="3mp"/>
+      <xs:enumeration value="3fp"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewPronounIndefiniteFormType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="indefinite"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewPronounPersonalFormType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="personal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewPronounDemonstrativeFormType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="demonstrative"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AramaicPronounFormType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="indefinite"/>
+      <xs:enumeration value="interrogative"/>
+      <xs:enumeration value="relative"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewAdjectiveRoleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="cardinal"/>
+      <xs:enumeration value="ordinal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewParticleFormType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="affirmation"/>
+      <xs:enumeration value="definite article"/>
+      <xs:enumeration value="demonstrative"/>
+      <xs:enumeration value="direct object marker"/>
+      <xs:enumeration value="exhortation"/>
+      <xs:enumeration value="interjection"/>
+      <xs:enumeration value="interrogative"/>
+      <xs:enumeration value="negative"/>
+      <xs:enumeration value="relative"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WordPartHebrewPunctuationFormType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="sof pasuq"/>
+      <xs:enumeration value="maqqef"/>
+      <xs:enumeration value="paseq"/>
+      <xs:enumeration value="samekh"/>
+      <xs:enumeration value="pe"/>
+      <xs:enumeration value="reversed nun"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalPersonType">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:enumeration value="1">
+        <xs:annotation><xs:documentation>First person.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation><xs:documentation>Second person.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation><xs:documentation>Third person.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalVerbGenderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="masculine"/>
+      <xs:enumeration value="feminine"/>
+      <xs:enumeration value="common"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalNounGenderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="masculine"/>
+      <xs:enumeration value="feminine"/>
+      <xs:enumeration value="both"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalPronounGenderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="masculine"/>
+      <xs:enumeration value="feminine"/>
+      <xs:enumeration value="common"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalNumberType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="singular"/>
+      <xs:enumeration value="dual"/>
+      <xs:enumeration value="plural"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewVerbPgnType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1*s"/>
+      <xs:enumeration value="2ms"/>
+      <xs:enumeration value="2fs"/>
+      <xs:enumeration value="3ms"/>
+      <xs:enumeration value="3fs"/>
+      <xs:enumeration value="1*p"/>
+      <xs:enumeration value="2mp"/>
+      <xs:enumeration value="2fp"/>
+      <xs:enumeration value="3mp"/>
+      <xs:enumeration value="3fp"/>
+      <xs:enumeration value="3*p"/>   <!-- TODO: This is lazy! -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewVerbParticipalPgnType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="*ms"/>
+      <xs:enumeration value="*fs"/>
+      <xs:enumeration value="*mp"/>
+      <xs:enumeration value="*fp"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewNounPgnType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="*ms"/>
+      <xs:enumeration value="*fs"/>
+      <xs:enumeration value="*md"/>
+      <xs:enumeration value="*fd"/>
+      <xs:enumeration value="*mp"/>
+      <xs:enumeration value="*fp"/>
+      <xs:enumeration value="**s"/>
+      <xs:enumeration value="**d"/>
+      <xs:enumeration value="**p"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewPronounPersonalPgnType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1*s"/>
+      <xs:enumeration value="2ms"/>
+      <xs:enumeration value="2fs"/>
+      <xs:enumeration value="3ms"/>
+      <xs:enumeration value="3fs"/>
+      <xs:enumeration value="1*p"/>
+      <xs:enumeration value="2mp"/>
+      <xs:enumeration value="2fp"/>
+      <xs:enumeration value="3mp"/>
+      <xs:enumeration value="3fp"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewPronounDemonstrativePgnType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="*ms"/>
+      <xs:enumeration value="*fs"/>
+      <xs:enumeration value="**s"/>   <!-- TODO: This is lazy! -->
+      <xs:enumeration value="*mp"/>
+      <xs:enumeration value="*fp"/>
+      <xs:enumeration value="**p"/>   <!-- TODO: This is lazy! -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewAdjectivePgnType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="*ms"/>
+      <xs:enumeration value="*fs"/>
+      <xs:enumeration value="*md"/>
+      <xs:enumeration value="*fd"/>
+      <xs:enumeration value="*mp"/>
+      <xs:enumeration value="*fp"/>
+      <xs:enumeration value="**s"/>
+      <xs:enumeration value="**d"/>
+      <xs:enumeration value="**p"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="HebrewStateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="absolute"/>
+      <xs:enumeration value="construct"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GrammaticalStateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="absolute"/>
+      <xs:enumeration value="construct"/>
+      <xs:enumeration value="determined"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+
+<!--
+  vim:shiftwidth=2:tabstop=2
+  -->

@@ -13,3 +13,4 @@ tst/*.tsv
 wrd/*.tsv
 wrd/*.schema
 wrd/*.diff
+wrd/*.xml

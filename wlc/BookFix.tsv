@@ -391,6 +391,7 @@
 2Sam	10XTv	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.		
 2Sam	10Yh5	HC/Vpw3fs	Moving from 'C/Vqw3fs' to 'C/Vpw3fs' because 'תִּהְיֶה' is Qal Imperfect and 'יתְּהִי' is Piel Imperfect.		
 2Sam	10ySc	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.		
+2Sam	10d68	HVpi1cs/Sp2ms	Moving from 'Sp2cs' to 'Sp2ms' pronominal suffix because the "2cs" PGN is invalid for pronominal suffixes.		
 Amos	30Jdu			4480 a	Moving Strongs number from suffix to the detached preposition.
 Amos	30PZP	HC/Vpi3ms	Moving from 'C/Vqj3ms' to 'C/Vpi3ms' because 'יְהִי' is Piel Imperfect.		
 Dan	27chR	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.		
@@ -978,6 +979,9 @@ Lev	03q5L			4480 a	Moving Strongs number from suffix to the detached preposition
 Lev	03Jb7			4480 a	Moving Strongs number from suffix to the detached preposition.
 Lev	03phb			4480 a	Moving Strongs number from suffix to the detached preposition.
 Lev	03Q8W			4480 a	Moving Strongs number from suffix to the detached preposition.
+Lev	03UuW	HNcbpc/Sp2mp	Moving from 'Sp2cp' to 'Sp2mp' pronominal suffix because the "2cp" PGN is invalid for pronominal suffixes.		
+Lev	03MWL	HR/Ncbsc/Sp2mp	Moving from 'Sp2cp' to 'Sp2mp' pronominal suffix because the "2cp" PGN is invalid for pronominal suffixes.		
+Lev	03m9t	HNcbpc/Sp2mp	Moving from 'Sp2cp' to 'Sp2mp' pronominal suffix because the "2cp" PGN is invalid for pronominal suffixes.		
 Mal	39reD	HC/Vpi3ms	Moving from 'C/Vqj3ms' to 'C/Vpi3ms' because 'יְהִי' is Piel Imperfect.		
 Mal	39YWU			4480 a	Moving Strongs number from suffix to the detached preposition.
 Mic	33W26	HC/Vpi3ms	Moving from 'C/Vqj3ms' to 'C/Vpi3ms' because 'יְהִי' is Piel Imperfect.		
@@ -1077,6 +1081,7 @@ Ps	19Whr	HVpi3ms	Moving from 'Vqi3ms' to 'Vpi3ms' because 'יְהִי' is Piel I
 Ps	19XNh	HVpi3ms	Moving from 'Vqi3ms' to 'Vpi3ms' because 'יְהִי' is Piel Imperfect.		
 Ps	19Z9W	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.		
 Ps	19zco	HC/Vpw1cs	Moving from 'C/Vqw1cs' to 'C/Vpw1cs' because 'אֶהְיֶה' is Qal Imperfect and 'אֱהִי' is Piel Imperfect.		
+Ps	19dnN	HVqrmpc/Sp3ms	Moving from 'Sp3cs' to 'Sp3ms' pronominal suffix because the "3cs" PGN is invalid for pronominal suffixes.		
 Ps	19fNs			4480 a	Moving Strongs number from suffix to the detached preposition.
 Ruth	081jv	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.		
 Ruth	082B3	HC/Vpi3ms	Moving from 'C/Vqj3ms' to 'C/Vpi3ms' because 'יְהִי' is Piel Imperfect.		

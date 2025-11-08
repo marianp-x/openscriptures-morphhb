@@ -42,14 +42,16 @@ BOOK_NAMEs := \
 FIX_OUTPUT_PATH := fix
 NRM_OUTPUT_PATH := nrm
 WRD_OUTPUT_PATH := wrd
+TBL_OUTPUT_PATH := tbl
 TSV_OUTPUT_PATH := tsv
 
 BOOK_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(bookName).xml)
 BOOK_FIXES_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(FIX_OUTPUT_PATH)/$(bookName)Fix.xml)
 BOOK_FIXED_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(FIX_OUTPUT_PATH)/$(bookName).xml)
 BOOK_NRMED_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(NRM_OUTPUT_PATH)/$(bookName).xml)
-BOOK_WORDS_TSVs := $(foreach bookName, $(BOOK_NAMEs), $(WRD_OUTPUT_PATH)/$(bookName).tsv)
-BOOK_SCHEMAS_TSVs := $(foreach bookName, $(BOOK_NAMEs), $(WRD_OUTPUT_PATH)/$(bookName).schema)
+BOOK_WORDS_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(WRD_OUTPUT_PATH)/$(bookName).xml)
+BOOK_TABLES_TSVs := $(foreach bookName, $(BOOK_NAMEs), $(TBL_OUTPUT_PATH)/$(bookName).tsv)
+BOOK_SCHEMAS_TSVs := $(foreach bookName, $(BOOK_NAMEs), $(TBL_OUTPUT_PATH)/$(bookName).schema)
 BOOK_TSVs := $(foreach bookName, $(BOOK_NAMEs), $(TSV_OUTPUT_PATH)/$(bookName).tsv)
 BOOK_SCHEMAs := $(foreach bookName, $(BOOK_NAMEs), $(TSV_OUTPUT_PATH)/$(bookName).schema)
 BOOK_DEBUGs := $(foreach bookName, $(BOOK_NAMEs), $(TSV_OUTPUT_PATH)/$(bookName).debug)
@@ -88,9 +90,8 @@ $(NRM_OUTPUT_PATH):
 .PRECIOUS: $(NRM_OUTPUT_PATH)/%.xml
 
 $(NRM_OUTPUT_PATH)/%.xml : $(FIX_OUTPUT_PATH)/%.xml $(NRM_OUTPUT_PATH) Makefile BookNorm.xsl BookNorm.xsd xml.xsd
-	/usr/bin/xsltproc --nonet --xinclude "BookNorm.xsl" "$(FIX_OUTPUT_PATH)/$*.xml" >"$(NRM_OUTPUT_PATH)/$*.xml"
-	/usr/bin/xmllint --nonet --schema "BookNorm.xsd" --noout "$(NRM_OUTPUT_PATH)/$*.xml"
-#	/usr/bin/xsltproc --nonet --xinclude "BookNorm.xsl" "$*.xml" | /usr/bin/xmllint --encode utf8 --format --pretty 1 - >"$(NRM_OUTPUT_PATH)/$*.xml"
+	/usr/bin/xsltproc --nonet --xinclude "BookNorm.xsl" "$(FIX_OUTPUT_PATH)/$*.xml" >"$@"
+	/usr/bin/xmllint --nonet --schema "BookNorm.xsd" --noout "$@"
 
 # TSV output:
 
@@ -113,23 +114,32 @@ $(TSV_OUTPUT_PATH)/%.tsv $(TSV_OUTPUT_PATH)/%.debug : $(TSV_OUTPUT_PATH) $(FIX_O
 
 # WRD
 
-words: $(WRD_OUTPUT_PATH)/WLC.tsv
-
-#	/usr/bin/diff $(TSV_OUTPUT_PATH)/WLC-c.tsv $(WRD_OUTPUT_PATH)/WLC-c.tsv >$(WRD_OUTPUT_PATH)/WLC-c.diff
-
-# words: $(WRD_OUTPUT_PATH)/Gen.tsv $(WRD_OUTPUT_PATH)/Ps.tsv
-
-$(WRD_OUTPUT_PATH)/WLC.tsv : $(BOOK_WORDS_TSVs)
-	/usr/bin/cat "$(WRD_OUTPUT_PATH)/Gen.schema" | head -n 1 >"$@"
-	/usr/bin/cat $(BOOK_WORDS_TSVs) >>"$@"
+words: $(BOOK_WORDS_XMLs)
 
 $(WRD_OUTPUT_PATH):
 	mkdir -p "$@"
 
-.PRECIOUS: $(WRD_OUTPUT_PATH)/%.tsv
+.PRECIOUS: $(WRD_OUTPUT_PATH)/%.xml
 
-$(WRD_OUTPUT_PATH)/%.tsv : $(WRD_OUTPUT_PATH) $(NRM_OUTPUT_PATH)/%.xml BookWord.xsl Makefile
-	/usr/bin/xsltproc --nonet --stringparam "bookSchemaFname" "$(WRD_OUTPUT_PATH)/$*.schema" "BookWord.xsl" $(NRM_OUTPUT_PATH)/$*.xml >"$@"
+$(WRD_OUTPUT_PATH)/%.xml : $(WRD_OUTPUT_PATH) $(NRM_OUTPUT_PATH)/%.xml Makefile BookWord.xsl BookWord.xsd
+	/usr/bin/xsltproc --nonet "BookWord.xsl" $(NRM_OUTPUT_PATH)/$*.xml >"$@"
+	/usr/bin/xmllint --nonet --schema "BookWord.xsd" --noout "$@"
+
+# TBL
+
+tables: $(TBL_OUTPUT_PATH)/WLC.tsv
+
+$(TBL_OUTPUT_PATH)/WLC.tsv : $(BOOK_TABLES_TSVs)
+	/usr/bin/cat "$(TBL_OUTPUT_PATH)/Gen.schema" | head -n 1 >"$@"
+	/usr/bin/cat $(BOOK_TABLES_TSVs) >>"$@"
+
+$(TBL_OUTPUT_PATH):
+	mkdir -p "$@"
+
+.PRECIOUS: $(TBL_OUTPUT_PATH)/%.tsv
+
+$(TBL_OUTPUT_PATH)/%.tsv : $(TBL_OUTPUT_PATH) $(WRD_OUTPUT_PATH)/%.xml BookTable.xsl Makefile
+	/usr/bin/xsltproc --nonet --stringparam "bookSchemaFname" "$(TBL_OUTPUT_PATH)/$*.schema" "BookTable.xsl" $(WRD_OUTPUT_PATH)/$*.xml >"$@"
 
 # DIFFs
 
@@ -156,7 +166,7 @@ GENERATED:=\
 	$(BOOK_FIXES_XMLs) \
 	$(BOOK_FIXED_XMLs) \
 	$(BOOK_NRMED_XMLs) \
-	$(BOOK_WORDS_TSVs) \
+	$(BOOK_WORDS_XMLs) \
 	$(BOOK_SCHEMAS_TSVs) \
 	$(BOOK_TSVs) \
 	$(BOOK_SCHEMAs) \
@@ -176,7 +186,7 @@ edit:
 		$(BOOK_FIXES_XMLs) \
 		$(BOOK_FIXED_XMLs) \
 		$(BOOK_NRMED_XMLs) \
-		$(BOOK_WORDS_TSVs) \
+		$(BOOK_WORDS_XMLs) \
 		$(BOOK_SCHEMAS_TSVs) \
 		$(BOOK_TSVs) \
 		$(BOOK_SCHEMAs) \
@@ -193,6 +203,7 @@ edit:
 		"BookNorm.xsl" \
 		"BookNorm.xsd" \
 		"BookWord.xsl" \
+		"BookWord.xsd" \
 		"Diag.xsl" \
 		"osisCore.2.1.1.xsd" \
 		"xml.xsd" \

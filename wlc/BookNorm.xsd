@@ -25,21 +25,32 @@
   </xs:element>
 
   <xs:complexType name="TokenType">
-    <xs:choice minOccurs="1" maxOccurs="unbounded">
-      <!-- TODO: Enforce the requirement for specific sequencing of these 3 prefixes: -->
-      <xs:element name="conjunction" type="WordPartType"/>
-      <xs:element name="preposition" type="WordPartPrepositionType"/>
-      <xs:element name="particle" type="WordPartParticleType"/>
-      <!-- TODO: Enforce the requirement that only one of these elements can be allowed: -->
-      <xs:element name="noun" type="WordPartNounType"/>
-      <xs:element name="pronoun" type="WordPartPronounType"/>
-      <xs:element name="adjective" type="WordPartAdjectiveType"/>
-      <xs:element name="adverb" type="WordPartType"/>
-      <xs:element name="verb" type="WordPartVerbType">
-      </xs:element>
-      <!-- TODO: Enforce the requirement for specific sequencing of this 1 suffix: -->
-      <xs:element name="suffix" type="WordPartSuffixType"/>
-      <xs:element name="punctuation" type="PunctuationType"/>
+    <xs:choice minOccurs="1" maxOccurs="1">
+      <xs:sequence>
+        <!-- TODO: Enforce the requirement for specific sequencing of these 3 prefixes: -->
+        <xs:choice minOccurs="0" maxOccurs="2">
+          <xs:element name="conjunction" type="WordPartType"/>
+          <xs:element name="preposition" type="WordPartPrepositionType"/>
+          <xs:element name="particle" type="WordPartParticleType"/>
+        </xs:choice>
+        <xs:choice minOccurs="0" maxOccurs="2">
+          <xs:element name="conjunction" type="WordPartType"/>
+          <xs:element name="preposition" type="WordPartPrepositionType"/>
+          <xs:element name="particle" type="WordPartParticleType"/>
+        </xs:choice>
+        <xs:choice minOccurs="0" maxOccurs="1">
+          <xs:element name="noun" type="WordPartNounType"/>
+          <xs:element name="pronoun" type="WordPartPronounType"/>
+          <xs:element name="adjective" type="WordPartAdjectiveType"/>
+          <xs:element name="adverb" type="WordPartType"/>
+          <xs:element name="verb" type="WordPartVerbType"/>
+        </xs:choice>
+        <xs:element name="suffix" type="WordPartSuffixType" minOccurs="0" maxOccurs="2"/>
+        <xs:element name="particle" type="WordPartParticleType" minOccurs="0" maxOccurs="1"/>   <!-- Aramaic and Hebrew Jonah 1:7(32BU7): "מִ֛י" allows particles after suffixes -->
+      </xs:sequence>
+      <xs:sequence>
+        <xs:element name="punctuation" type="PunctuationType"/>
+      </xs:sequence>
     </xs:choice>
     <xs:attribute name="versePathJewish" type="VersePathType" use="required"/>
     <xs:attribute name="versePathChristian" type="VersePathType" use="required"/>
@@ -369,8 +380,8 @@
   <xs:simpleType name="NounType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="common"/>
-      <xs:enumeration value="proper"/>
       <xs:enumeration value="gentilic"/>
+      <xs:enumeration value="proper name"/>
     </xs:restriction>
   </xs:simpleType>
 

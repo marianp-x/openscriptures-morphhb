@@ -16,20 +16,11 @@
         extension-element-prefixes="common date func regexp mp"
         exclude-result-prefixes="common date func mp">
 
-<!--
-  The 'bookSchemaFname' global parameter is used to control the name of the
-  name of the external output file TSV.
-
-  The default value for this parameter is designed to NOT match any .xml file,
-  thus implicitly making this parameter mandatory to be defined during the
-  run-time.
-  -->
-
-<xsl:param name="bookSchemaFname" select="'UNKNOWN'"/>
-
 <!--                               -->
 
-<xsl:output method="text" encoding="UTF-8"/>
+<xsl:output method="xml" encoding="UTF-8"/>
+<xsl:output omit-xml-declaration="no"/>
+<xsl:output indent="yes"/>
 <xsl:output encoding="UTF-8"/>
 <xsl:strip-space elements="*"/>
 
@@ -70,262 +61,427 @@
 <!--                               -->
 
 <xsl:template match="/book">
-  <xsl:apply-templates select="token"/>
-
-  <common:document href="{$bookSchemaFname}"
-                   method="text"
-                   encoding="UTF-8">
-    <xsl:value-of select="'TokenPathJewish'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'TokenPathChristian'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordId'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'OsisWordId'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordSpeechType'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordHebrew'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordHebrewN'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordHebrewC'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordHebrewParsed'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordLemma'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordMorph'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordConjunction'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordPreposition'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordArticle'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordInterrogative'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordParticle'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordVerbBinyanim'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordForm'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordPgn'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordState'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordSuffixPronominal'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordSuffixPronominalPgn'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordSuffixDirectionalHei'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordSuffixParagogicHei'"/>
-    <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'WordSuffixParagogicNun'"/>
-    <xsl:text>&#10;</xsl:text>
-  </common:document>
+  <xsl:copy>
+    <xsl:copy-of select="@*"/>
+    <xsl:apply-templates/>
+  </xsl:copy>
 </xsl:template>
 
 <!--                               -->
 
 <xsl:template match="/book/token">
+  <xsl:copy>
+    <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
+    <xsl:apply-templates/>
+  </xsl:copy>
+</xsl:template>
 
-  <xsl:variable name="tokenPathJewish">
-    <xsl:value-of select="concat(../@bookPathJewish, '/', @versePathJewish)"/>
-  </xsl:variable>
-  <xsl:variable name="tokenPathChristian">
-    <xsl:value-of select="concat(../@bookPathChristian, '/', @versePathChristian)"/>
-  </xsl:variable>
-  <xsl:variable name="wordId">
-    <xsl:value-of select="generate-id(.)"/>
-  </xsl:variable>
-  <xsl:variable name="osisWordId">
-    <xsl:value-of select="@osisWordId"/>
-  </xsl:variable>
-  <xsl:variable name="wordSpeechXml">
-    <xsl:call-template name="tokenSpeech">
-      <xsl:with-param name="osisWordId" select="$osisWordId"/>
-      <xsl:with-param name="token" select="."/>
-    </xsl:call-template>
-  </xsl:variable>
-  <xsl:variable name="wordSpeech" select="common:node-set($wordSpeechXml)"/>
-  <xsl:variable name="wordSpeechName" select="$wordSpeech/speech[1]/@name"/>
-  <xsl:variable name="wordSpeechType" select="$wordSpeech/speech[1]/@type"/>
-  <xsl:variable name="wordMorphLang">
-    <xsl:value-of select="$isoLangCodeToOsisLanguage/entry[@id = current()/@lang]"/>
-  </xsl:variable>
-  <xsl:variable name="wordTextParts" select="./*/text()"/>
-  <xsl:variable name="wordHebrewParsed">
-    <xsl:value-of select="mp:string_join('׀', $wordTextParts)"/>
-  </xsl:variable>
-  <xsl:variable name="wordHebrew">
-    <xsl:choose>
-      <xsl:when test="$wordHebrewParsed != '׀'">
-        <xsl:value-of select="translate($wordHebrewParsed, '׀', '')"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$wordHebrewParsed"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="wordHebrewN">
-    <xsl:value-of select="mp:strip_taamim($wordHebrew)"/>
-  </xsl:variable>
-  <xsl:variable name="wordHebrewC">
-    <xsl:value-of select="mp:strip_pointing($wordHebrew)"/>
-  </xsl:variable>
-  <xsl:variable name="wordLemma">
-    <xsl:value-of select="mp:string_join('|', */@lemma)"/>
-  </xsl:variable>
-  <xsl:variable name="wordMorph">
-    <xsl:choose>
-      <xsl:when test="$wordSpeechName = 'punctuation'">
-        <xsl:value-of select="''"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="concat($wordMorphLang, mp:string_join('|', */@morph))"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="wordConjunctionParts" select="conjunction/text()"/>
-  <xsl:variable name="wordConjunction">
-    <xsl:value-of select="mp:string_join('׀', $wordConjunctionParts)"/>
-  </xsl:variable>
-  <xsl:variable name="wordPreposition">
-    <xsl:value-of select="mp:string_join('׀', preposition/text())"/>
-  </xsl:variable>
-  <xsl:variable name="wordArticle">
-    <xsl:choose>
-      <xsl:when test="preposition[@type = 'definite article']">
-        <xsl:value-of select="'הַ'"/>    <!-- TODO: generate according to the form -->
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="particle[@type = 'definite article']"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="wordInterrogative">
-    <xsl:value-of select="particle[@type = 'interrogative']"/>
-  </xsl:variable>
-  <xsl:variable name="wordParticle">
-    <xsl:value-of select="particle[@type = 'relative']"/>
-  </xsl:variable>
-  <xsl:variable name="wordVerbBinyanim">
-    <xsl:value-of select="verb/@stem"/>
-  </xsl:variable>
-  <xsl:variable name="wordState">
-    <xsl:value-of select="verb/@state"/>
-  </xsl:variable>
-  <xsl:variable name="wordFormMain">
-    <xsl:choose>
-      <xsl:when test="contains($wordSpeechType, 'participle')">
-        <xsl:value-of select="concat($wordSpeechType, ' ', $wordState)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$wordSpeechType"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="wordForm">
-    <xsl:choose>
-      <xsl:when test="conjunction and $wordSpeechName = 'verb' and not(contains($wordSpeechType, 'sequential'))">
-        <xsl:value-of select="concat('conjunction-', $wordFormMain)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$wordFormMain"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="wordPerson">
-    <xsl:value-of select="$wordSpeech/speech[1]/@person"/>
-  </xsl:variable>
-  <xsl:variable name="wordGender">
-    <xsl:value-of select="$wordSpeech/speech[1]/@gender"/>
-  </xsl:variable>
-  <xsl:variable name="wordNumber">
-    <xsl:value-of select="$wordSpeech/speech[1]/@number"/>
-  </xsl:variable>
-  <xsl:variable name="wordPgn">
-    <xsl:value-of select="concat($personToPgn/entry[@id = $wordPerson], $genderToPgn/entry[@id = $wordGender], $numberToPgn/entry[@id = $wordNumber])"/>
-  </xsl:variable>
-  <xsl:variable name="wordSuffixPronominal">
-    <xsl:value-of select="suffix[@type = 'pronominal']"/>
-  </xsl:variable>
-  <xsl:variable name="wordSuffixPronominalPerson">
-    <xsl:value-of select="suffix[@type = 'pronominal']/@person"/>
-  </xsl:variable>
-  <xsl:variable name="wordSuffixPronominalGender">
-    <xsl:value-of select="suffix[@type = 'pronominal']/@gender"/>
-  </xsl:variable>
-  <xsl:variable name="wordSuffixPronominalNumber">
-    <xsl:value-of select="suffix[@type = 'pronominal']/@number"/>
-  </xsl:variable>
-  <xsl:variable name="wordSuffixPronominalPgn">
-    <xsl:value-of select="concat($personToPgn/entry[@id = $wordSuffixPronominalPerson], $genderToPgn/entry[@id = $wordSuffixPronominalGender], $numberToPgn/entry[@id = $wordSuffixPronominalNumber])"/>
-  </xsl:variable>
-  <xsl:variable name="wordSuffixDirectionalHei">
-    <xsl:value-of select="suffix[@type = 'directional he']/text()"/>
-  </xsl:variable>
-  <xsl:variable name="wordSuffixParagogicHei">
-    <xsl:value-of select="suffix[@type = 'paragogic he']/text()"/>
-  </xsl:variable>
-  <xsl:variable name="wordSuffixParagogicNun">
-    <xsl:value-of select="suffix[@type = 'paragogic nun']/text()"/>
-  </xsl:variable>
+<!--                               -->
 
-  <xsl:value-of select="$tokenPathJewish"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$tokenPathChristian"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordId"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$osisWordId"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordSpeech/speech[1]/@name"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordHebrew"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordHebrewN"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordHebrewC"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordHebrewParsed"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordLemma"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordMorph"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordConjunction"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordPreposition"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordArticle"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordInterrogative"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordParticle"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordVerbBinyanim"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordForm"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordPgn"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordState"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordSuffixPronominal"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordSuffixPronominalPgn"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordSuffixDirectionalHei"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordSuffixParagogicHei"/>
-  <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$wordSuffixParagogicNun"/>
-  <xsl:text>&NL;</xsl:text>
+<xsl:template match="/book/token/conjunction[../@lang = 'he']">
+  <xsl:element name="hebrew_conjunction">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
 
+<!--                               -->
+
+<xsl:template match="/book/token/preposition[../@lang = 'he' and @type = 'definite article']">
+  <xsl:element name="hebrew_preposition_definite">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/preposition[../@lang = 'he' and not(@type)]">
+  <xsl:element name="hebrew_preposition">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/particle[../@lang = 'he']">
+  <xsl:element name="hebrew_particle">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="role">
+      <xsl:value-of select="@type"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/noun[../@lang = 'he' and @type = 'common']">
+  <xsl:element name="hebrew_noun">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/noun[../@lang = 'he' and @type = 'gentilic']">
+  <xsl:element name="hebrew_noun_proper">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/noun[../@lang = 'he' and @type = 'proper name']">
+  <xsl:element name="hebrew_noun_proper">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/pronoun[../@lang = 'he' and @type = 'personal']">
+  <xsl:element name="hebrew_pronoun_personal">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/pronoun[../@lang = 'he' and @type = 'demonstrative']">
+  <xsl:element name="hebrew_pronoun_demonstrative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/pronoun[../@lang = 'he' and @type = 'indefinite']">
+  <xsl:element name="hebrew_pronoun_indefinite">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/adjective[../@lang = 'he' and @type = 'adjective']">
+  <xsl:element name="hebrew_adjective">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/adjective[../@lang = 'he' and @type = 'gentilic']">
+  <xsl:element name="hebrew_adjective_gentilic">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="form">
+      <xsl:value-of select="@type"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/adjective[../@lang = 'he' and contains(@type, 'number')]">
+  <xsl:element name="hebrew_adjective_number">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="role">
+      <xsl:choose>
+        <xsl:when test="@type = 'cardinal number'">
+          <xsl:value-of select="'cardinal'"/>
+        </xsl:when>
+        <xsl:when test="@type = 'ordinal number'">
+          <xsl:value-of select="'ordinal'"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="''"/>   <!-- TODO: Assert -->
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/adverb[../@lang = 'he']">
+  <xsl:element name="hebrew_adverb">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/verb[../@lang = 'he' and contains(@type, 'perfect')]">
+  <xsl:element name="hebrew_verb_perfect">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:if test="@type = 'sequential perfect'">
+      <xsl:attribute name="role">
+        <xsl:value-of select="'sequential'"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/verb[../@lang = 'he' and contains(@type, 'imperfect')]">
+  <xsl:element name="hebrew_verb_imperfect">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:if test="@type = 'sequential imperfect'">
+      <xsl:attribute name="role">
+        <xsl:value-of select="'sequential'"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/verb[../@lang = 'he' and @type = 'imperative']">
+  <xsl:element name="hebrew_verb_imperative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/verb[../@lang = 'he' and @type = 'cohortative']">
+  <xsl:element name="hebrew_verb_cohortative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/verb[../@lang = 'he' and @type = 'jussive']">
+  <xsl:element name="hebrew_verb_jussive">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/verb[../@lang = 'he' and contains(@type, 'participle')]">
+  <xsl:element name="hebrew_verb_participal">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="role">
+      <xsl:choose>
+        <xsl:when test="@type = 'participle active'">
+          <xsl:value-of select="'active'"/>
+        </xsl:when>
+        <xsl:when test="@type = 'participle passive'">
+          <xsl:value-of select="'passive'"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="''"/>   <!-- TODO: Assert -->
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:if test="@person or @gender or @number">
+      <xsl:variable name="person">
+        <xsl:choose>
+          <xsl:when test="@person">
+            <xsl:value-of select="@person"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="''"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:attribute name="pgn">
+        <xsl:value-of select="concat($personToPgn/entry[@id = $person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="@state">
+      <xsl:attribute name="state">
+        <xsl:value-of select="@state"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/verb[../@lang = 'he' and contains(@type, 'infinitive')]">
+  <xsl:element name="hebrew_verb_infinitive">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/suffix[../@lang = 'he' and @type = 'pronominal']">
+  <xsl:element name="hebrew_suffix_pronominal">
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/suffix[../@lang = 'he' and @type = 'directional he']">
+  <xsl:element name="hebrew_suffix_directional_he">
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/suffix[../@lang = 'he' and @type = 'paragogic he']">
+  <xsl:element name="hebrew_suffix_paragogic_he">
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/suffix[../@lang = 'he' and @type = 'paragogic nun']">
+  <xsl:element name="hebrew_suffix_paragogic_nun">
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/punctuation[../@lang = 'he']">
+  <xsl:element name="hebrew_punctuation">
+    <xsl:attribute name="role">
+      <xsl:value-of select="@type"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
 </xsl:template>
 
 <!-- Ignore all other elements -->

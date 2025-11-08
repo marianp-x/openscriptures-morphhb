@@ -201,8 +201,8 @@
 
 <xsl:variable name="osisNounTypesXml">
   <entry id="c">common</entry>
-  <entry id="p">proper</entry>
   <entry id="g">gentilic</entry>
+  <entry id="p">proper name</entry>
   <entry id="x"></entry>
 </xsl:variable>
 <xsl:variable name="osisNounTypes" select="common:node-set($osisNounTypesXml)"/>
@@ -428,7 +428,7 @@
                 <xsl:value-of select="$type"/>
               </xsl:attribute>
             </xsl:if>
-            <xsl:if test="normalize-space($type) != 'proper'">
+            <xsl:if test="normalize-space($type) != 'proper name'">
               <xsl:call-template name="attributesFromPgn">
                 <xsl:with-param name="morph" select="substring($wordPartMorphDetails, 2)"/>
                 <xsl:with-param name="type" select="'simple-noun'"/>
