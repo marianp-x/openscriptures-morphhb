@@ -34,7 +34,6 @@
 <xsl:variable name="isoLangCodeToOsisLanguage" select="common:node-set($isoLangCodeToOsisLanguageXml)"/>
 
 <xsl:variable name="personToPgnXml">
-  <entry id="">*</entry>
   <entry id="first">1</entry>
   <entry id="second">2</entry>
   <entry id="third">3</entry>
@@ -42,7 +41,6 @@
 <xsl:variable name="personToPgn" select="common:node-set($personToPgnXml)"/>
 
 <xsl:variable name="genderToPgnXml">
-  <entry id="">*</entry>
   <entry id="both">*</entry>
   <entry id="common">*</entry>
   <entry id="feminine">f</entry>
@@ -51,7 +49,6 @@
 <xsl:variable name="genderToPgn" select="common:node-set($genderToPgnXml)"/>
 
 <xsl:variable name="numberToPgnXml">
-  <entry id="">*</entry>
   <entry id="dual">d</entry>
   <entry id="plural">p</entry>
   <entry id="singular">s</entry>
