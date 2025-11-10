@@ -35,9 +35,9 @@
 
 <xsl:variable name="personToPgnXml">
   <entry id="">*</entry>
-  <entry id="1">1</entry>
-  <entry id="2">2</entry>
-  <entry id="3">3</entry>
+  <entry id="first">1</entry>
+  <entry id="second">2</entry>
+  <entry id="third">3</entry>
 </xsl:variable>
 <xsl:variable name="personToPgn" select="common:node-set($personToPgnXml)"/>
 
@@ -130,8 +130,8 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
-    <xsl:attribute name="pgn">
-      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
     </xsl:attribute>
     <xsl:attribute name="state">
       <xsl:value-of select="@state"/>
@@ -143,7 +143,7 @@
 <!--                               -->
 
 <xsl:template match="/book/token/noun[../@lang = 'he' and @type = 'gentilic']">
-  <xsl:element name="hebrew_noun_proper">
+  <xsl:element name="hebrew_noun_gentilic">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -183,8 +183,8 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
-    <xsl:attribute name="pgn">
-      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -208,8 +208,8 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
-    <xsl:attribute name="pgn">
-      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
     </xsl:attribute>
     <xsl:attribute name="state">
       <xsl:value-of select="@state"/>
@@ -228,8 +228,8 @@
     <xsl:attribute name="form">
       <xsl:value-of select="@type"/>
     </xsl:attribute>
-    <xsl:attribute name="pgn">
-      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
     </xsl:attribute>
     <xsl:attribute name="state">
       <xsl:value-of select="@state"/>
@@ -258,8 +258,8 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
-    <xsl:attribute name="pgn">
-      <xsl:value-of select="concat($personToPgn/entry[@id = ''], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
     </xsl:attribute>
     <xsl:attribute name="state">
       <xsl:value-of select="@state"/>
@@ -397,21 +397,9 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
-    <xsl:if test="@person or @gender or @number">
-      <xsl:variable name="person">
-        <xsl:choose>
-          <xsl:when test="@person">
-            <xsl:value-of select="@person"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="''"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
-      <xsl:attribute name="pgn">
-        <xsl:value-of select="concat($personToPgn/entry[@id = $person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
-      </xsl:attribute>
-    </xsl:if>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
     <xsl:if test="@state">
       <xsl:attribute name="state">
         <xsl:value-of select="@state"/>

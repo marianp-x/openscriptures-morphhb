@@ -445,14 +445,14 @@
   </xs:simpleType>
 
   <xs:simpleType name="GrammaticalPersonType">
-    <xs:restriction base="xs:positiveInteger">
-      <xs:enumeration value="1">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="first">
         <xs:annotation><xs:documentation>First person.</xs:documentation></xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="2">
+      <xs:enumeration value="second">
         <xs:annotation><xs:documentation>Second person.</xs:documentation></xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="3">
+      <xs:enumeration value="third">
         <xs:annotation><xs:documentation>Third person.</xs:documentation></xs:annotation>
       </xs:enumeration>
     </xs:restriction>

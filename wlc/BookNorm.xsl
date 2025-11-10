@@ -207,6 +207,13 @@
 </xsl:variable>
 <xsl:variable name="osisNounTypes" select="common:node-set($osisNounTypesXml)"/>
 
+<xsl:variable name="osisPersonsXml">
+  <entry id="1">first</entry>
+  <entry id="2">second</entry>
+  <entry id="3">third</entry>
+</xsl:variable>
+<xsl:variable name="osisPersons" select="common:node-set($osisPersonsXml)"/>
+
 <xsl:variable name="osisNounGendersXml">
   <entry id="b">both</entry>
   <entry id="f">feminine</entry>
@@ -811,10 +818,9 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  <xsl:variable name="person" select="$person_tag"/>
-  <xsl:if test="normalize-space($person) != '' and normalize-space($person) != 'x'">
+  <xsl:if test="normalize-space($person_tag) != '' and normalize-space($person_tag) != 'x'">
     <xsl:attribute name="person">
-      <xsl:value-of select="$person"/>
+      <xsl:value-of select="$osisPersons/entry[@id = $person_tag]"/>
     </xsl:attribute>
   </xsl:if>
 
