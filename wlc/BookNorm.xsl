@@ -21,91 +21,6 @@
 
 <xsl:variable name="osisBookId" select="osis:osis/osis:osisText/osis:div[@type = 'book' and position() = 1]/@osisID"/>
 
-<xsl:variable name="osisBookIdToNameChristianXml">
-  <entry groupName="Old Testament" osisId="Gen">Genesis</entry>
-  <entry groupName="Old Testament" osisId="Exod">Exodus</entry>
-  <entry groupName="Old Testament" osisId="Lev">Leviticus</entry>
-  <entry groupName="Old Testament" osisId="Num">Numbers</entry>
-  <entry groupName="Old Testament" osisId="Deut">Deuteronomy</entry>
-  <entry groupName="Old Testament" osisId="Josh">Joshua</entry>
-  <entry groupName="Old Testament" osisId="Judg">Judges</entry>
-  <entry groupName="Old Testament" osisId="Ruth">Ruth</entry>
-  <entry groupName="Old Testament" osisId="1Sam">1 Samuel</entry>
-  <entry groupName="Old Testament" osisId="2Sam">2 Samuel</entry>
-  <entry groupName="Old Testament" osisId="1Kgs">1 Kings</entry>
-  <entry groupName="Old Testament" osisId="2Kgs">1 Kings</entry>
-  <entry groupName="Old Testament" osisId="1Chr">1 Chronicles</entry>
-  <entry groupName="Old Testament" osisId="2Chr">2 Chronicles</entry>
-  <entry groupName="Old Testament" osisId="Ezra">Ezra</entry>
-  <entry groupName="Old Testament" osisId="Neh">Nehemiah</entry>
-  <entry groupName="Old Testament" osisId="Esth">Esther</entry>
-  <entry groupName="Old Testament" osisId="Job">Job</entry>
-  <entry groupName="Old Testament" osisId="Ps">Psalms</entry>
-  <entry groupName="Old Testament" osisId="Prov">Proverbs</entry>
-  <entry groupName="Old Testament" osisId="Eccl">Ecclesiastes</entry>
-  <entry groupName="Old Testament" osisId="Song">Song of Songs</entry>
-  <entry groupName="Old Testament" osisId="Isa">Isaiah</entry>
-  <entry groupName="Old Testament" osisId="Jer">Jeremiah</entry>
-  <entry groupName="Old Testament" osisId="Lam">Lamentations</entry>
-  <entry groupName="Old Testament" osisId="Ezek">Ezekiel</entry>
-  <entry groupName="Old Testament" osisId="Dan">Daniel</entry>
-  <entry groupName="Old Testament" osisId="Hos">Hosea</entry>
-  <entry groupName="Old Testament" osisId="Joel">Joel</entry>
-  <entry groupName="Old Testament" osisId="Amos">Amos</entry>
-  <entry groupName="Old Testament" osisId="Obad">Obadiah</entry>
-  <entry groupName="Old Testament" osisId="Jonah">Jonah</entry>
-  <entry groupName="Old Testament" osisId="Mic">Micah</entry>
-  <entry groupName="Old Testament" osisId="Nah">Nahum</entry>
-  <entry groupName="Old Testament" osisId="Hab">Habakkuk</entry>
-  <entry groupName="Old Testament" osisId="Zeph">Zephaniah</entry>
-  <entry groupName="Old Testament" osisId="Hag">Haggai</entry>
-  <entry groupName="Old Testament" osisId="Zech">Zechariah</entry>
-  <entry groupName="Old Testament" osisId="Mal">Malachi</entry>
-</xsl:variable>
-<xsl:variable name="osisBookIdToNameChristian" select="common:node-set($osisBookIdToNameChristianXml)"/>
-
-<xsl:variable name="osisBookIdToNameJewishXml">
-  <entry groupName="תורה"   osisId="Gen">בראשית</entry>
-  <entry groupName="תורה"   osisId="Exod">שמות</entry>
-  <entry groupName="תורה"   osisId="Lev">ויקרא</entry>
-  <entry groupName="תורה"   osisId="Num">במדבר</entry>
-  <entry groupName="תורה"   osisId="Deut">דברים</entry>
-  <entry groupName="נביאים" osisId="Josh">יהושע</entry>
-  <entry groupName="נביאים" osisId="Judg">שופטים</entry>
-  <entry groupName="נביאים" osisId="1Sam">שמואל א</entry>
-  <entry groupName="נביאים" osisId="2Sam">שמואל ב</entry>
-  <entry groupName="נביאים" osisId="1Kgs">מלכים א</entry>
-  <entry groupName="נביאים" osisId="2Kgs">מלכים ב</entry>
-  <entry groupName="נביאים" osisId="Isa">ישעיהו</entry>
-  <entry groupName="נביאים" osisId="Jer">ירמיהו</entry>
-  <entry groupName="נביאים" osisId="Ezek">יחזקאל</entry>
-  <entry groupName="נביאים" osisId="Hos">הושע</entry>
-  <entry groupName="נביאים" osisId="Joel">יואל</entry>
-  <entry groupName="נביאים" osisId="Amos">עמוס</entry>
-  <entry groupName="נביאים" osisId="Obad">עובדיה</entry>
-  <entry groupName="נביאים" osisId="Jonah">יונה</entry>
-  <entry groupName="נביאים" osisId="Mic">מיכה</entry>
-  <entry groupName="נביאים" osisId="Nah">נחום</entry>
-  <entry groupName="נביאים" osisId="Hab">חבקוק</entry>
-  <entry groupName="נביאים" osisId="Zeph">צפניה</entry>
-  <entry groupName="נביאים" osisId="Hag">חגי</entry>
-  <entry groupName="נביאים" osisId="Zech">זכריה</entry>
-  <entry groupName="נביאים" osisId="Mal">מלאכי</entry>
-  <entry groupName="כתובים" osisId="Ps">תהילים</entry>
-  <entry groupName="כתובים" osisId="Prov">משלי</entry>
-  <entry groupName="כתובים" osisId="Job">איוב</entry>
-  <entry groupName="כתובים" osisId="Song">שיר השירים</entry>
-  <entry groupName="כתובים" osisId="Ruth">רות</entry>
-  <entry groupName="כתובים" osisId="Lam">איכה</entry>
-  <entry groupName="כתובים" osisId="Eccl">קהלת</entry>
-  <entry groupName="כתובים" osisId="Esth">אסתר</entry>
-  <entry groupName="כתובים" osisId="Dan">דניאל</entry>
-  <entry groupName="כתובים" osisId="Ezra">עזרא</entry>
-  <entry groupName="כתובים" osisId="Neh">נחמיה</entry>
-  <entry groupName="כתובים" osisId="1Chr">דברי הימים א</entry>
-  <entry groupName="כתובים" osisId="2Chr">דברי הימים ב</entry>
-</xsl:variable>
-<xsl:variable name="osisBookIdToNameJewish" select="common:node-set($osisBookIdToNameJewishXml)"/>
 
 <xsl:variable name="osisLanguageToIsoCodeXml">
   <entry id="H">he</entry>
@@ -281,12 +196,6 @@
   <xsl:element name="book">
     <xsl:attribute name="osisBookId">
       <xsl:value-of select="$osisBookId"/>
-    </xsl:attribute>
-    <xsl:attribute name="bookPathJewish">
-      <xsl:value-of select="concat($osisBookIdToNameJewish/entry[@osisId = $osisBookId]/@groupName, '/', $osisBookIdToNameJewish/entry[@osisId = $osisBookId])"/>
-    </xsl:attribute>
-    <xsl:attribute name="bookPathChristian">
-      <xsl:value-of select="concat($osisBookIdToNameChristian/entry[@osisId = $osisBookId]/@groupName, '/', $osisBookIdToNameChristian/entry[@osisId = $osisBookId])"/>
     </xsl:attribute>
     <xsl:apply-templates/>
   </xsl:element>

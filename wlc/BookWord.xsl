@@ -26,6 +26,112 @@
 
 <!--                               -->
 
+<xsl:variable name="osisBookIdToNameChristianXml">
+  <group>
+    <name>Old Testament</name>
+    <entry osisId="Gen">Genesis</entry>
+    <entry osisId="Exod">Exodus</entry>
+    <entry osisId="Lev">Leviticus</entry>
+    <entry osisId="Num">Numbers</entry>
+    <entry osisId="Deut">Deuteronomy</entry>
+    <entry osisId="Josh">Joshua</entry>
+    <entry osisId="Judg">Judges</entry>
+    <entry osisId="Ruth">Ruth</entry>
+    <entry osisId="1Sam">1 Samuel</entry>
+    <entry osisId="2Sam">2 Samuel</entry>
+    <entry osisId="1Kgs">1 Kings</entry>
+    <entry osisId="2Kgs">1 Kings</entry>
+    <entry osisId="1Chr">1 Chronicles</entry>
+    <entry osisId="2Chr">2 Chronicles</entry>
+    <entry osisId="Ezra">Ezra</entry>
+    <entry osisId="Neh">Nehemiah</entry>
+    <entry osisId="Esth">Esther</entry>
+    <entry osisId="Job">Job</entry>
+    <entry osisId="Ps">Psalms</entry>
+    <entry osisId="Prov">Proverbs</entry>
+    <entry osisId="Eccl">Ecclesiastes</entry>
+    <entry osisId="Song">Song of Songs</entry>
+    <entry osisId="Isa">Isaiah</entry>
+    <entry osisId="Jer">Jeremiah</entry>
+    <entry osisId="Lam">Lamentations</entry>
+    <entry osisId="Ezek">Ezekiel</entry>
+    <entry osisId="Dan">Daniel</entry>
+    <entry osisId="Hos">Hosea</entry>
+    <entry osisId="Joel">Joel</entry>
+    <entry osisId="Amos">Amos</entry>
+    <entry osisId="Obad">Obadiah</entry>
+    <entry osisId="Jonah">Jonah</entry>
+    <entry osisId="Mic">Micah</entry>
+    <entry osisId="Nah">Nahum</entry>
+    <entry osisId="Hab">Habakkuk</entry>
+    <entry osisId="Zeph">Zephaniah</entry>
+    <entry osisId="Hag">Haggai</entry>
+    <entry osisId="Zech">Zechariah</entry>
+    <entry osisId="Mal">Malachi</entry>
+  </group>
+</xsl:variable>
+<xsl:variable name="osisBookIdToNameChristian" select="common:node-set($osisBookIdToNameChristianXml)"/>
+
+<xsl:variable name="osisBookIdToNameJewishXml">
+  <group>
+    <name>תּוֹרָה</name>
+    <entry osisId="Gen">בְּרֵאשִׁית</entry>
+    <entry osisId="Exod">שְׁמֹות</entry>
+    <entry osisId="Lev">וַיִּקְרָא</entry>
+    <entry osisId="Num">בְּמִדְבַּר</entry>
+    <entry osisId="Deut">דְּבָרִים</entry>
+  </group>
+  <group>
+    <name>נְבִיאִים</name>
+    <!-- נביאים ראשונים -->
+    <entry osisId="Josh">יְהוֹשֻעַ</entry>
+    <entry osisId="Judg">שֹׁפְטִים</entry>
+    <entry osisId="1Sam">שְׁמוּאֵל א</entry>
+    <entry osisId="2Sam">שְׁמוּאֵל ב</entry>
+    <entry osisId="1Kgs">מְלָכִים א</entry>
+    <entry osisId="2Kgs">מְלָכִים ב</entry>
+    <!-- נביאים אחרונים -->
+    <entry osisId="Isa">יְשַׁעְיָהוּ</entry>
+    <entry osisId="Jer">יִרְמְיָהוּ</entry>
+    <entry osisId="Ezek">יְחֶזְקֵאל</entry>
+    <!-- תרי עשר -->
+    <entry osisId="Hos">הוֹשֵׁעַ</entry>
+    <entry osisId="Joel">יוֹאֵל</entry>
+    <entry osisId="Amos">עָמוֹס</entry>
+    <entry osisId="Obad">עֹבַדְיָה</entry>
+    <entry osisId="Jonah">יוֹנָה</entry>
+    <entry osisId="Mic">מִיכָה</entry>
+    <entry osisId="Nah">נַחוּם</entry>
+    <entry osisId="Hab">חֲבַקּוּק</entry>
+    <entry osisId="Zeph">צְפַנְיָה</entry>
+    <entry osisId="Hag">חַגַּי</entry>
+    <entry osisId="Zech">זְכַרְיָה</entry>
+    <entry osisId="Mal">מַלְאָכִי</entry>
+  </group>
+  <group>
+    <name>כְּתוּבִים</name>
+    <!-- סִפְרֵי אֶמֶת -->
+    <entry osisId="Ps">תְהִלִּים</entry>
+    <entry osisId="Prov">מִשְׁלֵי</entry>
+    <entry osisId="Job">אִיּוֹב</entry>
+    <!-- חמש מגילות -->
+    <entry osisId="Song">שִׁיר הַשִּׁירִים</entry>
+    <entry osisId="Ruth">רוּת</entry>
+    <entry osisId="Lam">אֵיכָה</entry>
+    <entry osisId="Eccl">קֹהֶלֶת</entry>
+    <entry osisId="Esth">אֶסְתֵר</entry>
+    <!-- -->
+    <entry osisId="Dan">דָּנִיֵּאל</entry>
+    <entry osisId="Ezra">עֶזְרָא</entry>
+    <entry osisId="Neh">נְחֶמְיָה</entry>
+    <entry osisId="1Chr">דִּבְרֵי הַיָּמִים א</entry>
+    <entry osisId="2Chr">דִּבְרֵי הַיָּמִים ב</entry>
+  </group>
+</xsl:variable>
+<xsl:variable name="osisBookIdToNameJewish" select="common:node-set($osisBookIdToNameJewishXml)"/>
+
+<!--                               -->
+
 <xsl:variable name="isoLangCodeToOsisLanguageXml">
   <entry id="he">H</entry>
   <entry id="arc">A</entry>
@@ -58,10 +164,16 @@
 <!--                               -->
 
 <xsl:template match="/book">
-  <xsl:copy>
-    <xsl:copy-of select="@*"/>
+  <xsl:element name="book">
+    <xsl:copy-of select="@osisBookId"/>
+    <xsl:attribute name="bookPathJewish">
+      <xsl:value-of select="concat($osisBookIdToNameJewish/group/entry[@osisId = current()/@osisBookId]/../name, '/', $osisBookIdToNameJewish/group/entry[@osisId = current()/@osisBookId])"/>
+    </xsl:attribute>
+    <xsl:attribute name="bookPathChristian">
+      <xsl:value-of select="concat($osisBookIdToNameChristian/group/entry[@osisId = current()/@osisBookId]/../name, '/', $osisBookIdToNameChristian/group/entry[@osisId = current()/@osisBookId])"/>
+    </xsl:attribute>
     <xsl:apply-templates/>
-  </xsl:copy>
+  </xsl:element>
 </xsl:template>
 
 <!--                               -->

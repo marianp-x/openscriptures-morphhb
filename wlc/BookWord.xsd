@@ -454,6 +454,18 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="BookPathJewishType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(תּוֹרָה|נְבִיאִים|כְּתוּבִים)/\p{IsHebrew}+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="BookPathChristianType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="Old Testament/([12] )?[A-Za-z ]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="VersePathType">
     <xs:restriction base="xs:string">
       <xs:pattern value="\d+/\d+"/>

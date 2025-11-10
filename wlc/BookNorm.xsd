@@ -19,8 +19,6 @@
         <xs:element name="token" type="TokenType" minOccurs="1" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="osisBookId" type="OsisBookIdType" use="required"/>
-      <xs:attribute name="bookPathJewish" type="xs:string" use="required"/>
-      <xs:attribute name="bookPathChristian" type="xs:string" use="required"/>
     </xs:complexType>
   </xs:element>
 
