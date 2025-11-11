@@ -19,8 +19,8 @@
         <xs:element name="token" type="TokenType" minOccurs="1" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="osisBookId" type="OsisBookIdType" use="required"/>
-      <xs:attribute name="bookPathJewish" type="xs:string" use="required"/>
-      <xs:attribute name="bookPathChristian" type="xs:string" use="required"/>
+      <xs:attribute name="bookPathJewish" type="BookPathJewishType" use="required"/>
+      <xs:attribute name="bookPathChristian" type="BookPathChristianType" use="required"/>
     </xs:complexType>
   </xs:element>
 
@@ -456,7 +456,7 @@
 
   <xs:simpleType name="BookPathJewishType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="(תּוֹרָה|נְבִיאִים|כְּתוּבִים)/\p{IsHebrew}+"/>
+      <xs:pattern value="(תּוֹרָה|נְבִיאִים|כְּתוּבִים)/[\p{IsHebrew} ]+"/>
     </xs:restriction>
   </xs:simpleType>
 
