@@ -178,11 +178,72 @@
 
 <!--                               -->
 
-<xsl:template match="/book/token">
-  <xsl:copy>
-    <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
-    <xsl:apply-templates/>
-  </xsl:copy>
+<xsl:template match="/book/token[@lang = 'he']">
+  <xsl:variable name="wordSpeechXml">
+    <xsl:call-template name="tokenSpeech">
+      <xsl:with-param name="osisWordId" select="@osisWordId"/>
+      <xsl:with-param name="token" select="."/>
+    </xsl:call-template>
+  </xsl:variable>
+  <xsl:variable name="wordSpeech" select="common:node-set($wordSpeechXml)"/>
+  <xsl:variable name="wordSpeechName" select="$wordSpeech/speech[1]/@name"/>
+  <xsl:variable name="wordSpeechType" select="$wordSpeech/speech[1]/@type"/>
+
+  <xsl:choose>
+    <xsl:when test="$wordSpeechName = 'verb'">
+      <xsl:element name="hebrew_word_verb">
+        <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'noun'">
+      <xsl:element name="hebrew_word_noun">
+        <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'pronoun'">
+      <xsl:element name="hebrew_word_pronoun">
+        <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'adjective'">
+      <xsl:element name="hebrew_word_adjective">
+        <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'adverb'">
+      <xsl:element name="hebrew_word_adverb">
+        <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'particle'">
+      <xsl:element name="hebrew_word_particle">
+        <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'preposition'">
+      <xsl:element name="hebrew_word_preposition">
+        <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'punctuation'">
+      <xsl:element name="hebrew_punctuation">
+        <xsl:copy-of select="@versePathJewish|@versePathChristian|@osisWordId"/>
+        <xsl:attribute name="role">
+          <xsl:value-of select="punctuation[1]/@type"/>
+        </xsl:attribute>
+        <xsl:value-of select="punctuation/text()"/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:otherwise>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <!--                               -->
@@ -220,13 +281,98 @@
 
 <!--                               -->
 
-<xsl:template match="/book/token/particle[../@lang = 'he']">
-  <xsl:element name="hebrew_particle">
+<xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'affirmation']">
+  <xsl:element name="hebrew_particle_affirmation">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
-    <xsl:attribute name="role">
-      <xsl:value-of select="@type"/>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'definite article']">
+  <xsl:element name="hebrew_particle_definite_article">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'exhortation']">
+  <xsl:element name="hebrew_particle_exhortation">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'interrogative']">
+  <xsl:element name="hebrew_particle_interrogative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'interjection']">
+  <xsl:element name="hebrew_particle_interjection">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'demonstrative']">
+  <xsl:element name="hebrew_particle_demonstrative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'negative']">
+  <xsl:element name="hebrew_particle_negative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'direct object marker']">
+  <xsl:element name="hebrew_particle_direct_object_marker">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'relative']">
+  <xsl:element name="hebrew_particle_relative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -777,22 +923,22 @@
 
     <!-- prefixes that can also be standalone -->
 
-    <xsl:when test="$token/conjunction">
+    <xsl:when test="$token/particle[not(following-sibling::preposition) and not(following-sibling::conjunction)]">
       <xsl:element name="speech">
-        <xsl:attribute name="name"><xsl:text>conjunction</xsl:text></xsl:attribute>
-        <xsl:attribute name="type"><xsl:value-of select="$token/conjunction/@type"/></xsl:attribute>
+        <xsl:attribute name="name"><xsl:text>particle</xsl:text></xsl:attribute>
+        <xsl:attribute name="type"><xsl:value-of select="$token/particle/@type"/></xsl:attribute>
       </xsl:element>
     </xsl:when>
-    <xsl:when test="$token/preposition">
+    <xsl:when test="$token/preposition[not(following-sibling::conjunction)]">
       <xsl:element name="speech">
         <xsl:attribute name="name"><xsl:text>preposition</xsl:text></xsl:attribute>
         <xsl:attribute name="type"><xsl:value-of select="$token/preposition/@type"/></xsl:attribute>
       </xsl:element>
     </xsl:when>
-    <xsl:when test="$token/particle">
+    <xsl:when test="$token/*[name() = 'conjunction']">
       <xsl:element name="speech">
-        <xsl:attribute name="name"><xsl:text>particle</xsl:text></xsl:attribute>
-        <xsl:attribute name="type"><xsl:value-of select="$token/particle/@type"/></xsl:attribute>
+        <xsl:attribute name="name"><xsl:text>conjunction</xsl:text></xsl:attribute>
+        <xsl:attribute name="type"><xsl:value-of select="$token/conjunction/@type"/></xsl:attribute>
       </xsl:element>
     </xsl:when>
 
@@ -804,12 +950,14 @@
         <xsl:attribute name="type"><xsl:value-of select="$token/punctuation/@type"/></xsl:attribute>
       </xsl:element>
     </xsl:when>
+
     <xsl:otherwise>
       <xsl:message terminate="yes">
         <xsl:value-of select="concat('ERROR[', $osisWordId, ']: ')"/>
         <xsl:value-of select="concat('Unexpected speech type.')"/>
       </xsl:message>
     </xsl:otherwise>
+
   </xsl:choose>
 </xsl:template>
 

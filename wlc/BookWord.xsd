@@ -15,8 +15,17 @@
 
   <xs:element name="book">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element name="token" type="TokenType" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:choice>
+          <xs:element ref="hebrew_word_verb"/>
+          <xs:element ref="hebrew_word_noun"/>
+          <xs:element ref="hebrew_word_pronoun"/>
+          <xs:element ref="hebrew_word_adjective"/>
+          <xs:element ref="hebrew_word_adverb"/>
+          <xs:element ref="hebrew_word_particle"/>
+          <xs:element ref="hebrew_word_preposition"/>
+          <xs:element ref="hebrew_punctuation"/>
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="osisBookId" type="OsisBookIdType" use="required"/>
       <xs:attribute name="bookPathJewish" type="BookPathJewishType" use="required"/>
@@ -24,62 +33,254 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:complexType name="TokenType">
-    <xs:choice minOccurs="1" maxOccurs="1">
-      <xs:sequence>
-        <!-- TODO: Enforce the requirement for specific sequencing of these 3 prefixes: -->
-        <xs:choice minOccurs="0" maxOccurs="2">
-          <xs:element ref="hebrew_conjunction"/>
-          <xs:choice>
-            <xs:element ref="hebrew_preposition"/>
-            <xs:element ref="hebrew_preposition_definite"/>
-          </xs:choice>
-          <xs:element ref="hebrew_particle"/>
-        </xs:choice>
-        <xs:choice minOccurs="0">
-          <xs:element ref="hebrew_conjunction"/>
-          <xs:choice>
-            <xs:element ref="hebrew_preposition"/>
-            <xs:element ref="hebrew_preposition_definite"/>
-          </xs:choice>
-          <xs:element ref="hebrew_particle"/>
-        </xs:choice>
-        <xs:choice minOccurs="0">
-          <xs:element ref="hebrew_noun"/>
-          <xs:element ref="hebrew_noun_gentilic"/>
-          <xs:element ref="hebrew_noun_proper"/>
-          <xs:element ref="hebrew_pronoun_personal"/>
-          <xs:element ref="hebrew_pronoun_demonstrative"/>
-          <xs:element ref="hebrew_pronoun_indefinite"/>
-          <xs:element ref="hebrew_adjective"/>
-          <xs:element ref="hebrew_adjective_gentilic"/>
-          <xs:element ref="hebrew_adjective_number"/>
-          <xs:element ref="hebrew_adverb"/>
-          <xs:element ref="hebrew_verb_perfect"/>
-          <xs:element ref="hebrew_verb_imperfect"/>
-          <xs:element ref="hebrew_verb_imperative"/>
-          <xs:element ref="hebrew_verb_cohortative"/>
-          <xs:element ref="hebrew_verb_jussive"/>
-          <xs:element ref="hebrew_verb_participal"/>
-          <xs:element ref="hebrew_verb_infinitive"/>
-        </xs:choice>
-        <xs:element ref="hebrew_suffix_paragogic_nun" minOccurs="0"/>
-        <xs:element ref="hebrew_suffix_pronominal" minOccurs="0"/>
-        <xs:choice minOccurs="0">
-          <xs:element ref="hebrew_suffix_directional_he"/>
-          <xs:element ref="hebrew_suffix_paragogic_he"/>
-        </xs:choice>
-        <xs:element ref="hebrew_particle" minOccurs="0" maxOccurs="1"/>   <!-- TODO: Hebrew Jonah 1:7(32BU7): "מִ֛י" -->
-      </xs:sequence>
-      <xs:sequence>
-        <xs:element ref="hebrew_punctuation"/>
-      </xs:sequence>
-    </xs:choice>
+  <!-- Words -->
+
+  <xs:complexType name="HebrewWordType">
     <xs:attribute name="versePathJewish" type="VersePathType" use="required"/>
     <xs:attribute name="versePathChristian" type="VersePathType" use="required"/>
-    <!-- Not needed: <xs:attribute ref="lang" use="required"/> -->
-    <xs:attribute name="osisWordId" type="OsisWordIdType" use="optional"/>
+    <xs:attribute name="osisWordId" type="OsisWordIdType" use="required"/>
   </xs:complexType>
+
+  <xs:element name="hebrew_word_verb">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HebrewWordType">
+          <xs:sequence>
+            <xs:element ref="hebrew_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_particle_interrogative"/>
+              <xs:element ref="hebrew_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+              <!-- Requires allowing for mixing any order of definitive article and preposition, because:
+
+                   Judges 14:14 word (07tLC) uses preposition => definite article order, but
+                   Judges 14:15 word (07mL7) uses definite article => preposition order (with infinitive)
+                -->
+              <xs:element ref="hebrew_preposition"/>
+              <xs:element ref="hebrew_preposition_definite"/>
+              <xs:element ref="hebrew_particle_definite_article"/>
+              <xs:element ref="hebrew_particle_relative"/>
+            </xs:choice>
+            <xs:choice>
+              <xs:element ref="hebrew_verb_perfect"/>
+              <xs:element ref="hebrew_verb_imperfect"/>
+              <xs:element ref="hebrew_verb_imperative"/>
+              <xs:element ref="hebrew_verb_cohortative"/>
+              <xs:element ref="hebrew_verb_jussive"/>
+              <xs:element ref="hebrew_verb_participal"/>
+              <xs:element ref="hebrew_verb_infinitive"/>
+            </xs:choice>
+            <xs:element ref="hebrew_suffix_paragogic_nun" minOccurs="0"/>
+            <xs:element ref="hebrew_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_suffix_directional_he"/>
+              <xs:element ref="hebrew_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_word_noun">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HebrewWordType">
+          <xs:sequence>
+            <xs:element ref="hebrew_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_particle_interrogative"/>
+              <xs:element ref="hebrew_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+              <!-- The preposition and relative particle are used in any order: -->
+              <xs:element ref="hebrew_preposition"/>
+              <xs:element ref="hebrew_preposition_definite"/>
+              <xs:element ref="hebrew_particle_relative"/>
+            </xs:choice>
+            <xs:element ref="hebrew_particle_definite_article" minOccurs="0"/>
+            <xs:choice>
+              <xs:element ref="hebrew_noun"/>
+              <xs:element ref="hebrew_noun_gentilic"/>
+              <xs:element ref="hebrew_noun_proper"/>
+            </xs:choice>
+            <xs:element ref="hebrew_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_suffix_directional_he"/>
+              <xs:element ref="hebrew_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_word_pronoun">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HebrewWordType">
+          <xs:sequence>
+            <xs:element ref="hebrew_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_particle_interrogative"/>
+              <xs:element ref="hebrew_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_preposition"/>
+              <xs:element ref="hebrew_preposition_definite"/>
+              <xs:element ref="hebrew_particle_relative"/>
+              <xs:element ref="hebrew_particle_definite_article"/>
+            </xs:choice>
+            <xs:choice>
+              <xs:element ref="hebrew_pronoun_personal"/>
+              <xs:element ref="hebrew_pronoun_demonstrative"/>
+              <xs:element ref="hebrew_pronoun_indefinite"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_word_adjective">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HebrewWordType">
+          <xs:sequence>
+            <xs:element ref="hebrew_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_particle_interrogative"/>
+              <xs:element ref="hebrew_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+              <!-- The preposition and relative particle are used in any order: -->
+              <xs:element ref="hebrew_preposition"/>
+              <xs:element ref="hebrew_preposition_definite"/>
+              <xs:element ref="hebrew_particle_relative"/>
+            </xs:choice>
+            <xs:element ref="hebrew_particle_definite_article" minOccurs="0"/>
+            <xs:choice>
+              <xs:element ref="hebrew_adjective"/>
+              <xs:element ref="hebrew_adjective_gentilic"/>
+              <xs:element ref="hebrew_adjective_number"/>
+            </xs:choice>
+            <xs:element ref="hebrew_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_suffix_directional_he"/>
+              <xs:element ref="hebrew_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_word_adverb">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HebrewWordType">
+          <xs:sequence>
+            <xs:element ref="hebrew_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_particle_interrogative"/>
+              <xs:element ref="hebrew_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+              <xs:element ref="hebrew_preposition"/>
+              <xs:element ref="hebrew_preposition_definite"/>
+              <xs:element ref="hebrew_particle_relative"/>
+            </xs:choice>
+            <xs:element ref="hebrew_particle_definite_article" minOccurs="0"/>
+            <xs:element ref="hebrew_adverb"/>
+            <xs:element ref="hebrew_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_suffix_directional_he"/>
+              <xs:element ref="hebrew_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_word_particle">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HebrewWordType">
+          <xs:sequence>
+            <xs:element ref="hebrew_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_particle_interrogative"/>
+              <xs:element ref="hebrew_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="3">
+              <!-- The preposition and relative particle are used in any order: -->
+              <xs:element ref="hebrew_preposition"/>
+              <xs:element ref="hebrew_preposition_definite"/>
+              <xs:element ref="hebrew_particle_relative"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+            <!-- 2x: hebrew_particle_relative + hebrew_particle_negative -->
+              <xs:element ref="hebrew_particle_affirmation"/>
+              <xs:element ref="hebrew_particle_demonstrative"/>
+              <xs:element ref="hebrew_particle_direct_object_marker"/>
+              <xs:element ref="hebrew_particle_exhortation"/>
+              <xs:element ref="hebrew_particle_interjection"/>
+              <xs:element ref="hebrew_particle_interrogative"/>
+              <xs:element ref="hebrew_particle_negative"/>
+              <xs:element ref="hebrew_particle_relative"/>
+            </xs:choice>
+            <xs:element ref="hebrew_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_suffix_directional_he"/>
+              <xs:element ref="hebrew_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_word_preposition">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="HebrewWordType">
+          <xs:sequence>
+            <xs:element ref="hebrew_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="hebrew_particle_definite_article"/>
+              <xs:element ref="hebrew_particle_interrogative"/>
+              <xs:element ref="hebrew_particle_interjection"/>
+            </xs:choice>
+            <xs:choice maxOccurs="3">
+            <!-- 1 Kings 7:32 (11hPW): 3 prepositions -->
+            <!-- prepositions and relative particles are used in any order -->
+              <xs:element ref="hebrew_preposition"/>
+              <xs:element ref="hebrew_preposition_definite"/>
+              <xs:element ref="hebrew_particle_relative"/>
+            </xs:choice>
+            <xs:element ref="hebrew_suffix_pronominal" minOccurs="0"/>
+            <xs:element ref="hebrew_suffix_directional_he" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_punctuation">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="versePathJewish" type="VersePathType" use="required"/>
+          <xs:attribute name="versePathChristian" type="VersePathType" use="required"/>
+          <xs:attribute name="role" type="WordPartHebrewPunctuationFormType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Word part elements -->
 
   <xs:attribute name="lang">
     <xs:simpleType>
@@ -115,12 +316,74 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="hebrew_particle">
+  <xs:element name="hebrew_particle_affirmation">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma">
-          <xs:attribute name="role" type="HebrewParticleFormType" use="required"/>
-        </xs:extension>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_particle_definite_article">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_particle_exhortation">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_particle_interrogative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_particle_interjection">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_particle_demonstrative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_particle_negative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_particle_direct_object_marker">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_particle_relative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -135,7 +398,6 @@
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
-
 
   <xs:element name="hebrew_noun_gentilic">
     <xs:complexType>
@@ -334,16 +596,6 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:string"/>
-      </xs:simpleContent>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="hebrew_punctuation">
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="xs:string">
-          <xs:attribute name="role" type="WordPartHebrewPunctuationFormType" use="required"/>
-        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -606,14 +858,20 @@
   <xs:simpleType name="HebrewParticleFormType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="affirmation"/>
+      <!--
       <xs:enumeration value="definite article"/>
+        -->
       <xs:enumeration value="demonstrative"/>
       <xs:enumeration value="direct object marker"/>
       <xs:enumeration value="exhortation"/>
       <xs:enumeration value="interjection"/>
+      <!--
       <xs:enumeration value="interrogative"/>
+        -->
       <xs:enumeration value="negative"/>
+      <!--
       <xs:enumeration value="relative"/>
+        -->
     </xs:restriction>
   </xs:simpleType>
 
