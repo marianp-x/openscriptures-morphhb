@@ -90,7 +90,14 @@
             </xsl:otherwise>
           </xsl:choose>
           <xsl:apply-templates select="@id"/>
-          <xsl:value-of select="text()"/>
+          <xsl:choose>
+            <xsl:when test="normalize-space($fix/text) != ''">
+              <xsl:value-of select="$fix/text/text()"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="text()"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:element>
       </xsl:element>
     </xsl:when>

@@ -28,6 +28,8 @@ while(<>) {
     my $morphNote = $fields[3];
     my $lemma = $fields[4];
     my $lemmaNote = $fields[5];
+    my $text = $fields[6];
+    my $textNote = $fields[7];
     print "  <fix-word osisBookId=\"${bookId}\" osisId=\"${wordId}\">";
     if (defined($morph) && length($morph) gt 0) {
         print "<morph>${morph}</morph>";
@@ -40,6 +42,12 @@ while(<>) {
     }
     if (defined($lemmaNote) && length($lemmaNote) gt 0) {
         print "<lemma-note>${lemmaNote}</lemma-note>";
+    }
+    if (defined($text) && length($text) gt 0) {
+        print "<text>${text}</text>";
+    }
+    if (defined($textNote) && length($textNote) gt 0) {
+        print "<text-note>${textNote}</text-note>";
     }
     print "</fix-word>\n";
 }
