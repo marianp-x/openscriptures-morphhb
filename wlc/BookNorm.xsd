@@ -50,8 +50,8 @@
         <xs:element name="punctuation" type="PunctuationType"/>
       </xs:sequence>
     </xs:choice>
-    <xs:attribute name="versePathJewish" type="VersePathType" use="required"/>
-    <xs:attribute name="versePathChristian" type="VersePathType" use="required"/>
+    <xs:attribute name="osisVerseId" type="OsisVerseIdType" use="required"/>
+    <xs:attribute name="osisKjvVerseId" type="OsisVerseIdType" use="optional"/>
     <xs:attribute ref="lang" use="required"/>
     <xs:attribute name="osisWordId" type="OsisWordIdType" use="optional"/>
     <xs:attribute name="lemma" type="WordLemmaType" use="optional"/>
@@ -260,6 +260,12 @@
       </xs:restriction>
     </xs:simpleType>
   </xs:attribute>
+
+  <xs:simpleType name="OsisVerseIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(Gen|Exod|Lev|Num|Deut|Josh|Judg|Ruth|1Sam|2Sam|1Kgs|2Kgs|1Chr|2Chr|Ezra|Neh|Esth|Job|Ps|Prov|Eccl|Song|Isa|Jer|Lam|Ezek|Dan|Hos|Joel|Amos|Obad|Jonah|Mic|Nah|Hab|Zeph|Hag|Zech|Mal)\.\d{1,3}\.\d{1,3}(![ab])?"/>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:simpleType name="OsisWordIdType">
     <xs:restriction base="xs:string">

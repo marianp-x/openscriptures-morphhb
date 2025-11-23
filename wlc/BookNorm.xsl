@@ -210,16 +210,14 @@
     <xsl:variable name="lang" select="substring(@morph, 1, 1)"/>
     <xsl:variable name="langIsoCode" select="$osisLanguageToIsoCode/entry[@id = $lang]"/>
 
-    <xsl:attribute name="versePathJewish">
-      <xsl:call-template name="getVersePathJewish">
-        <xsl:with-param name="token" select="."/>
-      </xsl:call-template>
+    <xsl:attribute name="osisVerseId">
+      <xsl:value-of select="ancestor::osis:verse/@osisID"/>
     </xsl:attribute>
-    <xsl:attribute name="versePathChristian">
-      <xsl:call-template name="getVersePathKjv">
-        <xsl:with-param name="token" select="."/>
-      </xsl:call-template>
-    </xsl:attribute>
+    <xsl:if test="normalize-space(ancestor::osis:verse/*[position() = 1 and name() = 'note']) != ''">
+      <xsl:attribute name="osisKjvVerseId">
+        <xsl:value-of select="substring-after(ancestor::osis:verse/*[position() = 1 and name() = 'note'], 'KJV:')"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:attribute name="lang">
       <xsl:value-of select="$langIsoCode"/>
     </xsl:attribute>
@@ -597,16 +595,14 @@
 
 <xsl:template match="osis:seg[not(@subType)]">
   <xsl:element name="token">
-    <xsl:attribute name="versePathJewish">
-      <xsl:call-template name="getVersePathJewish">
-        <xsl:with-param name="token" select="."/>
-      </xsl:call-template>
+    <xsl:attribute name="osisVerseId">
+      <xsl:value-of select="ancestor::osis:verse/@osisID"/>
     </xsl:attribute>
-    <xsl:attribute name="versePathChristian">
-      <xsl:call-template name="getVersePathKjv">
-        <xsl:with-param name="token" select="."/>
-      </xsl:call-template>
-    </xsl:attribute>
+    <xsl:if test="normalize-space(ancestor::osis:verse/*[position() = 1 and name() = 'note']) != ''">
+      <xsl:attribute name="osisKjvVerseId">
+        <xsl:value-of select="substring-after(ancestor::osis:verse/*[position() = 1 and name() = 'note'], 'KJV:')"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:attribute name="lang">
       <xsl:value-of select="'he'"/>
     </xsl:attribute>
@@ -641,71 +637,6 @@
     </xsl:element>
 
   </xsl:element>
-
-</xsl:template>
-
-<!--                               -->
-
-<xsl:template name="getVersePathJewish">
-  <xsl:param name="token"/>
-
-  <xsl:variable name="verseIdJew">
-    <xsl:value-of select="$token/ancestor::osis:verse/@osisID"/>
-  </xsl:variable>
-  <xsl:variable name="chapterNumJew">
-    <xsl:value-of select="substring-before(substring-after($verseIdJew, '.'), '.')"/>
-  </xsl:variable>
-  <xsl:variable name="verseNumJew">
-    <xsl:value-of select="substring-after(substring-after($verseIdJew, '.'), '.')"/>
-  </xsl:variable>
-
-  <xsl:value-of select="concat($chapterNumJew, '/', $verseNumJew)"/>
-
-</xsl:template>
-
-<!--                               -->
-
-<xsl:template name="getVersePathKjv">
-  <xsl:param name="token"/>
-
-  <xsl:variable name="verseIdJew">
-    <xsl:value-of select="$token/ancestor::osis:verse/@osisID"/>
-  </xsl:variable>
-  <xsl:variable name="chapterNumJew">
-    <xsl:value-of select="substring-before(substring-after($verseIdJew, '.'), '.')"/>
-  </xsl:variable>
-  <xsl:variable name="verseNumJew">
-    <xsl:value-of select="substring-after(substring-after($verseIdJew, '.'), '.')"/>
-  </xsl:variable>
-
-  <xsl:variable name="verseIdKjv">
-    <xsl:value-of select="substring-after(ancestor::osis:verse/osis:note/text(), 'KJV:')"/>
-  </xsl:variable>
-  <xsl:variable name="chapterNumKjv">
-    <xsl:choose>
-      <xsl:when test="$verseIdKjv = ''">
-        <xsl:value-of select="$chapterNumJew"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="substring-before(substring-after($verseIdKjv, '.'), '.')"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:variable name="verseNumKjv">
-    <xsl:choose>
-      <xsl:when test="$verseIdKjv = ''">
-        <xsl:value-of select="$verseNumJew"/>
-      </xsl:when>
-      <xsl:when test="contains($verseIdKjv, '!')">
-        <xsl:value-of select="substring-before(substring-after(substring-after($verseIdKjv, '.'), '.'), '!')"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="substring-after(substring-after($verseIdKjv, '.'), '.')"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
-  <xsl:value-of select="concat($chapterNumKjv, '/', $verseNumKjv)"/>
 
 </xsl:template>
 
