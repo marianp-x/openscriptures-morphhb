@@ -400,6 +400,14 @@ Dan	27Hme	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה
 Dan	27PzC	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Dan	27ybM			c/4481	Moving Strongs number from suffix to the detached preposition.		
 Dan	27ZpQ	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
+Dan	27Dne	AC/Pi3ms	Moving from 'AC/Pi3cs' to 'AC/Pi3ms' because there is no "3cs" PGN.				
+Dan	27GD6	ANcmsc/Sp1cs	Moving from 'ANcmsc/Sp1ms' to 'ANcmsc/Sp1cs' because "1ms" PGN is invalid for pronominal suffixes.				
+Dan	27VX8	AR/Sp3fs	Moving from 'AR/Sp3cs' to 'AR/Sp3fs' because the "3cs" PGN is invalid for pronominal suffixes.				
+Dan	27CqB	AR/Sp2ms	Moving from 'AR/To' to 'AR/Sp2ms' because the 'ךְ' is not a direct object marker, but a 2ms pronominal suffix (as in word '27jFf' and others).				
+Dan	27YVx	AC/R/Pfxcs	Moving from 'AC/R/Prxcs' to 'AC/R/Pfxcs' because the 'מַן' is not a relative, but indefinite pronoun.				
+Dan	27gwY	AC/R/Pfxcs	Moving from 'AC/R/Prxcs' to 'AC/R/Pfxcs' because the 'מַן' is not a relative, but indefinite pronoun.				
+Dan	272iX	ATr	Moving from 'APrxcs' to 'ATr' because the 'דִּי' is always declared by OSHB to be a relative particle, no a relative pronoun.				
+Dan	27um2	ATr	Moving from 'APrxcs' to 'ATr' because the 'דִּי' is always declared by OSHB to be a relative particle, no a relative pronoun.				
 Deut	058Qr	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Deut	05aDm	HC/Vpi3ms	Moving from 'C/Vqj3ms' to 'C/Vpi3ms' because 'יְהִי' is Piel Imperfect.				
 Deut	05CPS			4480 a	Moving Strongs number from suffix to the detached preposition.		

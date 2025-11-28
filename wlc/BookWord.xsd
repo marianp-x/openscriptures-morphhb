@@ -25,6 +25,15 @@
           <xs:element ref="hebrew_word_particle"/>
           <xs:element ref="hebrew_word_preposition"/>
           <xs:element ref="hebrew_punctuation"/>
+
+          <xs:element ref="aramaic_word_verb"/>
+          <xs:element ref="aramaic_word_noun"/>
+          <xs:element ref="aramaic_word_pronoun"/>
+          <xs:element ref="aramaic_word_adjective"/>
+          <xs:element ref="aramaic_word_adverb"/>
+          <xs:element ref="aramaic_word_particle"/>
+          <xs:element ref="aramaic_word_preposition"/>
+          <xs:element ref="aramaic_punctuation"/>
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="osisBookId" type="OsisBookIdType" use="required"/>
@@ -35,16 +44,18 @@
 
   <!-- Words -->
 
-  <xs:complexType name="HebrewWordType">
+  <xs:complexType name="WordType">
     <xs:attribute name="versePathJewish" type="VersePathType" use="required"/>
     <xs:attribute name="versePathChristian" type="VersePathType" use="required"/>
     <xs:attribute name="osisWordId" type="OsisWordIdType" use="required"/>
   </xs:complexType>
 
+  <!-- Hebrew words -->
+
   <xs:element name="hebrew_word_verb">
     <xs:complexType>
       <xs:complexContent>
-        <xs:extension base="HebrewWordType">
+        <xs:extension base="WordType">
           <xs:sequence>
             <xs:element ref="hebrew_conjunction" minOccurs="0"/>
             <xs:choice minOccurs="0">
@@ -83,10 +94,47 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_word_verb">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="WordType">
+          <xs:sequence>
+            <xs:element ref="aramaic_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_particle_interrogative"/>
+              <xs:element ref="aramaic_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+              <xs:element ref="aramaic_preposition"/>
+              <xs:element ref="aramaic_preposition_definite"/>
+              <xs:element ref="aramaic_particle_relative"/>
+            </xs:choice>
+            <xs:choice>
+              <xs:element ref="aramaic_verb_perfect"/>
+              <xs:element ref="aramaic_verb_imperfect"/>
+              <xs:element ref="aramaic_verb_imperative"/>
+              <xs:element ref="aramaic_verb_cohortative"/>
+              <xs:element ref="aramaic_verb_jussive"/>
+              <xs:element ref="aramaic_verb_participal"/>
+              <xs:element ref="aramaic_verb_infinitive"/>
+            </xs:choice>
+            <xs:element ref="aramaic_particle_definite_article" minOccurs="0"/>
+            <xs:element ref="aramaic_suffix_paragogic_nun" minOccurs="0"/>
+            <xs:element ref="aramaic_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_suffix_directional_he"/>
+              <xs:element ref="aramaic_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_word_noun">
     <xs:complexType>
       <xs:complexContent>
-        <xs:extension base="HebrewWordType">
+        <xs:extension base="WordType">
           <xs:sequence>
             <xs:element ref="hebrew_conjunction" minOccurs="0"/>
             <xs:choice minOccurs="0">
@@ -116,10 +164,45 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_word_noun">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="WordType">
+          <xs:sequence>
+            <xs:element ref="aramaic_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_particle_direct_object_marker"/>
+              <xs:element ref="aramaic_particle_interrogative"/>
+              <xs:element ref="aramaic_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+              <!-- The preposition and relative particle are used in any order: -->
+              <xs:element ref="aramaic_preposition"/>
+              <xs:element ref="aramaic_preposition_definite"/>
+              <xs:element ref="aramaic_particle_relative"/>
+            </xs:choice>
+            <xs:choice>
+              <xs:element ref="aramaic_noun"/>
+              <xs:element ref="aramaic_noun_gentilic"/>
+              <xs:element ref="aramaic_noun_proper"/>
+              <xs:element ref="aramaic_noun_special"/>
+            </xs:choice>
+            <xs:element ref="aramaic_particle_definite_article" minOccurs="0"/>
+            <xs:element ref="aramaic_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_suffix_directional_he"/>
+              <xs:element ref="aramaic_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_word_pronoun">
     <xs:complexType>
       <xs:complexContent>
-        <xs:extension base="HebrewWordType">
+        <xs:extension base="WordType">
           <xs:sequence>
             <xs:element ref="hebrew_conjunction" minOccurs="0"/>
             <xs:choice minOccurs="0">
@@ -143,10 +226,38 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_word_pronoun">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="WordType">
+          <xs:sequence>
+            <xs:element ref="aramaic_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_particle_interrogative"/>
+              <xs:element ref="aramaic_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_preposition"/>
+              <xs:element ref="aramaic_preposition_definite"/>
+              <xs:element ref="aramaic_particle_relative"/>
+              <xs:element ref="aramaic_particle_definite_article"/>
+            </xs:choice>
+            <xs:choice>
+              <xs:element ref="aramaic_pronoun_personal"/>
+              <xs:element ref="aramaic_pronoun_demonstrative"/>
+              <xs:element ref="aramaic_pronoun_indefinite"/>
+              <xs:element ref="aramaic_pronoun_interrogative"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_word_adjective">
     <xs:complexType>
       <xs:complexContent>
-        <xs:extension base="HebrewWordType">
+        <xs:extension base="WordType">
           <xs:sequence>
             <xs:element ref="hebrew_conjunction" minOccurs="0"/>
             <xs:choice minOccurs="0">
@@ -176,10 +287,44 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_word_adjective">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="WordType">
+          <xs:sequence>
+            <xs:element ref="aramaic_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_particle_direct_object_marker"/>
+              <xs:element ref="aramaic_particle_interrogative"/>
+              <xs:element ref="aramaic_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+              <!-- The preposition and relative particle are used in any order: -->
+              <xs:element ref="aramaic_preposition"/>
+              <xs:element ref="aramaic_preposition_definite"/>
+              <xs:element ref="aramaic_particle_relative"/>
+            </xs:choice>
+            <xs:choice>
+              <xs:element ref="aramaic_adjective"/>
+              <xs:element ref="aramaic_adjective_gentilic"/>
+              <xs:element ref="aramaic_adjective_number"/>
+            </xs:choice>
+            <xs:element ref="aramaic_particle_definite_article" minOccurs="0"/>
+            <xs:element ref="aramaic_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_suffix_directional_he"/>
+              <xs:element ref="aramaic_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_word_adverb">
     <xs:complexType>
       <xs:complexContent>
-        <xs:extension base="HebrewWordType">
+        <xs:extension base="WordType">
           <xs:sequence>
             <xs:element ref="hebrew_conjunction" minOccurs="0"/>
             <xs:choice minOccurs="0">
@@ -204,10 +349,38 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_word_adverb">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="WordType">
+          <xs:sequence>
+            <xs:element ref="aramaic_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_particle_interrogative"/>
+              <xs:element ref="aramaic_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+              <xs:element ref="aramaic_preposition"/>
+              <xs:element ref="aramaic_preposition_definite"/>
+              <xs:element ref="aramaic_particle_relative"/>
+            </xs:choice>
+            <xs:element ref="aramaic_particle_definite_article" minOccurs="0"/>
+            <xs:element ref="aramaic_adverb"/>
+            <xs:element ref="aramaic_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_suffix_directional_he"/>
+              <xs:element ref="aramaic_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_word_particle">
     <xs:complexType>
       <xs:complexContent>
-        <xs:extension base="HebrewWordType">
+        <xs:extension base="WordType">
           <xs:sequence>
             <xs:element ref="hebrew_conjunction" minOccurs="0"/>
             <xs:choice minOccurs="0">
@@ -242,10 +415,48 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_word_particle">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="WordType">
+          <xs:sequence>
+            <xs:element ref="aramaic_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_particle_interrogative"/>
+              <xs:element ref="aramaic_particle_interjection"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="3">
+              <!-- The preposition and relative particle are used in any order: -->
+              <xs:element ref="aramaic_preposition"/>
+              <xs:element ref="aramaic_preposition_definite"/>
+              <xs:element ref="aramaic_particle_relative"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="2">
+            <!-- 2x: aramaic_particle_relative + aramaic_particle_negative -->
+              <xs:element ref="aramaic_particle_affirmation"/>
+              <xs:element ref="aramaic_particle_demonstrative"/>
+              <xs:element ref="aramaic_particle_direct_object_marker"/>
+              <xs:element ref="aramaic_particle_exhortation"/>
+              <xs:element ref="aramaic_particle_interjection"/>
+              <xs:element ref="aramaic_particle_interrogative"/>
+              <xs:element ref="aramaic_particle_negative"/>
+              <xs:element ref="aramaic_particle_relative"/>
+            </xs:choice>
+            <xs:element ref="aramaic_suffix_pronominal" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_suffix_directional_he"/>
+              <xs:element ref="aramaic_suffix_paragogic_he"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_word_preposition">
     <xs:complexType>
       <xs:complexContent>
-        <xs:extension base="HebrewWordType">
+        <xs:extension base="WordType">
           <xs:sequence>
             <xs:element ref="hebrew_conjunction" minOccurs="0"/>
             <xs:choice minOccurs="0">
@@ -268,6 +479,32 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_word_preposition">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="WordType">
+          <xs:sequence>
+            <xs:element ref="aramaic_conjunction" minOccurs="0"/>
+            <xs:choice minOccurs="0">
+              <xs:element ref="aramaic_particle_definite_article"/>
+              <xs:element ref="aramaic_particle_interrogative"/>
+              <xs:element ref="aramaic_particle_interjection"/>
+            </xs:choice>
+            <xs:choice maxOccurs="3">
+            <!-- 1 Kings 7:32 (11hPW): 3 prepositions -->
+            <!-- prepositions and relative particles are used in any order -->
+              <xs:element ref="aramaic_preposition"/>
+              <xs:element ref="aramaic_preposition_definite"/>
+              <xs:element ref="aramaic_particle_relative"/>
+            </xs:choice>
+            <xs:element ref="aramaic_suffix_pronominal" minOccurs="0"/>
+            <xs:element ref="aramaic_suffix_directional_he" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_punctuation">
     <xs:complexType>
       <xs:simpleContent>
@@ -280,7 +517,19 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- Word part elements -->
+  <xs:element name="aramaic_punctuation">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="versePathJewish" type="VersePathType" use="required"/>
+          <xs:attribute name="versePathChristian" type="VersePathType" use="required"/>
+          <xs:attribute name="role" type="WordPartHebrewPunctuationFormType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Common attributes -->
 
   <xs:attribute name="lang">
     <xs:simpleType>
@@ -292,7 +541,17 @@
     </xs:simpleType>
   </xs:attribute>
 
+  <!-- Hebrew word part elements -->
+
   <xs:element name="hebrew_conjunction">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_conjunction">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma"/>
@@ -308,7 +567,23 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_preposition">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_preposition_definite">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_preposition_definite">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma"/>
@@ -324,7 +599,23 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_particle_affirmation">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_particle_definite_article">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_particle_definite_article">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma"/>
@@ -340,7 +631,23 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_particle_exhortation">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_particle_interrogative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_particle_interrogative">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma"/>
@@ -356,7 +663,23 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_particle_interjection">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_particle_demonstrative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_particle_demonstrative">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma"/>
@@ -372,6 +695,14 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_particle_negative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_particle_direct_object_marker">
     <xs:complexType>
       <xs:simpleContent>
@@ -380,7 +711,23 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_particle_direct_object_marker">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_particle_relative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_particle_relative">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma"/>
@@ -399,7 +746,26 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_noun">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="gn" type="HebrewNounPgnType" use="required"/>
+          <xs:attribute name="state" type="AramaicStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_noun_gentilic">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_noun_gentilic">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma"/>
@@ -415,7 +781,33 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_noun_proper">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_noun_special">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_pronoun_personal">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="pgn" type="HebrewPronounPersonalPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_pronoun_personal">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
@@ -435,10 +827,38 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_pronoun_demonstrative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="gn" type="HebrewPronounDemonstrativePgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_pronoun_indefinite">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_pronoun_indefinite">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_pronoun_interrogative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="pgn" type="AramaicPronounPersonalPgnType" use="optional"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -454,12 +874,34 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_adjective">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
+          <xs:attribute name="state" type="AramaicStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_adjective_gentilic">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
           <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
           <xs:attribute name="state" type="HebrewStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_adjective_gentilic">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
+          <xs:attribute name="state" type="AramaicStateType" use="required"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -477,7 +919,27 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_adjective_number">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="role" type="HebrewAdjectiveRoleType" use="required"/>
+          <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
+          <xs:attribute name="state" type="AramaicStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_adverb">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_adverb">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma"/>
@@ -497,11 +959,35 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_verb_perfect">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
+          <xs:attribute name="role" type="HebrewVerbSequentialRoleType" use="optional"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_verb_imperfect">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
           <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
+          <xs:attribute name="role" type="HebrewVerbSequentialRoleType" use="optional"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_verb_imperfect">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
           <xs:attribute name="role" type="HebrewVerbSequentialRoleType" use="optional"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
         </xs:extension>
@@ -520,6 +1006,17 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_verb_imperative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_verb_cohortative">
     <xs:complexType>
       <xs:simpleContent>
@@ -531,11 +1028,33 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_verb_cohortative">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_verb_jussive">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
           <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
+          <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_verb_jussive">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
         </xs:extension>
       </xs:simpleContent>
@@ -555,6 +1074,19 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_verb_participal">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
+          <xs:attribute name="role" type="HebrewVerbParticipalRoleType" use="required"/>
+          <xs:attribute name="gn" type="HebrewVerbParticipalPgnType" use="required"/>
+          <xs:attribute name="state" type="AramaicStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_verb_infinitive">
     <xs:complexType>
       <xs:simpleContent>
@@ -566,7 +1098,28 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_verb_infinitive">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
+          <xs:attribute name="state" type="AramaicStateType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_suffix_pronominal">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="pgn" type="HebrewSuffixPronominalPgnType" use="required"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_suffix_pronominal">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:string">
@@ -584,6 +1137,15 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_suffix_directional_he">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+
   <xs:element name="hebrew_suffix_paragogic_he">
     <xs:complexType>
       <xs:simpleContent>
@@ -592,7 +1154,23 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="aramaic_suffix_paragogic_he">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="hebrew_suffix_paragogic_nun">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_suffix_paragogic_nun">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:string"/>
@@ -940,6 +1518,23 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="AramaicPronounPersonalPgnType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1*s"/>
+      <xs:enumeration value="2ms"/>
+      <xs:enumeration value="2fs"/>
+      <xs:enumeration value="3ms"/>
+      <xs:enumeration value="3fs"/>
+      <xs:enumeration value="1*p"/>
+      <xs:enumeration value="2mp"/>
+      <xs:enumeration value="2fp"/>
+      <xs:enumeration value="3mp"/>
+      <xs:enumeration value="3fp"/>
+      <xs:enumeration value="*s"/>
+      <xs:enumeration value="*p"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="HebrewPronounDemonstrativePgnType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="ms"/>
@@ -969,6 +1564,14 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="absolute"/>
       <xs:enumeration value="construct"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AramaicStateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="absolute"/>
+      <xs:enumeration value="construct"/>
+      <xs:enumeration value="determined"/>
     </xs:restriction>
   </xs:simpleType>
 

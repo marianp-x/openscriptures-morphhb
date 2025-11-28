@@ -129,19 +129,13 @@
 </xsl:variable>
 <xsl:variable name="osisPersons" select="common:node-set($osisPersonsXml)"/>
 
-<xsl:variable name="osisNounGendersXml">
+<xsl:variable name="osisHebrewGendersXml">
   <entry id="b">both</entry>
-  <entry id="f">feminine</entry>
-  <entry id="m">masculine</entry>
-</xsl:variable>
-<xsl:variable name="osisNounGenders" select="common:node-set($osisNounGendersXml)"/>
-
-<xsl:variable name="osisVerbGendersXml">
   <entry id="c">common</entry>
   <entry id="f">feminine</entry>
   <entry id="m">masculine</entry>
 </xsl:variable>
-<xsl:variable name="osisVerbGenders" select="common:node-set($osisVerbGendersXml)"/>
+<xsl:variable name="osisHebrewGenders" select="common:node-set($osisHebrewGendersXml)"/>
 
 <xsl:variable name="osisNumbersXml">
   <entry id="d">dual</entry>
@@ -677,14 +671,7 @@
     </xsl:choose>
   </xsl:variable>
   <xsl:variable name="gender">
-    <xsl:choose>
-      <xsl:when test="$type = 'simple-noun'">
-        <xsl:value-of select="$osisNounGenders/entry[@id = $gender_tag]"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$osisVerbGenders/entry[@id = $gender_tag]"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:value-of select="$osisHebrewGenders/entry[@id = $gender_tag]"/>
   </xsl:variable>
   <xsl:if test="normalize-space($gender) != ''">
     <xsl:attribute name="gender">

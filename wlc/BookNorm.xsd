@@ -483,6 +483,7 @@
       <xs:enumeration value="masculine"/>
       <xs:enumeration value="feminine"/>
       <xs:enumeration value="common"/>
+      <xs:enumeration value="both"/>            <!-- Only in Aramaic (e.g. 'Pdxbp' morph) -->
     </xs:restriction>
   </xs:simpleType>
 

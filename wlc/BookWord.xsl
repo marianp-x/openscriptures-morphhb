@@ -310,10 +310,151 @@
   </xsl:choose>
 </xsl:template>
 
+<xsl:template match="/book/token[@lang = 'arc']">
+  <xsl:variable name="wordSpeechXml">
+    <xsl:call-template name="tokenSpeech">
+      <xsl:with-param name="osisWordId" select="@osisWordId"/>
+      <xsl:with-param name="token" select="."/>
+    </xsl:call-template>
+  </xsl:variable>
+  <xsl:variable name="wordSpeech" select="common:node-set($wordSpeechXml)"/>
+  <xsl:variable name="wordSpeechName" select="$wordSpeech/speech[1]/@name"/>
+  <xsl:variable name="wordSpeechType" select="$wordSpeech/speech[1]/@type"/>
+  <xsl:variable name="versePathJewish">
+    <xsl:call-template name="getVersePathJewish">
+      <xsl:with-param name="verseIdJew" select="@osisVerseId"/>
+    </xsl:call-template>
+  </xsl:variable>
+  <xsl:variable name="versePathChristian">
+    <xsl:choose>
+      <xsl:when test="normalize-space(@osisKjvVerseId) != ''">
+        <xsl:call-template name="getVersePathKjv">
+          <xsl:with-param name="verseIdKjv" select="@osisKjvVerseId"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$versePathJewish"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:choose>
+    <xsl:when test="$wordSpeechName = 'verb'">
+      <xsl:element name="aramaic_word_verb">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:copy-of select="@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'noun'">
+      <xsl:element name="aramaic_word_noun">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:copy-of select="@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'pronoun'">
+      <xsl:element name="aramaic_word_pronoun">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:copy-of select="@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'adjective'">
+      <xsl:element name="aramaic_word_adjective">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:copy-of select="@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'adverb'">
+      <xsl:element name="aramaic_word_adverb">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:copy-of select="@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'particle'">
+      <xsl:element name="aramaic_word_particle">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:copy-of select="@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'preposition'">
+      <xsl:element name="aramaic_word_preposition">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:copy-of select="@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:when test="$wordSpeechName = 'punctuation'">
+      <xsl:element name="aramaic_punctuation">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:attribute name="role">
+          <xsl:value-of select="punctuation[1]/@type"/>
+        </xsl:attribute>
+        <xsl:value-of select="punctuation/text()"/>
+      </xsl:element>
+    </xsl:when>
+    <xsl:otherwise>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/conjunction[../@lang = 'he']">
   <xsl:element name="hebrew_conjunction">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/conjunction[../@lang = 'arc']">
+  <xsl:element name="aramaic_conjunction">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -332,10 +473,28 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/preposition[../@lang = 'arc' and @type = 'definite article']">
+  <xsl:element name="aramaic_preposition_definite">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/preposition[../@lang = 'he' and not(@type)]">
   <xsl:element name="hebrew_preposition">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/preposition[../@lang = 'arc' and not(@type)]">
+  <xsl:element name="aramaic_preposition">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -354,6 +513,15 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/particle[../@lang = 'arc' and @type = 'affirmation']">
+  <xsl:element name="aramaic_particle_affirmation">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'definite article']">
@@ -365,10 +533,35 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/particle[../@lang = 'arc' and @type = 'definite article']">
+  <xsl:element name="aramaic_particle_definite_article">
+    <xsl:attribute name="lemma">
+      <xsl:choose>
+        <xsl:when test="normalize-space(@lemma) != ''">
+          <xsl:value-of select="@lemma"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>d</xsl:text>        <!-- TODO: This is a quick workaround for the fact that there are hundreds of cases where @lemma is not defined in Aramaic -->
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'exhortation']">
   <xsl:element name="hebrew_particle_exhortation">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/particle[../@lang = 'arc' and @type = 'exhortation']">
+  <xsl:element name="aramaic_particle_exhortation">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -387,10 +580,28 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/particle[../@lang = 'arc' and @type = 'interrogative']">
+  <xsl:element name="aramaic_particle_interrogative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'interjection']">
   <xsl:element name="hebrew_particle_interjection">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/particle[../@lang = 'arc' and @type = 'interjection']">
+  <xsl:element name="aramaic_particle_interjection">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -409,10 +620,28 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/particle[../@lang = 'arc' and @type = 'demonstrative']">
+  <xsl:element name="aramaic_particle_demonstrative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'negative']">
   <xsl:element name="hebrew_particle_negative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/particle[../@lang = 'arc' and @type = 'negative']">
+  <xsl:element name="aramaic_particle_negative">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -431,10 +660,28 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/particle[../@lang = 'arc' and @type = 'direct object marker']">
+  <xsl:element name="aramaic_particle_direct_object_marker">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/particle[../@lang = 'he' and @type = 'relative']">
   <xsl:element name="hebrew_particle_relative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/particle[../@lang = 'arc' and @type = 'relative']">
+  <xsl:element name="aramaic_particle_relative">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -459,10 +706,34 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/noun[../@lang = 'arc' and @type = 'common']">
+  <xsl:element name="aramaic_noun">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/noun[../@lang = 'he' and @type = 'gentilic']">
   <xsl:element name="hebrew_noun_gentilic">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/noun[../@lang = 'arc' and @type = 'gentilic']">
+  <xsl:element name="aramaic_noun_gentilic">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -481,10 +752,42 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/noun[../@lang = 'arc' and @type = 'proper name']">
+  <xsl:element name="aramaic_noun_proper">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/noun[../@lang = 'arc' and not(@type)]">
+  <xsl:element name="aramaic_noun_special">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/pronoun[../@lang = 'he' and @type = 'personal']">
   <xsl:element name="hebrew_pronoun_personal">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/pronoun[../@lang = 'arc' and @type = 'personal']">
+  <xsl:element name="aramaic_pronoun_personal">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -509,6 +812,18 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/pronoun[../@lang = 'arc' and @type = 'demonstrative']">
+  <xsl:element name="aramaic_pronoun_demonstrative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/pronoun[../@lang = 'he' and @type = 'indefinite']">
@@ -516,6 +831,31 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/pronoun[../@lang = 'arc' and @type = 'indefinite']">
+  <xsl:element name="aramaic_pronoun_indefinite">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<!--                               -->
+
+<xsl:template match="/book/token/pronoun[../@lang = 'arc' and @type = 'interrogative']">
+  <xsl:element name="aramaic_pronoun_interrogative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:if test="normalize-space(@person) != '' or normalize-space(@gender) != '' or normalize-space(@number) != ''">
+      <xsl:attribute name="pgn">
+        <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -537,10 +877,43 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/adjective[../@lang = 'arc' and @type = 'adjective']">
+  <xsl:element name="aramaic_adjective">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/adjective[../@lang = 'he' and @type = 'gentilic']">
   <xsl:element name="hebrew_adjective_gentilic">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="form">
+      <xsl:value-of select="@type"/>
+    </xsl:attribute>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/adjective[../@lang = 'arc' and @type = 'gentilic']">
+  <xsl:element name="aramaic_adjective_gentilic">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -587,6 +960,34 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/adjective[../@lang = 'arc' and contains(@type, 'number')]">
+  <xsl:element name="aramaic_adjective_number">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="role">
+      <xsl:choose>
+        <xsl:when test="@type = 'cardinal number'">
+          <xsl:value-of select="'cardinal'"/>
+        </xsl:when>
+        <xsl:when test="@type = 'ordinal number'">
+          <xsl:value-of select="'ordinal'"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="''"/>   <!-- TODO: Assert -->
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/adverb[../@lang = 'he']">
@@ -598,10 +999,39 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/adverb[../@lang = 'arc']">
+  <xsl:element name="aramaic_adverb">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/verb[../@lang = 'he' and contains(@type, 'perfect')]">
   <xsl:element name="hebrew_verb_perfect">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:if test="@type = 'sequential perfect'">
+      <xsl:attribute name="role">
+        <xsl:value-of select="'sequential'"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/verb[../@lang = 'arc' and contains(@type, 'perfect')]">
+  <xsl:element name="aramaic_verb_perfect">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -642,10 +1072,45 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/verb[../@lang = 'arc' and contains(@type, 'imperfect')]">
+  <xsl:element name="aramaic_verb_imperfect">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:if test="@type = 'sequential imperfect'">
+      <xsl:attribute name="role">
+        <xsl:value-of select="'sequential'"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/verb[../@lang = 'he' and @type = 'imperative']">
   <xsl:element name="hebrew_verb_imperative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/verb[../@lang = 'arc' and @type = 'imperative']">
+  <xsl:element name="aramaic_verb_imperative">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -676,10 +1141,40 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/verb[../@lang = 'arc' and @type = 'cohortative']">
+  <xsl:element name="aramaic_verb_cohortative">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/verb[../@lang = 'he' and @type = 'jussive']">
   <xsl:element name="hebrew_verb_jussive">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/verb[../@lang = 'arc' and @type = 'jussive']">
+  <xsl:element name="aramaic_verb_jussive">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -728,10 +1223,58 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/verb[../@lang = 'arc' and contains(@type, 'participle')]">
+  <xsl:element name="aramaic_verb_participal">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="role">
+      <xsl:choose>
+        <xsl:when test="@type = 'participle active'">
+          <xsl:value-of select="'active'"/>
+        </xsl:when>
+        <xsl:when test="@type = 'participle passive'">
+          <xsl:value-of select="'passive'"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="''"/>   <!-- TODO: Assert -->
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <xsl:attribute name="gn">
+      <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:if test="@state">
+      <xsl:attribute name="state">
+        <xsl:value-of select="@state"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/verb[../@lang = 'he' and contains(@type, 'infinitive')]">
   <xsl:element name="hebrew_verb_infinitive">
+    <xsl:attribute name="lemma">
+      <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="binyanim">
+      <xsl:value-of select="@stem"/>
+    </xsl:attribute>
+    <xsl:attribute name="state">
+      <xsl:value-of select="@state"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/verb[../@lang = 'arc' and contains(@type, 'infinitive')]">
+  <xsl:element name="aramaic_verb_infinitive">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -756,10 +1299,25 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/suffix[../@lang = 'arc' and @type = 'pronominal']">
+  <xsl:element name="aramaic_suffix_pronominal">
+    <xsl:attribute name="pgn">
+      <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/suffix[../@lang = 'he' and @type = 'directional he']">
   <xsl:element name="hebrew_suffix_directional_he">
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/suffix[../@lang = 'arc' and @type = 'directional he']">
+  <xsl:element name="aramaic_suffix_directional_he">
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -772,6 +1330,12 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/suffix[../@lang = 'arc' and @type = 'paragogic he']">
+  <xsl:element name="aramaic_suffix_paragogic_he">
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/suffix[../@lang = 'he' and @type = 'paragogic nun']">
@@ -780,10 +1344,25 @@
   </xsl:element>
 </xsl:template>
 
+<xsl:template match="/book/token/suffix[../@lang = 'arc' and @type = 'paragogic nun']">
+  <xsl:element name="aramaic_suffix_paragogic_nun">
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
 <!--                               -->
 
 <xsl:template match="/book/token/punctuation[../@lang = 'he']">
   <xsl:element name="hebrew_punctuation">
+    <xsl:attribute name="role">
+      <xsl:value-of select="@type"/>
+    </xsl:attribute>
+    <xsl:value-of select="."/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="/book/token/punctuation[../@lang = 'arc']">    <!-- TODO: Validate that this is not used -->
+  <xsl:element name="aramaic_punctuation">
     <xsl:attribute name="role">
       <xsl:value-of select="@type"/>
     </xsl:attribute>
