@@ -24,6 +24,7 @@
           <xs:element ref="hebrew_word_adverb"/>
           <xs:element ref="hebrew_word_particle"/>
           <xs:element ref="hebrew_word_preposition"/>
+          <xs:element ref="hebrew_word_conjunction"/>
           <xs:element ref="hebrew_punctuation"/>
 
           <xs:element ref="aramaic_word_verb"/>
@@ -33,6 +34,7 @@
           <xs:element ref="aramaic_word_adverb"/>
           <xs:element ref="aramaic_word_particle"/>
           <xs:element ref="aramaic_word_preposition"/>
+          <xs:element ref="aramaic_word_conjunction"/>
           <xs:element ref="aramaic_punctuation"/>
         </xs:choice>
       </xs:sequence>
@@ -499,6 +501,34 @@
             </xs:choice>
             <xs:element ref="aramaic_suffix_pronominal" minOccurs="0"/>
             <xs:element ref="aramaic_suffix_directional_he" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hebrew_word_conjunction">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="WordType">
+          <xs:sequence>
+            <xs:element ref="hebrew_particle_interrogative" minOccurs="0"/>
+            <xs:element ref="hebrew_conjunction" minOccurs="0"/>
+            <xs:element ref="hebrew_preposition" minOccurs="0" maxOccurs="2"/>
+            <xs:element ref="hebrew_conjunction" maxOccurs="1"/>
+            <xs:element ref="hebrew_suffix_pronominal" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="aramaic_word_conjunction">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="WordType">
+          <xs:sequence>
+            <xs:element ref="aramaic_conjunction" maxOccurs="3"/>
           </xs:sequence>
         </xs:extension>
       </xs:complexContent>

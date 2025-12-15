@@ -188,6 +188,7 @@ edit:
 		$(BOOK_NRMED_XMLs) \
 		$(BOOK_WORDS_XMLs) \
 		$(BOOK_SCHEMAS_TSVs) \
+		$(BOOK_TABLES_TSVs) \
 		$(BOOK_TSVs) \
 		$(BOOK_SCHEMAs) \
 		$(BOOK_DEBUGs) \
@@ -204,6 +205,7 @@ edit:
 		"BookNorm.xsd" \
 		"BookWord.xsl" \
 		"BookWord.xsd" \
+		"BookTable.xsl" \
 		"Diag.xsl" \
 		"osisCore.2.1.1.xsd" \
 		"xml.xsd" \

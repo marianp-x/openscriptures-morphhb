@@ -291,6 +291,18 @@
         <xsl:apply-templates/>
       </xsl:element>
     </xsl:when>
+    <xsl:when test="$wordSpeechName = 'conjunction'">
+      <xsl:element name="hebrew_word_conjunction">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:copy-of select="@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
     <xsl:when test="$wordSpeechName = 'punctuation'">
       <xsl:element name="hebrew_punctuation">
         <xsl:attribute name="versePathJewish">
@@ -306,6 +318,12 @@
       </xsl:element>
     </xsl:when>
     <xsl:otherwise>
+      <xsl:message terminate="yes">
+        <xsl:text>ERROR: </xsl:text>
+        <xsl:text>Unexpected speech type '</xsl:text>
+        <xsl:value-of select="name($token/*)"/>
+        <xsl:text>'</xsl:text>
+      </xsl:message>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -423,6 +441,18 @@
         <xsl:apply-templates/>
       </xsl:element>
     </xsl:when>
+    <xsl:when test="$wordSpeechName = 'conjunction'">
+      <xsl:element name="aramaic_word_conjunction">
+        <xsl:attribute name="versePathJewish">
+          <xsl:value-of select="$versePathJewish"/>
+        </xsl:attribute>
+        <xsl:attribute name="versePathChristian">
+          <xsl:value-of select="$versePathChristian"/>
+        </xsl:attribute>
+        <xsl:copy-of select="@osisWordId"/>
+        <xsl:apply-templates/>
+      </xsl:element>
+    </xsl:when>
     <xsl:when test="$wordSpeechName = 'punctuation'">
       <xsl:element name="aramaic_punctuation">
         <xsl:attribute name="versePathJewish">
@@ -438,6 +468,12 @@
       </xsl:element>
     </xsl:when>
     <xsl:otherwise>
+      <xsl:message terminate="yes">
+        <xsl:text>ERROR: </xsl:text>
+        <xsl:text>Unexpected speech type '</xsl:text>
+        <xsl:value-of select="name($token/*)"/>
+        <xsl:text>'</xsl:text>
+      </xsl:message>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
