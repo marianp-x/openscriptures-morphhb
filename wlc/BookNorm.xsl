@@ -249,6 +249,9 @@
       <xsl:variable name="wordPartLemma">
         <xsl:value-of select="$lemmaSet[position() = $num]"/>
       </xsl:variable>
+      <xsl:variable name="wordPartStrong">
+        <xsl:value-of select="translate($wordPartLemma, ' +abcdefiklms|', '')"/>
+      </xsl:variable>
       <xsl:variable name="wordPartMorph">
         <xsl:value-of select="$morphSet[position() = $num]"/>
       </xsl:variable>
@@ -266,6 +269,11 @@
             <xsl:if test="normalize-space($wordPartLemma) != ''">
               <xsl:attribute name="lemma">
                 <xsl:value-of select="$wordPartLemma"/>
+              </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="normalize-space($wordPartStrong) != ''">
+              <xsl:attribute name="strong">
+                <xsl:value-of select="$wordPartStrong"/>
               </xsl:attribute>
             </xsl:if>
             <xsl:attribute name="morph">
@@ -298,6 +306,11 @@
                 <xsl:value-of select="$wordPartLemma"/>
               </xsl:attribute>
             </xsl:if>
+            <xsl:if test="normalize-space($wordPartStrong) != ''">
+              <xsl:attribute name="strong">
+                <xsl:value-of select="$wordPartStrong"/>
+              </xsl:attribute>
+            </xsl:if>
             <xsl:attribute name="morph">
               <xsl:value-of select="$wordPartMorph"/>
             </xsl:attribute>
@@ -312,6 +325,11 @@
                 <xsl:value-of select="$wordPartLemma"/>
               </xsl:attribute>
             </xsl:if>
+            <xsl:if test="normalize-space($wordPartStrong) != ''">
+              <xsl:attribute name="strong">
+                <xsl:value-of select="$wordPartStrong"/>
+              </xsl:attribute>
+            </xsl:if>
             <xsl:attribute name="morph">
               <xsl:value-of select="$wordPartMorph"/>
             </xsl:attribute>
@@ -324,6 +342,11 @@
             <xsl:if test="normalize-space($wordPartLemma) != ''">
               <xsl:attribute name="lemma">
                 <xsl:value-of select="$wordPartLemma"/>
+              </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="normalize-space($wordPartStrong) != ''">
+              <xsl:attribute name="strong">
+                <xsl:value-of select="$wordPartStrong"/>
               </xsl:attribute>
             </xsl:if>
             <xsl:attribute name="morph">
@@ -358,6 +381,11 @@
                 <xsl:value-of select="$wordPartLemma"/>
               </xsl:attribute>
             </xsl:if>
+            <xsl:if test="normalize-space($wordPartStrong) != ''">
+              <xsl:attribute name="strong">
+                <xsl:value-of select="$wordPartStrong"/>
+              </xsl:attribute>
+            </xsl:if>
             <xsl:attribute name="morph">
               <xsl:value-of select="$wordPartMorph"/>
             </xsl:attribute>
@@ -381,6 +409,11 @@
             <xsl:if test="normalize-space($wordPartLemma) != ''">
               <xsl:attribute name="lemma">
                 <xsl:value-of select="$wordPartLemma"/>
+              </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="normalize-space($wordPartStrong) != ''">
+              <xsl:attribute name="strong">
+                <xsl:value-of select="$wordPartStrong"/>
               </xsl:attribute>
             </xsl:if>
             <xsl:attribute name="morph">
@@ -409,6 +442,11 @@
                     <xsl:value-of select="$wordPartLemma"/>
                   </xsl:attribute>
                 </xsl:if>
+                <xsl:if test="normalize-space($wordPartStrong) != ''">
+                  <xsl:attribute name="strong">
+                    <xsl:value-of select="$wordPartStrong"/>
+                  </xsl:attribute>
+                </xsl:if>
                 <xsl:attribute name="morph">
                   <xsl:value-of select="$wordPartMorph"/>
                 </xsl:attribute>
@@ -427,6 +465,11 @@
                     <xsl:value-of select="$wordPartLemma"/>
                   </xsl:attribute>
                 </xsl:if>
+                <xsl:if test="normalize-space($wordPartStrong) != ''">
+                  <xsl:attribute name="strong">
+                    <xsl:value-of select="$wordPartStrong"/>
+                  </xsl:attribute>
+                </xsl:if>
                 <xsl:attribute name="morph">
                   <xsl:value-of select="$wordPartMorph"/>
                 </xsl:attribute>
@@ -441,6 +484,11 @@
                     <xsl:value-of select="$wordPartLemma"/>
                   </xsl:attribute>
                 </xsl:if>
+                <xsl:if test="normalize-space($wordPartStrong) != ''">
+                  <xsl:attribute name="strong">
+                    <xsl:value-of select="$wordPartStrong"/>
+                  </xsl:attribute>
+                </xsl:if>
                 <xsl:attribute name="morph">
                   <xsl:value-of select="$wordPartMorph"/>
                 </xsl:attribute>
@@ -453,6 +501,11 @@
                 <xsl:if test="normalize-space($wordPartLemma) != ''">
                   <xsl:attribute name="lemma">
                     <xsl:value-of select="$wordPartLemma"/>
+                  </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="normalize-space($wordPartStrong) != ''">
+                  <xsl:attribute name="strong">
+                    <xsl:value-of select="$wordPartStrong"/>
                   </xsl:attribute>
                 </xsl:if>
                 <xsl:attribute name="morph">
@@ -482,6 +535,11 @@
                 <xsl:value-of select="$wordPartLemma"/>
               </xsl:attribute>
             </xsl:if>
+            <xsl:if test="normalize-space($wordPartStrong) != ''">
+              <xsl:attribute name="strong">
+                <xsl:value-of select="$wordPartStrong"/>
+              </xsl:attribute>
+            </xsl:if>
             <xsl:attribute name="morph">
               <xsl:value-of select="$wordPartMorph"/>
             </xsl:attribute>
@@ -500,6 +558,11 @@
             <xsl:if test="normalize-space($wordPartLemma) != ''">
               <xsl:attribute name="lemma">
                 <xsl:value-of select="$wordPartLemma"/>
+              </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="normalize-space($wordPartStrong) != ''">
+              <xsl:attribute name="strong">
+                <xsl:value-of select="$wordPartStrong"/>
               </xsl:attribute>
             </xsl:if>
             <xsl:if test="normalize-space($wordPartMorphDetails) != ''">

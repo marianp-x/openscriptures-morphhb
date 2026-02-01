@@ -36,6 +36,7 @@
 1Chr	13xK2	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 1Chr	13zMn	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 1Chr	13ZpB	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
+1Chr	13xeK	HR/Vqc	Moving from 'R/Np' to 'R/Vqc' because 'לְב֣וֹא' is not a proper noun.	l/935	Splitting 'לְב֣וֹא' into preposition + verb	לְ/ב֣וֹא	Splitting 'לְב֣וֹא' into preposition and the verb
 1Kgs	1125p	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 1Kgs	112jp	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 1Kgs	114dQ	HC/Vpi3ms	Moving from 'C/Vqj3ms' to 'C/Vpi3ms' because 'יְהִי' is Piel Imperfect.				
@@ -126,6 +127,7 @@
 1Kgs	11ZKD	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 1Kgs	11zLW	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 1Kgs	11zPq	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
+1Kgs	11RHd	HR/R/Vqc	Moving from 'R/Np' to 'R/R/Vqc' because 'לְּב֥וֹא' is not a proper noun.	m/l/935	Splitting 'מִ/לְּב֥וֹא' into preposition + preposition + verb	מִ/לְּ/ב֥וֹא	Splitting 'לְּב֥וֹא' into preposition and the verb
 1Sam	091B3	HC/Vpw3fs	Moving from 'C/Vqw3fs' to 'C/Vpw3fs' because 'תִּהְיֶה' is Qal Imperfect and 'יתְּהִי' is Piel Imperfect.				
 1Sam	091uH	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 1Sam	092ju	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
@@ -262,6 +264,7 @@
 2Chr	14ZJi	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 2Chr	14zJL	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 2Chr	14ZR9	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
+2Chr	1459X	HR/R/Vqc	Moving from 'R/Np' to 'R/R/Vqc' because 'לְּב֥וֹא' is not a proper noun.	m/l/935	Splitting 'מִ/לְּב֥וֹא' into preposition + preposition + verb	מִ/לְּ/ב֥וֹא	Splitting 'לְּב֥וֹא' into preposition and the verb
 2Kgs	1218W	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 2Kgs	1223n	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 2Kgs	122Jq	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
@@ -325,6 +328,7 @@
 2Kgs	12xRx	HC/Vpi2ms	Moving from 'C/Vqi2ms' to 'C/Vpi2ms' because 'תִּהְיֶה' is Qal Imperfect and 'תְּהִי' is Piel Imperfect.				
 2Kgs	12XUc	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 2Kgs	12yfp	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
+2Kgs	12vQR	HR/R/Vqc	Moving from 'R/Np' to 'R/R/Vqc' because 'לְּב֥וֹא' is not a proper noun.	m/l/935	Splitting 'מִ/לְּב֥וֹא' into preposition + preposition + verb	מִ/לְּ/ב֥וֹא	Splitting 'לְּב֥וֹא' into preposition and the verb
 2Sam	1011V	HC/Vpw3fs	Moving from 'C/Vqw3fs' to 'C/Vpw3fs' because 'תִּהְיֶה' is Qal Imperfect and 'יתְּהִי' is Piel Imperfect.				
 2Sam	102v1	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 2Sam	102WG	HC/Vpw3fs	Moving from 'C/Vqw3fs' to 'C/Vpw3fs' because 'תִּהְיֶה' is Qal Imperfect and 'יתְּהִי' is Piel Imperfect.				
@@ -394,6 +398,7 @@
 2Sam	10d68	HVpi1cs/Sp2ms	Moving from 'Sp2cs' to 'Sp2ms' pronominal suffix because the "2cs" PGN is invalid for pronominal suffixes.				
 Amos	30Jdu			4480 a	Moving Strongs number from suffix to the detached preposition.		
 Amos	30PZP	HC/Vpi3ms	Moving from 'C/Vqj3ms' to 'C/Vpi3ms' because 'יְהִי' is Piel Imperfect.				
+Amos	30HAz	HR/R/Vqc	Moving from 'R/Np' to 'R/R/Vqc' because 'לְּב֥וֹא' is not a proper noun.			מִ/לְּ/ב֥וֹא	Splitting 'לְּב֥וֹא' into preposition and the verb
 Dan	27chR	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Dan	27gMk	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Dan	27Hme	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
@@ -426,6 +431,7 @@ Deut	05Zuo			4480 a	Moving Strongs number from suffix to the detached prepositio
 Eccl	21Gon	HVpi2ms	Moving from 'Vqj2ms' to 'Vpi2ms' because 'תִּהְיֶה' is Qal Imperfect and 'תְּהִי' is Piel Imperfect.				
 Eccl	21pBm	HVpi2ms	Moving from 'Vqj2ms' to 'Vpi2ms' because 'תִּהְיֶה' is Qal Imperfect and 'תְּהִי' is Piel Imperfect.				
 Eccl	21Sho	HVqi3mp	Moving from 'Vqj3mp' to 'Vqi3mp' because 'יִהְיוּ' is Qal Imperfect.				
+Eccl	21ozy			c/337/l	Fixing wrong order of elements in the 'c/l/337' to the correct 'c/337/l'.	
 Esth	17aoZ	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Esth	17K8W	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Esth	17Sjh	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
@@ -565,6 +571,9 @@ Ezek	26Zbw	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶ�
 Ezek	26zgN	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Ezek	26zit	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Ezek	26ZSs	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
+Ezek	26UKN	HR/Vqc	Moving from 'R/Np' to 'R/Vqc' because 'לְב֥וֹא' is not a proper noun.	l/935	Splitting 'לְב֥וֹא' into preposition + verb	לְ/ב֥וֹא	Splitting 'לְב֥וֹא' into preposition and the verb
+Ezek	26n7i	HR/Vqc	Moving from 'R/Np' to 'R/Vqc' because 'לְב֣וֹא' is not a proper noun.	l/935	Splitting 'לְב֣וֹא' into preposition + verb	לְ/ב֣וֹא	Splitting 'לְב֣וֹא' into preposition and the verb
+Ezek	26KKg	HR/Vqc	Moving from 'R/Np' to 'R/Vqc' because 'לְֽבוֹא' is not a proper noun.	l/935	Splitting 'לְֽבוֹא' into preposition + verb	לְֽ/בוֹא	Splitting 'לְֽבוֹא' into preposition and the verb
 Ezra	153TS	HVpi3ms	Moving from 'Vqi3ms' to 'Vpi3ms' because 'יְהִי' is Piel Imperfect.				
 Ezra	15wz5	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Ezra	15YjW	AAobpa	Replacing use of 'common' gender with 'both' for an 'adjective' as 'common' applies only to verbs				
@@ -917,6 +926,7 @@ Josh	06u2w			l	Removing Strongs number applied to a suffix, clearly copied from 
 Josh	06Bj7			4480 a	Moving Strongs number from suffix to the detached preposition.		
 Josh	06gAL			4480 a	Moving Strongs number from suffix to the detached preposition.		
 Josh	06UNE			4480 a	Moving Strongs number from suffix to the detached preposition.		
+Josh	06G8J	HR/Vqc	Moving from 'R/Np' to 'R/Vqc' because 'לְב֥וֹא' is not a proper noun.	l/935	Splitting 'לְב֥וֹא' into preposition + verb	לְ/ב֥וֹא	Splitting 'לְב֥וֹא' into preposition and the verb
 Judg	071jv	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Judg	071ZZ	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				
 Judg	072ps	HC/Vpw3fs	Moving from 'C/Vqw3fs' to 'C/Vpw3fs' because 'תִּהְיֶה' is Qal Imperfect and 'יתְּהִי' is Piel Imperfect.				
@@ -977,6 +987,7 @@ Judg	07zPm	HVpi3ms	Moving from 'Vqi3ms' to 'Vpi3ms' because 'יְהִי' is Piel
 Judg	07DJC			4480 a	Moving Strongs number from suffix to the detached preposition.		
 Judg	07bzS	HTd/Pp3fs	Moving from 'Sp3fs' to 'Pp3fs' because 'הִיא' is not a pronominal suffix, but a personal pronoun.				
 Judg	07Jv1	HVpp1cs/Sp3fs	Moving from 'Pp3fs' to 'Sp3fs' because 'הָ' is not a pronoun, but a pronominal suffix.				
+Judg	07QFm	HR/Vqc	Moving from 'R/Np' to 'R/Vqc' because 'לְב֥וֹא' is not a proper noun.	l/935	Splitting 'לְב֥וֹא' into preposition + verb	לְ/ב֥וֹא	Splitting 'לְב֥וֹא' into preposition and the verb
 Lam	25YHi	HC/Vpw3fs	Moving from 'C/Vqw3fs' to 'C/Vpw3fs' because 'תִּהְיֶה' is Qal Imperfect and 'יתְּהִי' is Piel Imperfect.				
 Lev	037pV	HC/Vqq2mp	Moving from 'C/Vqq2cp' to 'C/Vqq2mp' because the "2cp" PGN is invalid for verbs.				
 Lev	03BJi	HC/Vpw3ms	Moving from 'C/Vqw3ms' to 'C/Vpw3ms' because 'יִהְיֶה' is Qal Imperfect and 'יְהִי' is Piel Imperfect.				

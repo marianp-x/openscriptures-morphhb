@@ -624,7 +624,9 @@
   <xs:element name="hebrew_particle_affirmation">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -632,7 +634,9 @@
   <xs:element name="aramaic_particle_affirmation">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -656,7 +660,9 @@
   <xs:element name="hebrew_particle_exhortation">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -664,7 +670,9 @@
   <xs:element name="aramaic_particle_exhortation">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -672,7 +680,9 @@
   <xs:element name="hebrew_particle_interrogative">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="optional"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -680,7 +690,9 @@
   <xs:element name="aramaic_particle_interrogative">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="optional"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -688,7 +700,9 @@
   <xs:element name="hebrew_particle_interjection">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -696,7 +710,9 @@
   <xs:element name="aramaic_particle_interjection">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -704,7 +720,9 @@
   <xs:element name="hebrew_particle_demonstrative">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -712,7 +730,9 @@
   <xs:element name="aramaic_particle_demonstrative">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -720,7 +740,9 @@
   <xs:element name="hebrew_particle_negative">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -728,7 +750,9 @@
   <xs:element name="aramaic_particle_negative">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -736,7 +760,9 @@
   <xs:element name="hebrew_particle_direct_object_marker">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -744,7 +770,9 @@
   <xs:element name="aramaic_particle_direct_object_marker">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="optional"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -752,7 +780,9 @@
   <xs:element name="hebrew_particle_relative">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="optional"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -760,7 +790,9 @@
   <xs:element name="aramaic_particle_relative">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="optional"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -769,6 +801,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="gn" type="HebrewNounPgnType" use="required"/>
           <xs:attribute name="state" type="HebrewStateType" use="required"/>
         </xs:extension>
@@ -780,6 +813,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="gn" type="HebrewNounPgnType" use="required"/>
           <xs:attribute name="state" type="AramaicStateType" use="required"/>
         </xs:extension>
@@ -790,7 +824,9 @@
   <xs:element name="hebrew_noun_gentilic">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -798,7 +834,9 @@
   <xs:element name="aramaic_noun_gentilic">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -806,7 +844,9 @@
   <xs:element name="hebrew_noun_proper">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -814,7 +854,9 @@
   <xs:element name="aramaic_noun_proper">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -822,7 +864,9 @@
   <xs:element name="aramaic_noun_special">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -831,6 +875,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="pgn" type="HebrewPronounPersonalPgnType" use="required"/>
         </xs:extension>
       </xs:simpleContent>
@@ -841,6 +886,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="pgn" type="HebrewPronounPersonalPgnType" use="required"/>
         </xs:extension>
       </xs:simpleContent>
@@ -851,6 +897,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="gn" type="HebrewPronounDemonstrativePgnType" use="required"/>
         </xs:extension>
       </xs:simpleContent>
@@ -861,6 +908,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="gn" type="HebrewPronounDemonstrativePgnType" use="required"/>
         </xs:extension>
       </xs:simpleContent>
@@ -870,7 +918,9 @@
   <xs:element name="hebrew_pronoun_indefinite">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -878,7 +928,9 @@
   <xs:element name="aramaic_pronoun_indefinite">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -887,6 +939,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="pgn" type="AramaicPronounPersonalPgnType" use="optional"/>
         </xs:extension>
       </xs:simpleContent>
@@ -897,6 +950,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
           <xs:attribute name="state" type="HebrewStateType" use="required"/>
         </xs:extension>
@@ -908,6 +962,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
           <xs:attribute name="state" type="AramaicStateType" use="required"/>
         </xs:extension>
@@ -919,6 +974,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
           <xs:attribute name="state" type="HebrewStateType" use="required"/>
         </xs:extension>
@@ -930,6 +986,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
           <xs:attribute name="state" type="AramaicStateType" use="required"/>
         </xs:extension>
@@ -941,6 +998,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="role" type="HebrewAdjectiveRoleType" use="required"/>
           <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
           <xs:attribute name="state" type="HebrewStateType" use="required"/>
@@ -953,6 +1011,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="role" type="HebrewAdjectiveRoleType" use="required"/>
           <xs:attribute name="gn" type="HebrewAdjectivePgnType" use="required"/>
           <xs:attribute name="state" type="AramaicStateType" use="required"/>
@@ -964,7 +1023,9 @@
   <xs:element name="hebrew_adverb">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -972,7 +1033,9 @@
   <xs:element name="aramaic_adverb">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="WordPartLemma"/>
+        <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -981,6 +1044,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
           <xs:attribute name="role" type="HebrewVerbSequentialRoleType" use="optional"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
@@ -993,6 +1057,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
           <xs:attribute name="role" type="HebrewVerbSequentialRoleType" use="optional"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
@@ -1005,6 +1070,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
           <xs:attribute name="role" type="HebrewVerbSequentialRoleType" use="optional"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
@@ -1017,6 +1083,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
           <xs:attribute name="role" type="HebrewVerbSequentialRoleType" use="optional"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
@@ -1029,6 +1096,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
         </xs:extension>
@@ -1040,6 +1108,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
         </xs:extension>
@@ -1051,6 +1120,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
         </xs:extension>
@@ -1062,6 +1132,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
         </xs:extension>
@@ -1073,6 +1144,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
         </xs:extension>
@@ -1084,6 +1156,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
           <xs:attribute name="pgn" type="HebrewVerbPgnType" use="required"/>
         </xs:extension>
@@ -1095,6 +1168,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
           <xs:attribute name="role" type="HebrewVerbParticipleRoleType" use="required"/>
           <xs:attribute name="gn" type="HebrewVerbParticiplePgnType" use="required"/>
@@ -1108,6 +1182,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
           <xs:attribute name="role" type="HebrewVerbParticipleRoleType" use="required"/>
           <xs:attribute name="gn" type="HebrewVerbParticiplePgnType" use="required"/>
@@ -1121,6 +1196,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="HebrewBinyanimType" use="required"/>
           <xs:attribute name="state" type="HebrewStateType" use="required"/>
         </xs:extension>
@@ -1132,6 +1208,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="WordPartLemma">
+          <xs:attribute name="strong" type="WordStrongType" use="required"/>
           <xs:attribute name="binyanim" type="AramaicBinyanimType" use="required"/>
           <xs:attribute name="state" type="AramaicStateType" use="required"/>
         </xs:extension>
@@ -1335,6 +1412,12 @@
   <xs:simpleType name="WordPartLemmaType">
     <xs:restriction base="xs:string">
       <xs:pattern value="([bdicklms]|\d{1,4}( [a-f])?\+?)"/>      <!-- TODO: Double-check the '+' use -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WordStrongType">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:maxInclusive value="8674"/>
     </xs:restriction>
   </xs:simpleType>
 

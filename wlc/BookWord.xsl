@@ -545,6 +545,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -553,6 +556,9 @@
   <xsl:element name="aramaic_particle_affirmation">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -592,6 +598,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -600,6 +609,9 @@
   <xsl:element name="aramaic_particle_exhortation">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -612,6 +624,11 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:if test="normalize-space(@strong) != ''">
+      <xsl:attribute name="strong">
+        <xsl:value-of select="@strong"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -621,6 +638,11 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:if test="normalize-space(@strong) != ''">
+      <xsl:attribute name="strong">
+        <xsl:value-of select="@strong"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -632,6 +654,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -640,6 +665,9 @@
   <xsl:element name="aramaic_particle_interjection">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -652,6 +680,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -660,6 +691,9 @@
   <xsl:element name="aramaic_particle_demonstrative">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -672,6 +706,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -680,6 +717,9 @@
   <xsl:element name="aramaic_particle_negative">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -692,6 +732,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -701,6 +744,11 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:if test="normalize-space(@strong) != ''">
+      <xsl:attribute name="strong">
+        <xsl:value-of select="@strong"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -712,6 +760,11 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:if test="normalize-space(@strong) != ''">
+      <xsl:attribute name="strong">
+        <xsl:value-of select="@strong"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -721,6 +774,11 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:if test="normalize-space(@strong) != ''">
+      <xsl:attribute name="strong">
+        <xsl:value-of select="@strong"/>
+      </xsl:attribute>
+    </xsl:if>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -731,6 +789,9 @@
   <xsl:element name="hebrew_noun">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="gn">
       <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
@@ -746,6 +807,9 @@
   <xsl:element name="aramaic_noun">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="gn">
       <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
@@ -764,6 +828,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -772,6 +839,9 @@
   <xsl:element name="aramaic_noun_gentilic">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -784,6 +854,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -792,6 +865,9 @@
   <xsl:element name="aramaic_noun_proper">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -804,6 +880,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -814,6 +893,9 @@
   <xsl:element name="hebrew_pronoun_personal">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="pgn">
       <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
@@ -826,6 +908,9 @@
   <xsl:element name="aramaic_pronoun_personal">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="pgn">
       <xsl:value-of select="concat($personToPgn/entry[@id = current()/@person], $genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
@@ -841,6 +926,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:attribute name="gn">
       <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
     </xsl:attribute>
@@ -852,6 +940,9 @@
   <xsl:element name="aramaic_pronoun_demonstrative">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="gn">
       <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
@@ -867,6 +958,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -875,6 +969,9 @@
   <xsl:element name="aramaic_pronoun_indefinite">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -886,6 +983,9 @@
   <xsl:element name="aramaic_pronoun_interrogative">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:if test="normalize-space(@person) != '' or normalize-space(@gender) != '' or normalize-space(@number) != ''">
       <xsl:attribute name="pgn">
@@ -903,6 +1003,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:attribute name="gn">
       <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
     </xsl:attribute>
@@ -917,6 +1020,9 @@
   <xsl:element name="aramaic_adjective">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="gn">
       <xsl:value-of select="concat($genderToPgn/entry[@id = current()/@gender], $numberToPgn/entry[@id = current()/@number])"/>
@@ -935,6 +1041,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:attribute name="form">
       <xsl:value-of select="@type"/>
     </xsl:attribute>
@@ -952,6 +1061,9 @@
   <xsl:element name="aramaic_adjective_gentilic">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="form">
       <xsl:value-of select="@type"/>
@@ -972,6 +1084,9 @@
   <xsl:element name="hebrew_adjective_number">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="role">
       <xsl:choose>
@@ -1000,6 +1115,9 @@
   <xsl:element name="aramaic_adjective_number">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="role">
       <xsl:choose>
@@ -1031,6 +1149,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
 </xsl:template>
@@ -1039,6 +1160,9 @@
   <xsl:element name="aramaic_adverb">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:value-of select="."/>
   </xsl:element>
@@ -1050,6 +1174,9 @@
   <xsl:element name="hebrew_verb_perfect">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
@@ -1070,6 +1197,9 @@
   <xsl:element name="aramaic_verb_perfect">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
@@ -1093,6 +1223,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
     </xsl:attribute>
@@ -1112,6 +1245,9 @@
   <xsl:element name="aramaic_verb_imperfect">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
@@ -1135,6 +1271,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
     </xsl:attribute>
@@ -1149,6 +1288,9 @@
   <xsl:element name="aramaic_verb_imperative">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
@@ -1167,6 +1309,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
     </xsl:attribute>
@@ -1181,6 +1326,9 @@
   <xsl:element name="aramaic_verb_cohortative">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
@@ -1199,6 +1347,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
     </xsl:attribute>
@@ -1213,6 +1364,9 @@
   <xsl:element name="aramaic_verb_jussive">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
@@ -1230,6 +1384,9 @@
   <xsl:element name="hebrew_verb_participle">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
@@ -1263,6 +1420,9 @@
   <xsl:element name="aramaic_verb_participle">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
@@ -1299,6 +1459,9 @@
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
+    </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>
     </xsl:attribute>
@@ -1313,6 +1476,9 @@
   <xsl:element name="aramaic_verb_infinitive">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
+    </xsl:attribute>
+    <xsl:attribute name="strong">
+      <xsl:value-of select="@strong"/>
     </xsl:attribute>
     <xsl:attribute name="binyanim">
       <xsl:value-of select="@stem"/>

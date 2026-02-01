@@ -27,12 +27,12 @@
       <xs:sequence>
         <!-- TODO: Enforce the requirement for specific sequencing of these 3 prefixes: -->
         <xs:choice minOccurs="0" maxOccurs="2">
-          <xs:element name="conjunction" type="WordPartType"/>
+          <xs:element name="conjunction" type="WordPartConjunctionType"/>
           <xs:element name="preposition" type="WordPartPrepositionType"/>
           <xs:element name="particle" type="WordPartParticleType"/>
         </xs:choice>
         <xs:choice minOccurs="0" maxOccurs="2">
-          <xs:element name="conjunction" type="WordPartType"/>
+          <xs:element name="conjunction" type="WordPartConjunctionType"/>
           <xs:element name="preposition" type="WordPartPrepositionType"/>
           <xs:element name="particle" type="WordPartParticleType"/>
         </xs:choice>
@@ -40,7 +40,7 @@
           <xs:element name="noun" type="WordPartNounType"/>
           <xs:element name="pronoun" type="WordPartPronounType"/>
           <xs:element name="adjective" type="WordPartAdjectiveType"/>
-          <xs:element name="adverb" type="WordPartType"/>
+          <xs:element name="adverb" type="WordPartAdverbType"/>
           <xs:element name="verb" type="WordPartVerbType"/>
         </xs:choice>
         <xs:element name="suffix" type="WordPartSuffixType" minOccurs="0" maxOccurs="2"/>
@@ -55,13 +55,15 @@
     <xs:attribute ref="lang" use="required"/>
     <xs:attribute name="osisWordId" type="OsisWordIdType" use="optional"/>
     <xs:attribute name="lemma" type="WordLemmaType" use="optional"/>
+    <xs:attribute name="strong" type="WordStrongType" use="optional"/>
     <xs:attribute name="morph" type="WordMorphType" use="optional"/>
   </xs:complexType>
 
-  <xs:complexType name="WordPartType">
+  <xs:complexType name="WordPartConjunctionType">
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="strong" type="WordStrongType" use="optional"/>
         <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
       </xs:extension>
     </xs:simpleContent>
@@ -71,6 +73,7 @@
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="strong" type="WordStrongType" use="required"/>
         <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
         <xs:attribute name="stem" type="StemType" use="required"/>
         <xs:attribute name="type" type="VerbType" use="required"/>
@@ -86,6 +89,7 @@
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="strong" type="WordStrongType" use="required"/>
         <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
         <xs:attribute name="type" type="NounType" use="optional"/>                      <!-- TODO: Optional ONLY to support the "MENE, MENE, TEKEL, UPHARSIN." phrase in Daniel 5 -->
         <xs:attribute name="gender" type="GrammaticalNounGenderType" use="optional"/>   <!-- Not available when 'type' = "proper" -->
@@ -111,6 +115,7 @@
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="strong" type="WordStrongType" use="required"/>
         <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
         <xs:attribute name="type" type="PronounType" use="required"/>
         <xs:attribute name="person" type="GrammaticalPersonType" use="optional"/>       <!-- TODO: Not available for 'type' = "demonstrative" -->
@@ -124,6 +129,7 @@
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="strong" type="WordStrongType" use="required"/>
         <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
         <xs:attribute name="type" type="AdjectiveType" use="required"/>
         <xs:attribute name="gender" type="GrammaticalNounGenderType" use="required"/>
@@ -133,10 +139,21 @@
     </xs:simpleContent>
   </xs:complexType>
 
+  <xs:complexType name="WordPartAdverbType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="strong" type="WordStrongType" use="required"/>
+        <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
   <xs:complexType name="WordPartPrepositionType">
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+        <xs:attribute name="strong" type="WordStrongType" use="optional"/>
         <xs:attribute name="morph" type="WordPartMorphType" use="required"/>
         <xs:attribute name="type" type="PrepositionType" use="optional"/>
       </xs:extension>
@@ -147,6 +164,7 @@
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute name="lemma" type="WordLemmaType" use="optional"/>
+        <xs:attribute name="strong" type="WordStrongType" use="optional"/>
         <xs:attribute name="morph" type="WordPartMorphType" use="optional"/>
         <xs:attribute name="type" type="ParticleType" use="optional"/>        <!-- Not available for Aramaic particle with no type defined (morph defined as the "AT") -->
       </xs:extension>
@@ -288,6 +306,12 @@
   <xs:simpleType name="WordLemmaType">
     <xs:restriction base="xs:string">     <!-- TODO: Improve specificity -->
       <xs:pattern value="[bdicklms\|0-9 \+a-f]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WordStrongType">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:maxInclusive value="8674"/>
     </xs:restriction>
   </xs:simpleType>
 
