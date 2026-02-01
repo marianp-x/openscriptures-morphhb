@@ -1227,7 +1227,7 @@
 <!--                               -->
 
 <xsl:template match="/book/token/verb[../@lang = 'he' and contains(@type, 'participle')]">
-  <xsl:element name="hebrew_verb_participal">
+  <xsl:element name="hebrew_verb_participle">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
@@ -1260,7 +1260,7 @@
 </xsl:template>
 
 <xsl:template match="/book/token/verb[../@lang = 'arc' and contains(@type, 'participle')]">
-  <xsl:element name="aramaic_verb_participal">
+  <xsl:element name="aramaic_verb_participle">
     <xsl:attribute name="lemma">
       <xsl:value-of select="@lemma"/>
     </xsl:attribute>
