@@ -205,6 +205,12 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
+  <xsl:variable name="wordLemma">
+    <xsl:value-of select="mp:string_join('|', */@lemma)"/>
+  </xsl:variable>
+  <xsl:variable name="wordStrong">
+    <xsl:value-of select="mp:string_join('|', */@strong)"/>
+  </xsl:variable>
 
   <xsl:choose>
     <xsl:when test="$wordSpeechName = 'verb'">
@@ -215,6 +221,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -227,6 +241,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -239,6 +261,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -251,6 +281,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -263,6 +301,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -275,6 +321,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -287,6 +341,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -299,6 +361,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -355,6 +425,12 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
+  <xsl:variable name="wordLemma">
+    <xsl:value-of select="mp:string_join('|', */@lemma)"/>
+  </xsl:variable>
+  <xsl:variable name="wordStrong">
+    <xsl:value-of select="mp:string_join('|', */@strong)"/>
+  </xsl:variable>
 
   <xsl:choose>
     <xsl:when test="$wordSpeechName = 'verb'">
@@ -365,6 +441,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -377,6 +461,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -389,6 +481,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -401,6 +501,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -413,6 +521,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -425,6 +541,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -437,6 +561,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>
@@ -449,6 +581,14 @@
         <xsl:attribute name="versePathChristian">
           <xsl:value-of select="$versePathChristian"/>
         </xsl:attribute>
+        <xsl:attribute name="lemma">
+          <xsl:value-of select="$wordLemma"/>
+        </xsl:attribute>
+        <xsl:if test="normalize-space($wordStrong) != ''">
+          <xsl:attribute name="strong">
+            <xsl:value-of select="$wordStrong"/>
+          </xsl:attribute>
+        </xsl:if>
         <xsl:copy-of select="@osisWordId"/>
         <xsl:apply-templates/>
       </xsl:element>

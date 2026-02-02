@@ -49,6 +49,8 @@
   <xs:complexType name="WordType">
     <xs:attribute name="versePathJewish" type="VersePathType" use="required"/>
     <xs:attribute name="versePathChristian" type="VersePathType" use="required"/>
+    <xs:attribute name="lemma" type="WordLemmaType" use="required"/>
+    <xs:attribute name="strong" type="WordStrongType" use="optional"/>
     <xs:attribute name="osisWordId" type="OsisWordIdType" use="required"/>
   </xs:complexType>
 
@@ -1693,6 +1695,12 @@
       <xs:enumeration value="absolute"/>
       <xs:enumeration value="construct"/>
       <xs:enumeration value="determined"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WordLemmaType">
+    <xs:restriction base="xs:string">     <!-- TODO: Improve specificity -->
+      <xs:pattern value="[bdicklms\|0-9 \+a-f]*"/>
     </xs:restriction>
   </xs:simpleType>
 
