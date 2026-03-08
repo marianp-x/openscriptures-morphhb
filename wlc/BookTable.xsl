@@ -35,40 +35,6 @@
 
 <!--                               -->
 
-<xsl:variable name="languageToOsisLanguageCodeXml">
-  <entry id="hebrew">H</entry>
-  <entry id="aramaic">A</entry>
-  <entry id="greek">G</entry>
-</xsl:variable>
-<xsl:variable name="languageToOsisLanguageCode" select="common:node-set($languageToOsisLanguageCodeXml)"/>
-
-<xsl:variable name="personToPgnXml">
-  <entry id="">*</entry>
-  <entry id="1">1</entry>
-  <entry id="2">2</entry>
-  <entry id="3">3</entry>
-</xsl:variable>
-<xsl:variable name="personToPgn" select="common:node-set($personToPgnXml)"/>
-
-<xsl:variable name="genderToPgnXml">
-  <entry id="">*</entry>
-  <entry id="both">*</entry>
-  <entry id="common">*</entry>
-  <entry id="feminine">f</entry>
-  <entry id="masculine">m</entry>
-</xsl:variable>
-<xsl:variable name="genderToPgn" select="common:node-set($genderToPgnXml)"/>
-
-<xsl:variable name="numberToPgnXml">
-  <entry id="">*</entry>
-  <entry id="dual">d</entry>
-  <entry id="plural">p</entry>
-  <entry id="singular">s</entry>
-</xsl:variable>
-<xsl:variable name="numberToPgn" select="common:node-set($numberToPgnXml)"/>
-
-<!--                               -->
-
 <xsl:template match="/book">
   <xsl:apply-templates select="*"/>
 
@@ -85,15 +51,45 @@
     <xsl:text>&TAB;</xsl:text>
     <xsl:value-of select="'Language'"/>
     <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'TokenType'"/>
+    <xsl:value-of select="'Word'"/>
     <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'Token'"/>
+    <xsl:value-of select="'WordN'"/>
     <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'TokenN'"/>
+    <xsl:value-of select="'WordC'"/>
     <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'TokenC'"/>
+    <xsl:value-of select="'WordParsed'"/>
     <xsl:text>&TAB;</xsl:text>
-    <xsl:value-of select="'TokenParsed'"/>
+    <xsl:value-of select="'WordLemma'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordMorph'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordConjunction'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordPreposition'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordArticle'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordInterrogative'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordParticle'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordVerbBinyanim'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordForm'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordPgn'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordState'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordSuffixPronominal'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordSuffixPronominalPgn'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordSuffixDirectionalHei'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordSuffixParagogicHei'"/>
+    <xsl:text>&TAB;</xsl:text>
+    <xsl:value-of select="'WordSuffixParagogicNun'"/>
     <xsl:text>&NL;</xsl:text>
   </common:document>
 </xsl:template>
@@ -114,12 +110,11 @@
   <xsl:variable name="osisWordId">
     <xsl:value-of select="@osisWordId"/>
   </xsl:variable>
-  <xsl:variable name="tokenType" select="name(.)"/>
-  <xsl:variable name="language" select="substring-before($tokenType, '_')"/>
-  <xsl:variable name="wordMorphLang" select="$languageToOsisLanguageCode/entry[@id = $language]"/>
+  <xsl:variable name="tokenName" select="name(.)"/>
+  <xsl:variable name="language" select="substring-before($wordName, '_')"/>
   <xsl:variable name="token">
     <xsl:choose>
-      <xsl:when test="contains($tokenType, 'punctuation')">
+      <xsl:when test="contains($tokenName, 'punctuation')">
         <xsl:value-of select="text()"/>
       </xsl:when>
       <xsl:otherwise>
@@ -129,7 +124,7 @@
   </xsl:variable>
   <xsl:variable name="tokenParsed">
     <xsl:choose>
-      <xsl:when test="contains($tokenType, 'punctuation')">
+      <xsl:when test="contains($tokenName, 'punctuation')">
         <xsl:value-of select="text()"/>
       </xsl:when>
       <xsl:otherwise>
@@ -154,7 +149,7 @@
   <xsl:text>&TAB;</xsl:text>
   <xsl:value-of select="$language"/>
   <xsl:text>&TAB;</xsl:text>
-  <xsl:value-of select="$tokenType"/>
+  <xsl:value-of select="$tokenName"/>
   <xsl:text>&TAB;</xsl:text>
   <xsl:value-of select="$token"/>
   <xsl:text>&TAB;</xsl:text>

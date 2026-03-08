@@ -207,11 +207,16 @@
     <xsl:attribute name="osisVerseId">
       <xsl:value-of select="ancestor::osis:verse/@osisID"/>
     </xsl:attribute>
-    <xsl:if test="normalize-space(ancestor::osis:verse/*[position() = 1 and name() = 'note']) != ''">
-      <xsl:attribute name="osisKjvVerseId">
-        <xsl:value-of select="substring-after(ancestor::osis:verse/*[position() = 1 and name() = 'note'], 'KJV:')"/>
-      </xsl:attribute>
-    </xsl:if>
+    <xsl:attribute name="osisKjvVerseId">
+      <xsl:choose>
+        <xsl:when test="normalize-space(ancestor::osis:verse/*[position() = 1 and name() = 'note']) != ''">
+          <xsl:value-of select="substring-after(ancestor::osis:verse/*[position() = 1 and name() = 'note'], 'KJV:')"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="ancestor::osis:verse/@osisID"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
     <xsl:attribute name="lang">
       <xsl:value-of select="$langIsoCode"/>
     </xsl:attribute>
@@ -655,11 +660,16 @@
     <xsl:attribute name="osisVerseId">
       <xsl:value-of select="ancestor::osis:verse/@osisID"/>
     </xsl:attribute>
-    <xsl:if test="normalize-space(ancestor::osis:verse/*[position() = 1 and name() = 'note']) != ''">
-      <xsl:attribute name="osisKjvVerseId">
-        <xsl:value-of select="substring-after(ancestor::osis:verse/*[position() = 1 and name() = 'note'], 'KJV:')"/>
-      </xsl:attribute>
-    </xsl:if>
+    <xsl:attribute name="osisKjvVerseId">
+      <xsl:choose>
+        <xsl:when test="normalize-space(ancestor::osis:verse/*[position() = 1 and name() = 'note']) != ''">
+          <xsl:value-of select="substring-after(ancestor::osis:verse/*[position() = 1 and name() = 'note'], 'KJV:')"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="ancestor::osis:verse/@osisID"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
     <xsl:attribute name="lang">
       <xsl:value-of select="'he'"/>
     </xsl:attribute>

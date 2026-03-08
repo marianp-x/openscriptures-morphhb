@@ -189,21 +189,10 @@
   <xsl:variable name="wordSpeechName" select="$wordSpeech/speech[1]/@name"/>
   <xsl:variable name="wordSpeechType" select="$wordSpeech/speech[1]/@type"/>
   <xsl:variable name="versePathJewish">
-    <xsl:call-template name="getVersePathJewish">
-      <xsl:with-param name="verseIdJew" select="@osisVerseId"/>
-    </xsl:call-template>
+    <xsl:value-of select="concat(@osisChapterNum, '/', @osisVerseNum, '/', @tokenInVerseNum)"/>
   </xsl:variable>
   <xsl:variable name="versePathChristian">
-    <xsl:choose>
-      <xsl:when test="normalize-space(@osisKjvVerseId) != ''">
-        <xsl:call-template name="getVersePathKjv">
-          <xsl:with-param name="verseIdKjv" select="@osisKjvVerseId"/>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$versePathJewish"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:value-of select="concat(@osisKjvChapterNum, '/', @osisKjvVerseNum, '/', @tokenInKjvVerseNum)"/>
   </xsl:variable>
   <xsl:variable name="wordLemma">
     <xsl:value-of select="mp:string_join('|', */@lemma)"/>
@@ -215,6 +204,7 @@
   <xsl:choose>
     <xsl:when test="$wordSpeechName = 'verb'">
       <xsl:element name="hebrew_word_verb">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -235,6 +225,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'noun'">
       <xsl:element name="hebrew_word_noun">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -255,6 +246,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'pronoun'">
       <xsl:element name="hebrew_word_pronoun">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -275,6 +267,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'adjective'">
       <xsl:element name="hebrew_word_adjective">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -295,6 +288,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'adverb'">
       <xsl:element name="hebrew_word_adverb">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -315,6 +309,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'particle'">
       <xsl:element name="hebrew_word_particle">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -335,6 +330,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'preposition'">
       <xsl:element name="hebrew_word_preposition">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -355,6 +351,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'conjunction'">
       <xsl:element name="hebrew_word_conjunction">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -375,6 +372,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'punctuation'">
       <xsl:element name="hebrew_punctuation">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -409,21 +407,10 @@
   <xsl:variable name="wordSpeechName" select="$wordSpeech/speech[1]/@name"/>
   <xsl:variable name="wordSpeechType" select="$wordSpeech/speech[1]/@type"/>
   <xsl:variable name="versePathJewish">
-    <xsl:call-template name="getVersePathJewish">
-      <xsl:with-param name="verseIdJew" select="@osisVerseId"/>
-    </xsl:call-template>
+    <xsl:value-of select="concat(@osisChapterNum, '/', @osisVerseNum, '/', @tokenInVerseNum)"/>
   </xsl:variable>
   <xsl:variable name="versePathChristian">
-    <xsl:choose>
-      <xsl:when test="normalize-space(@osisKjvVerseId) != ''">
-        <xsl:call-template name="getVersePathKjv">
-          <xsl:with-param name="verseIdKjv" select="@osisKjvVerseId"/>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$versePathJewish"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:value-of select="concat(@osisKjvChapterNum, '/', @osisKjvVerseNum, '/', @tokenInKjvVerseNum)"/>
   </xsl:variable>
   <xsl:variable name="wordLemma">
     <xsl:value-of select="mp:string_join('|', */@lemma)"/>
@@ -435,6 +422,7 @@
   <xsl:choose>
     <xsl:when test="$wordSpeechName = 'verb'">
       <xsl:element name="aramaic_word_verb">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -455,6 +443,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'noun'">
       <xsl:element name="aramaic_word_noun">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -475,6 +464,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'pronoun'">
       <xsl:element name="aramaic_word_pronoun">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -495,6 +485,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'adjective'">
       <xsl:element name="aramaic_word_adjective">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -515,6 +506,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'adverb'">
       <xsl:element name="aramaic_word_adverb">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -535,6 +527,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'particle'">
       <xsl:element name="aramaic_word_particle">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -555,6 +548,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'preposition'">
       <xsl:element name="aramaic_word_preposition">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -575,6 +569,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'conjunction'">
       <xsl:element name="aramaic_word_conjunction">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -595,6 +590,7 @@
     </xsl:when>
     <xsl:when test="$wordSpeechName = 'punctuation'">
       <xsl:element name="aramaic_punctuation">
+        <xsl:copy-of select="@id"/>
         <xsl:attribute name="versePathJewish">
           <xsl:value-of select="$versePathJewish"/>
         </xsl:attribute>
@@ -1696,6 +1692,7 @@
 
 <xsl:template match="/book/token/punctuation[../@lang = 'he']">
   <xsl:element name="hebrew_punctuation">
+    <xsl:copy-of select="@id"/>
     <xsl:attribute name="role">
       <xsl:value-of select="@type"/>
     </xsl:attribute>
@@ -1705,6 +1702,7 @@
 
 <xsl:template match="/book/token/punctuation[../@lang = 'arc']">    <!-- TODO: Validate that this is not used -->
   <xsl:element name="aramaic_punctuation">
+    <xsl:copy-of select="@id"/>
     <xsl:attribute name="role">
       <xsl:value-of select="@type"/>
     </xsl:attribute>
@@ -1944,45 +1942,6 @@
     </xsl:otherwise>
 
   </xsl:choose>
-</xsl:template>
-
-<!--                               -->
-
-<xsl:template name="getVersePathJewish">
-  <xsl:param name="verseIdJew"/>
-
-  <xsl:variable name="chapterNumJew">
-    <xsl:value-of select="substring-before(substring-after($verseIdJew, '.'), '.')"/>
-  </xsl:variable>
-  <xsl:variable name="verseNumJew">
-    <xsl:value-of select="substring-after(substring-after($verseIdJew, '.'), '.')"/>
-  </xsl:variable>
-
-  <xsl:value-of select="concat($chapterNumJew, '/', $verseNumJew)"/>
-
-</xsl:template>
-
-<!--                               -->
-
-<xsl:template name="getVersePathKjv">
-  <xsl:param name="verseIdKjv"/>
-
-  <xsl:variable name="chapterNumKjv">
-    <xsl:value-of select="substring-before(substring-after($verseIdKjv, '.'), '.')"/>
-  </xsl:variable>
-  <xsl:variable name="verseNumKjv">
-    <xsl:choose>
-      <xsl:when test="contains($verseIdKjv, '!')">
-        <xsl:value-of select="substring-before(substring-after(substring-after($verseIdKjv, '.'), '.'), '!')"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="substring-after(substring-after($verseIdKjv, '.'), '.')"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
-  <xsl:value-of select="concat($chapterNumKjv, '/', $verseNumKjv)"/>
-
 </xsl:template>
 
 <!--                               -->

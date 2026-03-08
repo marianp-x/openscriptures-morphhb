@@ -41,6 +41,7 @@ BOOK_NAMEs := \
 
 FIX_OUTPUT_PATH := fix
 NRM_OUTPUT_PATH := nrm
+IDX_OUTPUT_PATH := idx
 WRD_OUTPUT_PATH := wrd
 TBL_OUTPUT_PATH := tbl
 TSV_OUTPUT_PATH := tsv
@@ -49,6 +50,7 @@ BOOK_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(bookName).xml)
 BOOK_FIXES_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(FIX_OUTPUT_PATH)/$(bookName)Fix.xml)
 BOOK_FIXED_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(FIX_OUTPUT_PATH)/$(bookName).xml)
 BOOK_NRMED_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(NRM_OUTPUT_PATH)/$(bookName).xml)
+BOOK_IDXED_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(IDX_OUTPUT_PATH)/$(bookName).xml)
 BOOK_WORDS_XMLs := $(foreach bookName, $(BOOK_NAMEs), $(WRD_OUTPUT_PATH)/$(bookName).xml)
 BOOK_TABLES_TSVs := $(foreach bookName, $(BOOK_NAMEs), $(TBL_OUTPUT_PATH)/$(bookName).tsv)
 BOOK_SCHEMAS_TSVs := $(foreach bookName, $(BOOK_NAMEs), $(TBL_OUTPUT_PATH)/$(bookName).schema)
@@ -56,11 +58,13 @@ BOOK_TSVs := $(foreach bookName, $(BOOK_NAMEs), $(TSV_OUTPUT_PATH)/$(bookName).t
 BOOK_SCHEMAs := $(foreach bookName, $(BOOK_NAMEs), $(TSV_OUTPUT_PATH)/$(bookName).schema)
 BOOK_DEBUGs := $(foreach bookName, $(BOOK_NAMEs), $(TSV_OUTPUT_PATH)/$(bookName).debug)
 
-.PHONY: all fixes norm tsvs words diffs diag
+.PHONY: all fixes norms tsvs words diffs diag
 
 all: tsvs words
 
+# --
 # FIX
+# --
 
 fixes: $(BOOK_FIXED_XMLs)
 
@@ -80,9 +84,11 @@ $(FIX_OUTPUT_PATH)/%.xml : %.xml $(FIX_OUTPUT_PATH)/%Fix.xml $(FIX_OUTPUT_PATH) 
 	/usr/bin/xsltproc --nonet --stringparam "bookFixXmlFname" "$(FIX_OUTPUT_PATH)/$*Fix.xml" "BookFix.xsl" "$*.xml" >"$(FIX_OUTPUT_PATH)/$*.xml"
 	/usr/bin/xmllint --nonet --schema "osisCore.2.1.1.xsd" --noout "$(FIX_OUTPUT_PATH)/$*.xml"
 
+# --
 # NRM
+# --
 
-norm: $(BOOK_NRMED_XMLs)
+norms: $(BOOK_NRMED_XMLs)
 
 $(NRM_OUTPUT_PATH):
 	mkdir -p "$@"
@@ -93,7 +99,84 @@ $(NRM_OUTPUT_PATH)/%.xml : $(FIX_OUTPUT_PATH)/%.xml $(NRM_OUTPUT_PATH) Makefile 
 	/usr/bin/xsltproc --nonet --xinclude "BookNorm.xsl" "$(FIX_OUTPUT_PATH)/$*.xml" >"$@"
 	/usr/bin/xmllint --nonet --schema "BookNorm.xsd" --noout "$@"
 
-# TSV output:
+# --
+# IDX
+# --
+
+indices: $(BOOK_IDXED_XMLs)
+
+$(IDX_OUTPUT_PATH):
+	mkdir -p "$@"
+
+.PRECIOUS: $(IDX_OUTPUT_PATH)/%.xml
+
+$(IDX_OUTPUT_PATH)/%.xml : $(NRM_OUTPUT_PATH)/%.xml $(IDX_OUTPUT_PATH) Makefile BookIndex.pl BookIndex.xsd xml.xsd
+	BookIndex.pl "$(NRM_OUTPUT_PATH)/$*.xml" "$@" 3>"$(IDX_OUTPUT_PATH)/$*.debug"
+	/usr/bin/xmllint --nonet --schema "BookIndex.xsd" --noout "$@"
+
+# --
+# WRD
+# --
+
+words: $(BOOK_WORDS_XMLs)
+
+$(WRD_OUTPUT_PATH):
+	mkdir -p "$@"
+
+.PRECIOUS: $(WRD_OUTPUT_PATH)/%.xml
+
+$(WRD_OUTPUT_PATH)/%.xml : $(WRD_OUTPUT_PATH) $(IDX_OUTPUT_PATH)/%.xml Makefile BookWord.xsl BookWord.xsd
+	/usr/bin/xsltproc --nonet "BookWord.xsl" $(IDX_OUTPUT_PATH)/$*.xml >"$@"
+	/usr/bin/xmllint --nonet --schema "BookWord.xsd" --noout "$@"
+
+# --
+# TBL
+# --
+
+$(TBL_OUTPUT_PATH):
+	mkdir -p "$@"
+
+tables: \
+	$(TBL_OUTPUT_PATH)/WLC.tsv \
+	$(TBL_OUTPUT_PATH)/WLC-Verb.tsv
+
+# *.tsv
+
+$(TBL_OUTPUT_PATH)/WLC.tsv : $(foreach bookName, $(BOOK_NAMEs), $(TBL_OUTPUT_PATH)/$(bookName).tsv)
+	/usr/bin/cat "$(TBL_OUTPUT_PATH)/Gen.schema" | head -n 1 >"$@"
+	/usr/bin/cat $^ >>"$@"
+
+.PRECIOUS: $(TBL_OUTPUT_PATH)/%.tsv
+
+# $(TBL_OUTPUT_PATH)/%.tsv : $(TBL_OUTPUT_PATH) $(WRD_OUTPUT_PATH)/%.xml BookTable.xsl Makefile
+#	/usr/bin/xsltproc --nonet --stringparam "bookSchemaFname" "$(TBL_OUTPUT_PATH)/$*.schema" "BookTable.xsl" $(WRD_OUTPUT_PATH)/$*.xml >"$@"
+
+$(TBL_OUTPUT_PATH)/%.tsv $(TBL_OUTPUT_PATH)/%.debug  $(TBL_OUTPUT_PATH)/%.schema: $(TBL_OUTPUT_PATH) $(WRD_OUTPUT_PATH)/%.xml BookTable.pl Makefile
+	BookTable.pl "$(WRD_OUTPUT_PATH)/$*.xml" \
+		1>"$(TBL_OUTPUT_PATH)/$*.tsv" \
+		3>"$(TBL_OUTPUT_PATH)/$*.debug" \
+		4>"$(TBL_OUTPUT_PATH)/$*.schema"
+
+# *-Verb.tsv
+
+$(TBL_OUTPUT_PATH)/WLC-Verb.tsv : $(foreach bookName, $(BOOK_NAMEs), $(TBL_OUTPUT_PATH)/$(bookName)-Verb.tsv)
+	/usr/bin/cat "$(TBL_OUTPUT_PATH)/Gen-Verb.schema" | head -n 1 >"$@"
+	/usr/bin/cat $^ >>"$@"
+
+.PRECIOUS: $(TBL_OUTPUT_PATH)/%-Verb.tsv
+
+# $(TBL_OUTPUT_PATH)/%-Verb.tsv : $(TBL_OUTPUT_PATH) $(WRD_OUTPUT_PATH)/%.xml BookTable-Verb.xsl Makefile
+# 	/usr/bin/xsltproc --nonet --stringparam "bookSchemaFname" "$(TBL_OUTPUT_PATH)/$*.schema" "BookTable-Verb.xsl" $(WRD_OUTPUT_PATH)/$*.xml >"$@"
+
+$(TBL_OUTPUT_PATH)/%-Verb.tsv $(TBL_OUTPUT_PATH)/%-Verb.debug  $(TBL_OUTPUT_PATH)/%-Verb.schema: $(TBL_OUTPUT_PATH) $(WRD_OUTPUT_PATH)/%.xml BookTable-Verb.pl Makefile
+	BookTable-Verb.pl "$(WRD_OUTPUT_PATH)/$*.xml" \
+		1>"$(TBL_OUTPUT_PATH)/$*-Verb.tsv" \
+		3>"$(TBL_OUTPUT_PATH)/$*-Verb.debug" \
+		4>"$(TBL_OUTPUT_PATH)/$*-Verb.schema"
+
+# --
+# TSV
+# --
 
 tsvs: $(TSV_OUTPUT_PATH)/WLC.tsv
 
@@ -112,43 +195,18 @@ $(TSV_OUTPUT_PATH)/%.tsv $(TSV_OUTPUT_PATH)/%.debug : $(TSV_OUTPUT_PATH) $(FIX_O
 		3>"$(TSV_OUTPUT_PATH)/$*.debug" \
 		4>"$(TSV_OUTPUT_PATH)/$*.schema"
 
-# WRD
-
-words: $(BOOK_WORDS_XMLs)
-
-$(WRD_OUTPUT_PATH):
-	mkdir -p "$@"
-
-.PRECIOUS: $(WRD_OUTPUT_PATH)/%.xml
-
-$(WRD_OUTPUT_PATH)/%.xml : $(WRD_OUTPUT_PATH) $(NRM_OUTPUT_PATH)/%.xml Makefile BookWord.xsl BookWord.xsd
-	/usr/bin/xsltproc --nonet "BookWord.xsl" $(NRM_OUTPUT_PATH)/$*.xml >"$@"
-	/usr/bin/xmllint --nonet --schema "BookWord.xsd" --noout "$@"
-
-# TBL
-
-tables: $(TBL_OUTPUT_PATH)/WLC.tsv
-
-$(TBL_OUTPUT_PATH)/WLC.tsv : $(BOOK_TABLES_TSVs)
-	/usr/bin/cat "$(TBL_OUTPUT_PATH)/Gen.schema" | head -n 1 >"$@"
-	/usr/bin/cat $(BOOK_TABLES_TSVs) >>"$@"
-
-$(TBL_OUTPUT_PATH):
-	mkdir -p "$@"
-
-.PRECIOUS: $(TBL_OUTPUT_PATH)/%.tsv
-
-$(TBL_OUTPUT_PATH)/%.tsv : $(TBL_OUTPUT_PATH) $(WRD_OUTPUT_PATH)/%.xml BookTable.xsl Makefile
-	/usr/bin/xsltproc --nonet --stringparam "bookSchemaFname" "$(TBL_OUTPUT_PATH)/$*.schema" "BookTable.xsl" $(WRD_OUTPUT_PATH)/$*.xml >"$@"
-
+# --
 # DIFFs
+# --
 
 diffs:
 	/usr/bin/cut --delimiter="	" --fields=3,5-16,18- $(TSV_OUTPUT_PATH)/WLC.tsv >$(TSV_OUTPUT_PATH)/WLC-c.tsv
 	/usr/bin/cut --delimiter="	" --fields=4,6-17,19- $(WRD_OUTPUT_PATH)/WLC.tsv >$(WRD_OUTPUT_PATH)/WLC-c.tsv
 	"C:/Program Files/Vim/vim91/gvim.exe" -R -d +"set list" tsv/WLC-c.tsv wrd/WLC-c.tsv &
 
+# --
 # Diag
+# --
 
 diag: $(TSV_OUTPUT_PATH)/Diag.tsv $(TSV_OUTPUT_PATH)/DiagStructure.tsv
 
@@ -176,16 +234,26 @@ GENERATED:=\
 
 clean:
 	rm -f \
+		fix/*.xml \
+		idx/*.xml \
+		idx/*.debug \
+		nrm/*.xml \
+		wrd/*.xml \
+		tbl/*.debug \
+		tbl/*.schema \
+		tbl/*.tsv \
+		tst/*.tsv \
 		$(GENERATED)
 
 edit:
 	"C:/Program Files/Vim/vim91/gvim.exe" -R +"set guifont=Consolas:h18" +"set number" +"set wrap" +"set delcombine" +"set maxcombine=6" \
-		"$(TSV_OUTPUT_PATH)/WLC.tsv" \
-		"$(WRD_OUTPUT_PATH)/WLC.tsv" \
+		"$(TBL_OUTPUT_PATH)/WLC.tsv" \
+		"$(TBL_OUTPUT_PATH)/WLC-Verb.tsv" \
 		$(BOOK_XMLs) \
 		$(BOOK_FIXES_XMLs) \
 		$(BOOK_FIXED_XMLs) \
 		$(BOOK_NRMED_XMLs) \
+		$(BOOK_IDXED_XMLs) \
 		$(BOOK_WORDS_XMLs) \
 		$(BOOK_SCHEMAS_TSVs) \
 		$(BOOK_TABLES_TSVs) \
@@ -203,8 +271,10 @@ edit:
 		"BookFix.xsd" \
 		"BookNorm.xsl" \
 		"BookNorm.xsd" \
+		"BookIndex.pl" \
 		"BookWord.xsl" \
 		"BookWord.xsd" \
+		"BookTable.pl" \
 		"BookTable.xsl" \
 		"Diag.xsl" \
 		"osisCore.2.1.1.xsd" \

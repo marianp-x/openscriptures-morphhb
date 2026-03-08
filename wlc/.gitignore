@@ -3,14 +3,18 @@
 
 # Generated output
 fix/*.xml
+fix/*.xml
+nrm/*.xml
+idx/*.debug
+idx/*.xml
+wrd/*.xml
+wrd/*.xml
+tbl/*.tsv
+tbl/*.debug
+tbl/*.schema
 tsv/*.debug
 tsv/*.schema
 tsv/*.tsv
 tsv/*.log
-nrm/*.xml
 tst/*.xml
 tst/*.tsv
-wrd/*.tsv
-wrd/*.schema
-wrd/*.diff
-wrd/*.xml
